@@ -4,8 +4,9 @@
   "compilerOptions": {
     "outDir": "../../out-tsc/spec",
     "types": [
-      "jasmine"
-    ]
+      "jest"
+    ],
+    "module": "CommonJs",
   },
   "include": [
     "src/**/*.spec.ts",
