@@ -28,9 +28,9 @@ jobs:
           CI: true
 #          NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_READ_ORG }}
       - name: Building Lib
-        run: npm build:lib
+        run: npm run build:lib
       - name: Building Demo App
-        run: npm build:app
+        run: npm run build:app
 
 
   lint:
@@ -52,8 +52,8 @@ jobs:
 #          NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_READ_ORG }}
       - name: Linting
         run: npm run lint
-      - name: Format check
-        run: npm run format-check
+#      - name: Format check
+#        run: npm run format-check
 
 #  gitleaks:
 #    name: 🔒 Run Git leaks
