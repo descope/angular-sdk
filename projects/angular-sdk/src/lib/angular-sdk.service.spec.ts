@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AngularSdkService } from './angular-sdk.service';
+import { DescopeAuthService } from './descope-auth.service';
 
 describe('AngularSdkService', () => {
-	let service: AngularSdkService;
+	let service: DescopeAuthService;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({});
-		service = TestBed.inject(AngularSdkService);
+		service = TestBed.inject(DescopeAuthService);
 	});
 
 	it('should be created', () => {
