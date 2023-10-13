@@ -1,6 +1,6 @@
 const baseConfig = require('./jest.base.config');
 
 module.exports = {
-  ...baseConfig,
-  roots: ['<rootDir>/projects/demo-app'],
+	...baseConfig,
+	roots: ['<rootDir>/projects/demo-app']
 };
