@@ -6,13 +6,14 @@ import { AppComponent } from './app.component';
 import { DescopeAuthModule } from '../../../angular-sdk/src/lib/descope-auth.module';
 import { HomeComponent } from './home/home.component';
 import { ProtectedComponent } from './protected/protected.component';
+import {environment} from "../environments/environment";
 
 @NgModule({
 	declarations: [AppComponent, HomeComponent, ProtectedComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
-		DescopeAuthModule.forRoot({ projectId: 'P2WZqcc8uZQlTMOpxw94BZo7JbXH' })
+		DescopeAuthModule.forRoot({ projectId: environment.descopeProjectId })
 	],
 	providers: [],
 	bootstrap: [AppComponent]
