@@ -1,7 +1,7 @@
 import {Injectable, Optional} from '@angular/core';
 import {DescopeAuthConfig} from "./descope-auth.module";
 import createSdk from "@descope/web-js-sdk";
-import {from, Observable} from "rxjs";
+import {from, map, Observable} from "rxjs";
 
 @Injectable({
 	providedIn: 'root'
@@ -32,6 +32,16 @@ export class DescopeAuthService {
 
   logout(): Observable<any> {
     return from(this.sdk.logout());
+  }
+
+  getSessionToken(): Observable<string> {
+    return from<string>(this.sdk.getSessionToken());
+  }
+  isLoggedIn(): Observable<boolean> {
+    return this.getSessionToken().pipe(
+      map(token => token.length > 0)
+    )
+
   }
 
 }
