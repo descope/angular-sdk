@@ -1,6 +1,5 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 import { AngularSdkComponent } from './angular-sdk.component';
-import createSdk from '@descope/web-js-sdk';
 
 export class DescopeAuthConfig {
   projectId = '';
@@ -27,9 +26,4 @@ export class DescopeAuthModule {
       ]
     };
   }
-  // const sdk = createSdk({
-  //   ...config,
-  //   persistTokens: true,
-  //   autoRefresh: true
-  // });
 }
