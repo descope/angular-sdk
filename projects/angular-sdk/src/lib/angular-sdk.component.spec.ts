@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AngularSdkComponent } from './angular-sdk.component';
+import {DescopeAuthConfig} from "./descope-auth.module";
 
 describe('AngularSdkComponent', () => {
 	let component: AngularSdkComponent;
@@ -8,7 +9,11 @@ describe('AngularSdkComponent', () => {
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [AngularSdkComponent]
+			declarations: [AngularSdkComponent],
+			providers: [
+				DescopeAuthConfig,
+				{ provide: DescopeAuthConfig, useValue: { projectId: "test" } }
+			]
 		});
 		fixture = TestBed.createComponent(AngularSdkComponent);
 		component = fixture.componentInstance;
