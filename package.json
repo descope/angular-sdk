@@ -11,7 +11,7 @@
 		"test:app": "jest --config jest.app.config.js",
 		"lint": "ng lint",
 		"format": "prettier . -w --ignore-path .gitignore",
-		"format-check": "prettier . --check --ignore-path .gitignore",
+		"format-check": "prettier . --check --ignore-path .gitignore"
 	},
 	"private": true,
 	"dependencies": {
