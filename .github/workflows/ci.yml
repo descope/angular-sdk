@@ -1,0 +1,127 @@
+name: 🎛️ CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+env:
+  NODE_VERSION: 18.12
+
+jobs:
+  build:
+    name: 👷 Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://npm.pkg.github.com/
+      # Skip post-install scripts here, as a malicious
+      # script could steal NODE_AUTH_TOKEN.
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+        env:
+          CI: true
+      #          NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_READ_ORG }}
+      - name: Building Lib
+        run: npm run build:lib
+      - name: Building Demo App
+        run: npm run build:app
+
+  lint:
+    name: 🪥 Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://npm.pkg.github.com/
+      # Skip post-install scripts here, as a malicious
+      # script could steal NODE_AUTH_TOKEN.
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+        env:
+          CI: true
+      #          NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_READ_ORG }}
+      - name: Linting
+        run: npm run lint
+      - name: Format check
+        run: npm run format-check
+
+  #  gitleaks:
+  #    name: 🔒 Run Git leaks
+  #    runs-on: ubuntu-latest
+  #    steps:
+  #      - name: Checkout code
+  #        uses: actions/checkout@v4
+  #      - uses: actions/setup-node@v3
+  #        with:
+  #          node-version: ${{ env.NODE_VERSION }}
+  #      # Skip post-install scripts here, as a malicious
+  #      # script could steal NODE_AUTH_TOKEN.
+  #      - name: Install dependencies
+  #        run: npm ci --ignore-scripts
+  #        env:
+  #          CI: true
+  #          NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_READ_ORG }}
+  #      - name: Gitleaks
+  #        run: npm run leaks
+  #        shell: bash
+
+  testing:
+    name: 👔 Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: https://npm.pkg.github.com/
+      # Skip post-install scripts here, as a malicious
+      # script could steal NODE_AUTH_TOKEN.
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+        env:
+          CI: true
+      #          NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_READ_ORG }}
+      - name: Testing Lib
+        run: npm run test:lib
+      - name: Testing Demo App
+        run: npm run test:app
+#      - name: Coverage check
+#        uses: devmasx/coverage-check-action@v1.2.0
+#        with:
+#          type: lcov
+#          min_coverage: 94.5
+#          result_path: coverage/lcov.info
+#          token: ${{ github.token }}
+
+#  license-validation:
+#    name: 🪪 License Validation
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Checkout code
+#        uses: actions/checkout@v4
+#      - uses: actions/setup-node@v3
+#        with:
+#          node-version: ${{ env.NODE_VERSION }}
+#          registry-url: https://npm.pkg.github.com/
+#      # Skip post-install scripts here, as a malicious
+#      # script could steal NODE_AUTH_TOKEN.
+#      - name: Install dependencies
+#        run: npm ci --ignore-scripts
+#        env:
+#          CI: true
+#          NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_READ_ORG }}
+#      # `npm rebuild` will run all those post-install scripts for us.
+#      - run: npm rebuild && npm run prepare --if-present
+#      - name: License validation
+#        shell: bash
+#        run: ./thirdPartyLicenseCollector_linux_amd64 -npm-project .
