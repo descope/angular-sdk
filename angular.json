@@ -56,9 +56,7 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
-						"allowedCommonJsDependencies": [
-							"lodash.get"
-						],
+						"allowedCommonJsDependencies": ["lodash.get"],
 						"outputPath": "dist/demo-app",
 						"index": "projects/demo-app/src/index.html",
 						"main": "projects/demo-app/src/main.ts",
