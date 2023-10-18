@@ -3,5 +3,5 @@
  * Fill the env vars according to your needs
  */
 export const environment = {
-  descopeProjectId: "<prod_key>"
+	descopeProjectId: '<prod_key>'
 };

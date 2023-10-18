@@ -9,14 +9,14 @@ type DescopeSDK = ReturnType<typeof createSdk>;
 	providedIn: 'root'
 })
 export class DescopeAuthService {
-	private sdk: DescopeSDK
+	private sdk: DescopeSDK;
 
 	constructor(config: DescopeAuthConfig) {
-			this.sdk = createSdk({
-				...config,
-				persistTokens: true,
-				autoRefresh: true
-			});
+		this.sdk = createSdk({
+			...config,
+			persistTokens: true,
+			autoRefresh: true
+		});
 	}
 
 	passwordSignUp() {
@@ -30,7 +30,7 @@ export class DescopeAuthService {
 		);
 	}
 
-	passwordLogin(){
+	passwordLogin() {
 		return from(
 			this.sdk.password.signIn('piotr+angular@velocit.dev', '!QAZ2wsx')
 		);
@@ -45,7 +45,7 @@ export class DescopeAuthService {
 	}
 
 	getSessionToken() {
-    return "";
+		return '';
 	}
 	isLoggedIn(): boolean {
 		return this.getSessionToken().length > 0;

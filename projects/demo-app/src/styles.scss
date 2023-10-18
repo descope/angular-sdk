@@ -1,20 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 
 body {
-  height: 100vh;
-  width: 100vw;
-  margin: 0;
+	height: 100vh;
+	width: 100vw;
+	margin: 0;
 }
 
 button {
-  width: 200px;
-  height: 40px;
-  border: none;
-  background-color: #00ace1;
-  color: white;
-  cursor: pointer;
+	width: 200px;
+	height: 40px;
+	border: none;
+	background-color: #00ace1;
+	color: white;
+	cursor: pointer;
 
-  &:hover {
-    background-color: #047293;
-  }
+	&:hover {
+		background-color: #047293;
+	}
 }

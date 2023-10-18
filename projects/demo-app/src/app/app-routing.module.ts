@@ -9,8 +9,8 @@ const routes: Routes = [
 		path: 'protected',
 		component: ProtectedComponent,
 		canActivate: [descopeAuthGuard],
-    data: { descopeFallbackUrl: '/' },
-  },
+		data: { descopeFallbackUrl: '/' }
+	},
 	{ path: '**', component: HomeComponent }
 ];
 
