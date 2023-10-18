@@ -7,8 +7,6 @@ jest.mock('@descope/web-js-sdk');
 
 describe('AngularSdkService', () => {
 	let service: DescopeAuthService;
-	// Create a mock for the createSdk function
-	const createSdkMock = jest.fn();
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
