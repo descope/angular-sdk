@@ -17,7 +17,6 @@ export class DescopeAuthService {
         persistTokens: true,
         autoRefresh: true
       })
-      console.log(this.sdk);
     }
   }
 
@@ -34,12 +33,15 @@ export class DescopeAuthService {
     return from(this.sdk.logout());
   }
 
+  refreshSession(): Observable<string> {
+    return from<string>(this.sdk.refresh());
+  }
+
   getSessionToken(): string {
     return this.sdk.getSessionToken();
   }
   isLoggedIn(): boolean {
     return this.getSessionToken().length > 0
-
   }
 
 }
