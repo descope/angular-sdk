@@ -1,18 +1,27 @@
 header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 4rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 4rem;
 }
 
 .card {
-  padding: 1rem;
-  border: 2px solid black;
-  width: 450px;
-  height: 450px;
-  white-space: pre-wrap;
-  white-space: -moz-pre-wrap;
-  white-space: -o-pre-wrap;
-  word-wrap: break-word;
-  font-family: "Arial", serif;
+	padding: 1rem;
+	border: 2px solid black;
+	width: 450px;
+	height: 450px;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+	font-family: 'Arial', serif;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	button {
+		margin-bottom: 1rem;
+	}
 }

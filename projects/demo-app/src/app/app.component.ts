@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import {DescopeAuthService, DescopeSession} from '../../../angular-sdk/src/lib/descope-auth.service';
-import {map, Observable, of, tap} from "rxjs";
+import {
+	DescopeAuthService,
+	DescopeSession
+} from '../../../angular-sdk/src/lib/descope-auth.service';
+import { Observable, of, tap } from 'rxjs';
 
 @Component({
 	selector: 'app-root',
@@ -14,11 +17,15 @@ export class AppComponent implements OnInit {
 		isAuthenticated: false,
 		isSessionLoading: false,
 		sessionToken: ''
-	})
+	});
 
 	ngOnInit() {
 		this.session$ = this.authService.descopeSession$.pipe(
-			tap(value => console.log(value))
-		)
+			tap((value) => console.log(value))
+		);
+	}
+
+	refreshSession() {
+		this.authService.refreshSession().subscribe((data) => console.log(data));
 	}
 }
