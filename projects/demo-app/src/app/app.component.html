@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<header>
+    <div class="card">
+        {{session$ | async | json}}
+    </div>
+</header>
+<main>
+    <router-outlet></router-outlet>
+</main>

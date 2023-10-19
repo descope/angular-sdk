@@ -5,7 +5,7 @@ import { BehaviorSubject, finalize, from, Observable } from 'rxjs';
 
 type DescopeSDK = ReturnType<typeof createSdk>;
 
-interface DescopeSession {
+export interface DescopeSession {
 	isAuthenticated: boolean;
 	isSessionLoading: boolean;
 	sessionToken: string | null;
