@@ -56,6 +56,7 @@
 				"build": {
 					"builder": "@angular-devkit/build-angular:browser",
 					"options": {
+						"allowedCommonJsDependencies": ["lodash.get"],
 						"outputPath": "dist/demo-app",
 						"index": "projects/demo-app/src/index.html",
 						"main": "projects/demo-app/src/main.ts",
@@ -91,7 +92,13 @@
 							"vendorChunk": true,
 							"extractLicenses": false,
 							"sourceMap": true,
-							"namedChunks": true
+							"namedChunks": true,
+							"fileReplacements": [
+								{
+									"replace": "projects/demo-app/src/environments/environment.ts",
+									"with": "projects/demo-app/src/environments/environment.development.ts"
+								}
+							]
 						}
 					},
 					"defaultConfiguration": "production"

@@ -1,13 +1,21 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AngularSdkService } from './angular-sdk.service';
+import { DescopeAuthService } from './descope-auth.service';
+import { DescopeAuthConfig } from './descope-auth.module';
+
+jest.mock('@descope/web-js-sdk');
 
 describe('AngularSdkService', () => {
-	let service: AngularSdkService;
+	let service: DescopeAuthService;
 
 	beforeEach(() => {
-		TestBed.configureTestingModule({});
-		service = TestBed.inject(AngularSdkService);
+		TestBed.configureTestingModule({
+			providers: [
+				DescopeAuthConfig,
+				{ provide: DescopeAuthConfig, useValue: { projectId: 'someProject' } }
+			]
+		});
+		service = TestBed.inject(DescopeAuthService);
 	});
 
 	it('should be created', () => {

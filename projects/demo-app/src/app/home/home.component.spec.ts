@@ -1,21 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AngularSdkComponent } from './angular-sdk.component';
-import { DescopeAuthConfig } from './descope-auth.module';
+import { HomeComponent } from './home.component';
+import { DescopeAuthConfig } from '../../../../angular-sdk/src/lib/descope-auth.module';
 
-describe('AngularSdkComponent', () => {
-	let component: AngularSdkComponent;
-	let fixture: ComponentFixture<AngularSdkComponent>;
+jest.mock('@descope/web-js-sdk');
+
+describe('HomeComponent', () => {
+	let component: HomeComponent;
+	let fixture: ComponentFixture<HomeComponent>;
 
 	beforeEach(() => {
 		TestBed.configureTestingModule({
-			declarations: [AngularSdkComponent],
+			declarations: [HomeComponent],
 			providers: [
 				DescopeAuthConfig,
 				{ provide: DescopeAuthConfig, useValue: { projectId: 'test' } }
 			]
 		});
-		fixture = TestBed.createComponent(AngularSdkComponent);
+		fixture = TestBed.createComponent(HomeComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});
