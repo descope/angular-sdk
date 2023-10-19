@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import {DescopeAuthService} from "../../../angular-sdk/src/lib/descope-auth.service";
+import { Component, OnInit } from '@angular/core';
+import { DescopeAuthService } from '../../../angular-sdk/src/lib/descope-auth.service';
 
 @Component({
 	selector: 'app-root',
@@ -7,12 +7,11 @@ import {DescopeAuthService} from "../../../angular-sdk/src/lib/descope-auth.serv
 	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-	constructor(private authService: DescopeAuthService) {
-	}
+	constructor(private authService: DescopeAuthService) {}
 
 	ngOnInit() {
-		this.authService.descopeSession$.subscribe(data => {
+		this.authService.descopeSession$.subscribe((data) => {
 			console.log(data);
-		})
+		});
 	}
 }

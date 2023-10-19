@@ -19,7 +19,6 @@ export class DescopeAuthService {
 	private readonly sessionSubject: BehaviorSubject<DescopeSession>;
 	readonly descopeSession$: Observable<DescopeSession>;
 
-
 	constructor(config: DescopeAuthConfig) {
 		this.sdk = createSdk({
 			...config,
@@ -31,7 +30,7 @@ export class DescopeAuthService {
 			isAuthenticated: false,
 			isSessionLoading: false,
 			sessionToken: ''
-		})
+		});
 		this.descopeSession$ = this.sessionSubject.asObservable();
 	}
 
@@ -41,7 +40,7 @@ export class DescopeAuthService {
 			sessionToken,
 			isAuthenticated: !!sessionToken,
 			isSessionLoading: currentSession.isSessionLoading
-		})
+		});
 	}
 
 	passwordSignUp() {
@@ -56,7 +55,9 @@ export class DescopeAuthService {
 	}
 
 	passwordLogin() {
-		return from(this.sdk.password.signIn('piotr+angular@velocit.dev', '!QAZ2wsx'));
+		return from(
+			this.sdk.password.signIn('piotr+angular@velocit.dev', '!QAZ2wsx')
+		);
 	}
 
 	logout() {
@@ -65,11 +66,17 @@ export class DescopeAuthService {
 
 	refreshSession() {
 		const beforeRefreshSession = this.sessionSubject.value;
-		this.sessionSubject.next({ ...beforeRefreshSession, isSessionLoading: true });
+		this.sessionSubject.next({
+			...beforeRefreshSession,
+			isSessionLoading: true
+		});
 		return from(this.sdk.refresh()).pipe(
 			finalize(() => {
 				const afterRefreshSession = this.sessionSubject.value;
-				this.sessionSubject.next({ ...afterRefreshSession, isSessionLoading: false });
+				this.sessionSubject.next({
+					...afterRefreshSession,
+					isSessionLoading: false
+				});
 			})
 		);
 	}
