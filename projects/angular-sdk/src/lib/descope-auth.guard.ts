@@ -8,9 +8,9 @@ export const descopeAuthGuard = (route: ActivatedRouteSnapshot) => {
 	const authService = inject(DescopeAuthService);
 	const router = inject(Router);
 	const fallbackUrl = route.data['descopeFallbackUrl'];
-	const isLoggedIn = authService.isLoggedIn();
-	if (!isLoggedIn && !!fallbackUrl) {
+	const isAuthenticated = authService.isAuthenticated();
+	if (!isAuthenticated && !!fallbackUrl) {
 		return from(router.navigate([fallbackUrl]));
 	}
-	return of(isLoggedIn);
+	return of(isAuthenticated);
 };
