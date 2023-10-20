@@ -8,13 +8,14 @@ header {
 .card {
 	padding: 1rem;
 	border: 2px solid black;
-	width: 450px;
-	height: 450px;
+	width: 500px;
+	height: 500px;
 	white-space: pre-wrap;
 	white-space: -moz-pre-wrap;
 	white-space: -o-pre-wrap;
 	word-wrap: break-word;
 	font-family: 'Arial', serif;
+	margin: 2rem;
 }
 
 main {

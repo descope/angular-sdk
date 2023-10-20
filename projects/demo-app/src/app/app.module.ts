@@ -8,9 +8,10 @@ import { HomeComponent } from './home/home.component';
 import { ProtectedComponent } from './protected/protected.component';
 import { environment } from '../environments/environment';
 import { DescopeAuthService } from 'projects/angular-sdk/src/public-api';
+import { zip } from 'rxjs';
 
 export function initializeApp(authService: DescopeAuthService) {
-	return () => authService.refreshSession();
+	return () => zip([authService.refreshSession(), authService.refreshUser()]);
 }
 
 @NgModule({

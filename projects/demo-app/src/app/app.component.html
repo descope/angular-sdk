@@ -2,8 +2,12 @@
 	<div class="card">
 		{{ session$ | async | json }}
 	</div>
+	<div class="card">
+		{{ user$ | async | json }}
+	</div>
 </header>
 <main>
 	<button (click)="refreshSession()">Refresh Session</button>
+	<button (click)="refreshUser()">Refresh User</button>
 	<router-outlet></router-outlet>
 </main>
