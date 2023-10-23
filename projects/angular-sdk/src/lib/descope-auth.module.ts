@@ -4,16 +4,14 @@ import {
 	Optional,
 	SkipSelf
 } from '@angular/core';
-import { AngularSdkComponent } from './angular-sdk.component';
 
 export class DescopeAuthConfig {
 	projectId = '';
 }
 
 @NgModule({
-	declarations: [AngularSdkComponent],
 	imports: [],
-	exports: [AngularSdkComponent]
+	exports: []
 })
 export class DescopeAuthModule {
 	constructor(@Optional() @SkipSelf() parentModule?: DescopeAuthModule) {

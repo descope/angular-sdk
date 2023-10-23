@@ -14,7 +14,7 @@ export class ProtectedComponent {
 	) {}
 
 	logout() {
-		this.authService.logout().subscribe((resp) => {
+		this.authService.sdk.logout().subscribe((resp) => {
 			if (!resp.ok) {
 				console.log('Failed to logout');
 				console.log('Status Code: ' + resp.code);

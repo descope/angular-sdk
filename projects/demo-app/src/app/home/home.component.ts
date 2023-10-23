@@ -14,7 +14,13 @@ export class HomeComponent {
 	) {}
 
 	signUp() {
-		this.authService.passwordSignUp().subscribe((resp) => {
+		const user = {
+			name: 'Joe Person',
+			phone: '+15555555555',
+			email: 'email@company.com'
+		};
+
+		this.authService.sdk.password.signUp('piotr+angular@velocit.dev', '!QAZ2wsx', user).subscribe((resp) => {
 			if (!resp.ok) {
 				console.log('Failed to sign up via password');
 				console.log('Status Code: ' + resp.code);
@@ -28,8 +34,10 @@ export class HomeComponent {
 		});
 	}
 
+
+
 	login() {
-		this.authService.passwordLogin().subscribe((resp) => {
+		this.authService.sdk.password.signIn('piotr+angular@velocit.dev', '!QAZ2wsx').subscribe((resp) => {
 			if (!resp.ok) {
 				console.log('Failed to sign in via password');
 				console.log('Status Code: ' + resp.code);
