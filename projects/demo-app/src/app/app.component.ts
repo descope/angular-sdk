@@ -22,11 +22,13 @@ export class AppComponent implements OnInit {
 
 	user$: Observable<DescopeUser> = of({
 		isUserLoading: false,
-		loginIds: [],
-		userId: '',
-		createTime: 0,
-		TOTP: false,
-		SAML: false
+    user: {
+      loginIds: [],
+      userId: '',
+      createTime: 0,
+      TOTP: false,
+      SAML: false
+    }
 	});
 
 	ngOnInit() {
