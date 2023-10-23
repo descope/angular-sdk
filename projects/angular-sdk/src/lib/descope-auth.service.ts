@@ -23,7 +23,12 @@ function makeObservable<T>(value: T): Observablefied<T> {
             if (typeof value[key] === 'function') {
                 let fn = value[key] as Function;
                 observableValue[key] = (...args: unknown[]) => {
-                    return from(fn(...args))
+                    const fnResult = fn(...args);
+                    if (fnResult instanceof Promise) {
+                        return from(fnResult)
+                    } else {
+                        return fnResult
+                    }
                 };
             } else if (typeof value[key] === 'object' && value[key] !== null) {
                 observableValue[key] = makeObservable(value[key]);
@@ -68,9 +73,9 @@ export class DescopeAuthService {
             persistTokens: true,
             autoRefresh: true
         });
+        baseSdk.onSessionTokenChange(this.setSession.bind(this));
+        baseSdk.onUserChange(this.setUser.bind(this));
         this.sdk = makeObservable<DescopeSDK>(baseSdk)
-        // this.sdk.onSessionTokenChange(this.setSession.bind(this));
-        // this.sdk.onUserChange(this.setUser.bind(this));
         this.sessionSubject = new BehaviorSubject<DescopeSession>({
             isAuthenticated: false,
             isSessionLoading: false,
