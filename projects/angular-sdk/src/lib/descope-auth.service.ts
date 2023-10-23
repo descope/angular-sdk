@@ -12,7 +12,7 @@ export interface DescopeSession {
 	sessionToken: string | null;
 }
 
-export type DescopeUser = { user: UserResponse, isUserLoading: boolean };
+export type DescopeUser = { user: UserResponse; isUserLoading: boolean };
 
 @Injectable({
 	providedIn: 'root'
@@ -40,13 +40,13 @@ export class DescopeAuthService {
 		this.descopeSession$ = this.sessionSubject.asObservable();
 		this.userSubject = new BehaviorSubject<DescopeUser>({
 			isUserLoading: false,
-      user: {
-        loginIds: [],
-        userId: '',
-        createTime: 0,
-        TOTP: false,
-        SAML: false
-      },
+			user: {
+				loginIds: [],
+				userId: '',
+				createTime: 0,
+				TOTP: false,
+				SAML: false
+			}
 		});
 		this.descopeUser$ = this.userSubject.asObservable();
 	}
