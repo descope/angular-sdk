@@ -10,7 +10,7 @@ type Observablefied<T> = {
 	[K in keyof T]: T[K] extends (...args: infer Args) => Promise<infer R>
 		? (...args: Args) => Observable<R>
 		: T[K] extends (...args: infer Args) => infer R
-		? (...args: Args) => Observable<R>
+		? (...args: Args) => R
 		: T[K] extends object
 		? Observablefied<T[K]>
 		: T[K];
