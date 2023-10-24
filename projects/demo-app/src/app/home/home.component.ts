@@ -14,33 +14,45 @@ export class HomeComponent {
 	) {}
 
 	signUp() {
-		this.authService.passwordSignUp().subscribe((resp) => {
-			if (!resp.ok) {
-				console.log('Failed to sign up via password');
-				console.log('Status Code: ' + resp.code);
-				console.log('Error Code: ' + resp.error?.errorCode);
-				console.log('Error Description: ' + resp.error?.errorDescription);
-				console.log('Error Message: ' + resp.error?.errorMessage);
-			} else {
-				console.log('Successfully signed up via password');
-				console.log(resp);
-			}
-		});
+		const user = {
+			name: 'Joe Person',
+			phone: '+15555555555',
+			email: 'email@company.com'
+		};
+
+		this.authService.sdk.password
+			.signUp('piotr+angular@velocit.dev', '!QAZ2wsx', user)
+			.subscribe((resp) => {
+				if (!resp.ok) {
+					console.log('Failed to sign up via password');
+					console.log('Status Code: ' + resp.code);
+					console.log('Error Code: ' + resp.error?.errorCode);
+					console.log('Error Description: ' + resp.error?.errorDescription);
+					console.log('Error Message: ' + resp.error?.errorMessage);
+				} else {
+					console.log('Successfully signed up via password');
+					console.log(resp);
+				}
+			});
 	}
 
 	login() {
-		this.authService.passwordLogin().subscribe((resp) => {
-			if (!resp.ok) {
-				console.log('Failed to sign in via password');
-				console.log('Status Code: ' + resp.code);
-				console.log('Error Code: ' + resp.error?.errorCode);
-				console.log('Error Description: ' + resp.error?.errorDescription);
-				console.log('Error Message: ' + resp.error?.errorMessage);
-			} else {
-				console.log('Successfully signed in via password');
-				console.log(resp);
-				this.router.navigate(['/protected']).catch((err) => console.error(err));
-			}
-		});
+		this.authService.sdk.password
+			.signIn('piotr+angular@velocit.dev', '!QAZ2wsx')
+			.subscribe((resp) => {
+				if (!resp.ok) {
+					console.log('Failed to sign in via password');
+					console.log('Status Code: ' + resp.code);
+					console.log('Error Code: ' + resp.error?.errorCode);
+					console.log('Error Description: ' + resp.error?.errorDescription);
+					console.log('Error Message: ' + resp.error?.errorMessage);
+				} else {
+					console.log('Successfully signed in via password');
+					console.log(resp);
+					this.router
+						.navigate(['/protected'])
+						.catch((err) => console.error(err));
+				}
+			});
 	}
 }
