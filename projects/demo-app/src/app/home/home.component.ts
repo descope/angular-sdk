@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DescopeAuthService } from '../../../../angular-sdk/src/lib/descope-auth.service';
 import { Router } from '@angular/router';
+import {environment} from "../../environments/environment";
 
 @Component({
 	selector: 'app-home',
@@ -8,6 +9,7 @@ import { Router } from '@angular/router';
 	styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+	projectId: string = environment.descopeProjectId;
 	constructor(
 		private router: Router,
 		private authService: DescopeAuthService
