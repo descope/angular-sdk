@@ -19,11 +19,12 @@ type Observablefied<T> = {
 type AngularDescopeSDK = Observablefied<DescopeSDK>;
 
 function makeObservable<T>(value: T): Observablefied<T> {
+	/* eslint-disable @typescript-eslint/no-explicit-any */
 	const observableValue: any = {};
 
 	for (const key in value) {
 		if (typeof value[key] === 'function') {
-			const fn = value[key] as Function;
+			const fn = value[key] as (...args: unknown[]) => unknown;
 			observableValue[key] = (...args: unknown[]) => {
 				const fnResult = fn(...args);
 				if (fnResult instanceof Promise) {
