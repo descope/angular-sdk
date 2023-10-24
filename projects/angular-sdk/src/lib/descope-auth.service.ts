@@ -2,46 +2,11 @@ import { Injectable } from '@angular/core';
 import { DescopeAuthConfig } from './descope-auth.module';
 import type { UserResponse } from '@descope/web-js-sdk';
 import createSdk from '@descope/web-js-sdk';
-import { BehaviorSubject, finalize, from, Observable, tap } from 'rxjs';
+import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
+import { observabilify, Observablefied } from './helpers';
 
 type DescopeSDK = ReturnType<typeof createSdk>;
-
-type Observablefied<T> = {
-	[K in keyof T]: T[K] extends (...args: infer Args) => Promise<infer R>
-		? (...args: Args) => Observable<R>
-		: T[K] extends (...args: infer Args) => infer R
-		? (...args: Args) => R
-		: T[K] extends object
-		? Observablefied<T[K]>
-		: T[K];
-};
-
 type AngularDescopeSDK = Observablefied<DescopeSDK>;
-
-function makeObservable<T>(value: T): Observablefied<T> {
-	/* eslint-disable @typescript-eslint/no-explicit-any */
-	const observableValue: any = {};
-
-	for (const key in value) {
-		if (typeof value[key] === 'function') {
-			const fn = value[key] as (...args: unknown[]) => unknown;
-			observableValue[key] = (...args: unknown[]) => {
-				const fnResult = fn(...args);
-				if (fnResult instanceof Promise) {
-					return from(fnResult);
-				} else {
-					return fnResult;
-				}
-			};
-		} else if (typeof value[key] === 'object' && value[key] !== null) {
-			observableValue[key] = makeObservable(value[key]);
-		} else {
-			observableValue[key] = value[key];
-		}
-	}
-
-	return observableValue as Observablefied<T>;
-}
 
 export interface DescopeSession {
 	isAuthenticated: boolean;
@@ -70,7 +35,7 @@ export class DescopeAuthService {
 	};
 
 	constructor(config: DescopeAuthConfig) {
-		this.sdk = makeObservable<DescopeSDK>(
+		this.sdk = observabilify<DescopeSDK>(
 			createSdk({
 				...config,
 				persistTokens: true,
