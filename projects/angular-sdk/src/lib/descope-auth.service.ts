@@ -4,6 +4,7 @@ import type { UserResponse } from '@descope/web-js-sdk';
 import createSdk from '@descope/web-js-sdk';
 import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
 import { observabilify, Observablefied } from './helpers';
+import { baseHeaders } from './constants';
 
 type DescopeSDK = ReturnType<typeof createSdk>;
 type AngularDescopeSDK = Observablefied<DescopeSDK>;
@@ -39,7 +40,8 @@ export class DescopeAuthService {
 			createSdk({
 				...config,
 				persistTokens: true,
-				autoRefresh: true
+				autoRefresh: true,
+				baseHeaders
 			})
 		);
 		this.sdk.onSessionTokenChange(this.setSession.bind(this));

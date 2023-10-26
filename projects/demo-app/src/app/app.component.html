@@ -1,13 +1,13 @@
-<header>
-	<div class="card">
-		{{ session$ | async | json }}
-	</div>
-	<div class="card">
-		{{ user$ | async | json }}
-	</div>
-</header>
 <main>
-	<button (click)="refreshSession()">Refresh Session</button>
-	<button (click)="refreshUser()">Refresh User</button>
 	<router-outlet></router-outlet>
+	<div class="card-wrapper">
+		<div class="card">
+			<button (click)="refreshSession()">Refresh Session</button>
+			<pre>{{ session$ | async | json }}</pre>
+		</div>
+		<div class="card">
+			<button (click)="refreshUser()">Refresh User</button>
+			<pre>{{ user$ | async | json }}</pre>
+		</div>
+	</div>
 </main>

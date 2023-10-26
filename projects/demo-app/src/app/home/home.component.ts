@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DescopeAuthService } from '../../../../angular-sdk/src/lib/descope-auth.service';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment';
 
 @Component({
 	selector: 'app-home',
@@ -8,6 +9,9 @@ import { Router } from '@angular/router';
 	styleUrls: ['./home.component.scss']
 })
 export class HomeComponent {
+	projectId: string = environment.descopeProjectId;
+	theme: 'light' | 'dark' = 'light';
+
 	constructor(
 		private router: Router,
 		private authService: DescopeAuthService
@@ -54,5 +58,18 @@ export class HomeComponent {
 						.catch((err) => console.error(err));
 				}
 			});
+	}
+
+	onSuccess() {
+		console.log('SUCCESSFULLY LOGGED IN FROM WEB COMPONENT');
+		this.router.navigate(['/protected']).catch((err) => console.error(err));
+	}
+
+	onError() {
+		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT');
+	}
+
+	changeTheme(theme: 'light' | 'dark') {
+		this.theme = theme;
 	}
 }

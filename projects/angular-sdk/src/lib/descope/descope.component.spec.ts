@@ -1,37 +1,43 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HomeComponent } from './home.component';
-import { DescopeAuthConfig } from '../../../../angular-sdk/src/lib/descope-auth.module';
+import { DescopeComponent } from './descope.component';
+import { DescopeAuthConfig } from '../descope-auth.module';
 import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
-import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 jest.mock('@descope/web-js-sdk');
+//Mock DescopeWebComponent
+jest.mock('@descope/web-component', () => {
+	return jest.fn();
+});
 
-describe('HomeComponent', () => {
-	let component: HomeComponent;
-	let fixture: ComponentFixture<HomeComponent>;
-
+describe('DescopeComponent', () => {
+	let component: DescopeComponent;
+	let fixture: ComponentFixture<DescopeComponent>;
 	let mockedCreateSdk: jest.Mock;
 	const onSessionTokenChangeSpy = jest.fn();
 	const onUserChangeSpy = jest.fn();
+	const mockConfig: DescopeAuthConfig = {
+		projectId: 'someProject'
+	};
 
 	beforeEach(() => {
 		mockedCreateSdk = mocked(createSdk);
+
 		mockedCreateSdk.mockReturnValue({
 			onSessionTokenChange: onSessionTokenChangeSpy,
 			onUserChange: onUserChangeSpy
 		});
 
 		TestBed.configureTestingModule({
-			schemas: [NO_ERRORS_SCHEMA],
-			declarations: [HomeComponent],
+			declarations: [DescopeComponent],
 			providers: [
 				DescopeAuthConfig,
-				{ provide: DescopeAuthConfig, useValue: { projectId: 'test' } }
+				{ provide: DescopeAuthConfig, useValue: mockConfig }
 			]
 		});
-		fixture = TestBed.createComponent(HomeComponent);
+
+		fixture = TestBed.createComponent(DescopeComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

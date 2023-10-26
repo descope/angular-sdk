@@ -1,9 +1,11 @@
 import {
+	CUSTOM_ELEMENTS_SCHEMA,
 	ModuleWithProviders,
 	NgModule,
 	Optional,
 	SkipSelf
 } from '@angular/core';
+import { DescopeComponent } from './descope/descope.component';
 
 export class DescopeAuthConfig {
 	projectId = '';
@@ -11,7 +13,9 @@ export class DescopeAuthConfig {
 
 @NgModule({
 	imports: [],
-	exports: []
+	schemas: [CUSTOM_ELEMENTS_SCHEMA],
+	exports: [DescopeComponent],
+	declarations: [DescopeComponent]
 })
 export class DescopeAuthModule {
 	constructor(@Optional() @SkipSelf() parentModule?: DescopeAuthModule) {
@@ -21,6 +25,7 @@ export class DescopeAuthModule {
 			);
 		}
 	}
+
 	static forRoot(
 		config?: DescopeAuthConfig
 	): ModuleWithProviders<DescopeAuthModule> {
