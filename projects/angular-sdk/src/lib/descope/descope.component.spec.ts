@@ -6,6 +6,10 @@ import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
 
 jest.mock('@descope/web-js-sdk');
+//Mock DescopeWebComponent
+jest.mock('@descope/web-component', () => {
+	return jest.fn();
+});
 
 describe('DescopeComponent', () => {
 	let component: DescopeComponent;
