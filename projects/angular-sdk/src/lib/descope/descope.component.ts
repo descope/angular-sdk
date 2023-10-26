@@ -10,11 +10,7 @@ import DescopeWebComponent from '@descope/web-component';
 import DescopeWc, { ILogger } from '@descope/web-component';
 import { DescopeAuthService } from '../descope-auth.service';
 import { from } from 'rxjs';
-
-export const baseHeaders = {
-	'x-descope-sdk-name': 'angular',
-	'x-descope-sdk-version': '1.1.1'
-};
+import {baseHeaders} from "../constants";
 
 @Component({
 	selector: 'descope[projectId][flowId]',
