@@ -17,10 +17,11 @@
 					"error",
 					{
 						"type": "element",
-						"prefix": "lib",
+						"prefix": "",
 						"style": "kebab-case"
 					}
-				]
+				],
+				"@angular-eslint/no-output-native": "off"
 			}
 		},
 		{

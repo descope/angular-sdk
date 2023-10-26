@@ -1,3 +1,8 @@
 <button (click)="signUp()">Sign Up</button>
 <button (click)="login()">Login</button>
-<descope (success)="onSuccess()" (error)="onError()" projectId="{{projectId}}" flowId="sign-in"></descope>
+<descope
+	(success)="onSuccess()"
+	(error)="onError()"
+	projectId="{{ projectId }}"
+	flowId="sign-in"
+></descope>

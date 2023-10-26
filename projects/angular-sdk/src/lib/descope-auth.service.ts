@@ -3,8 +3,8 @@ import { DescopeAuthConfig } from './descope-auth.module';
 import type { UserResponse } from '@descope/web-js-sdk';
 import createSdk from '@descope/web-js-sdk';
 import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
-import {observabilify, Observablefied} from "./helpers";
-import {baseHeaders} from "./constants";
+import { observabilify, Observablefied } from './helpers';
+import { baseHeaders } from './constants';
 
 type DescopeSDK = ReturnType<typeof createSdk>;
 type AngularDescopeSDK = Observablefied<DescopeSDK>;

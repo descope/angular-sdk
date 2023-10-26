@@ -1,6 +1,6 @@
-declare const BUILD_VERSION: string;
+// declare const BUILD_VERSION: string;
 
 export const baseHeaders = {
-    'x-descope-sdk-name': 'angular',
-    'x-descope-sdk-version': "1.1.1"
+	'x-descope-sdk-name': 'angular',
+	'x-descope-sdk-version': '1.1.1'
 };

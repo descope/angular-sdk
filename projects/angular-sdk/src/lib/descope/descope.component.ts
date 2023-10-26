@@ -10,7 +10,7 @@ import DescopeWebComponent from '@descope/web-component';
 import DescopeWc, { ILogger } from '@descope/web-component';
 import { DescopeAuthService } from '../descope-auth.service';
 import { from } from 'rxjs';
-import {baseHeaders} from "../constants";
+import { baseHeaders } from '../constants';
 
 @Component({
 	selector: 'descope[projectId][flowId]',
@@ -48,41 +48,41 @@ export class DescopeComponent implements OnChanges {
 		DescopeWc.sdkConfigOverrides = { baseHeaders };
 		webComponent.setAttribute('project-id', this.projectId);
 		webComponent.setAttribute('flow-id', this.flowId);
-		if (!!this.locale) {
+		if (this.locale) {
 			webComponent.setAttribute('locale', this.locale);
 		}
-		if (!!this.theme) {
+		if (this.theme) {
 			webComponent.setAttribute('theme', this.theme);
 		}
-		if (!!this.tenant) {
+		if (this.tenant) {
 			webComponent.setAttribute('tenant', this.tenant);
 		}
-		if (!!this.telemetryKey) {
+		if (this.telemetryKey) {
 			webComponent.setAttribute('telemetryKey', this.telemetryKey);
 		}
-		if (!!this.redirectUrl) {
+		if (this.redirectUrl) {
 			webComponent.setAttribute('redirect-url', this.redirectUrl);
 		}
-		if (!!this.autoFocus) {
+		if (this.autoFocus) {
 			webComponent.setAttribute('auto-focus', this.autoFocus.toString());
 		}
 		if (this.debug) {
 			webComponent.setAttribute('debug', this.debug.toString());
 		}
 
-		if (!!this.errorTransformer) {
+		if (this.errorTransformer) {
 			webComponent.errorTransformer = this.errorTransformer;
 		}
 
-		if (!!this.logger) {
+		if (this.logger) {
 			webComponent.logger = this.logger;
 		}
 
-		if (!!this.success) {
+		if (this.success) {
 			webComponent.addEventListener('success', () => {
 				from(
 					this.authService.sdk.httpClient.hooks?.afterRequest!(
-						{} as any,
+						{} as never,
 						new Response(JSON.stringify({}))
 					) as Promise<unknown>
 				).subscribe(() => {
@@ -91,7 +91,7 @@ export class DescopeComponent implements OnChanges {
 			});
 		}
 
-		if (!!this.error) {
+		if (this.error) {
 			webComponent.addEventListener('error', () => {
 				this.error?.emit();
 			});
