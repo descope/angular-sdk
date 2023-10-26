@@ -82,7 +82,8 @@ export class DescopeComponent implements OnChanges {
 			webComponent.addEventListener('success', () => {
 				from(
 					this.authService.sdk.httpClient.hooks?.afterRequest!(
-						{} as never,
+						// eslint-disable-next-line @typescript-eslint/no-explicit-any
+						{} as any,
 						new Response(JSON.stringify({}))
 					) as Promise<unknown>
 				).subscribe(() => {

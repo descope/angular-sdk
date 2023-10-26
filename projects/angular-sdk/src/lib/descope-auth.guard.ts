@@ -9,7 +9,6 @@ export const descopeAuthGuard = (route: ActivatedRouteSnapshot) => {
 	const router = inject(Router);
 	const fallbackUrl = route.data['descopeFallbackUrl'];
 	const isAuthenticated = authService.isAuthenticated();
-	console.log('IN ROUTE GUARD. IS AUTH:' + authService.isAuthenticated());
 	if (!isAuthenticated && !!fallbackUrl) {
 		return from(router.navigate([fallbackUrl]));
 	}
