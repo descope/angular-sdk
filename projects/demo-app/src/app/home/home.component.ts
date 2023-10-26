@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 })
 export class HomeComponent {
 	projectId: string = environment.descopeProjectId;
+	theme: "light" | "dark" = 'light';
 
 	constructor(
 		private router: Router,
@@ -66,5 +67,9 @@ export class HomeComponent {
 
 	onError() {
 		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT');
+	}
+
+	changeTheme(theme: "light" | "dark") {
+		this.theme = theme;
 	}
 }
