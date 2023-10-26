@@ -34,52 +34,54 @@ export class DescopeComponent implements OnChanges {
 	@Output() success: EventEmitter<void> = new EventEmitter<void>();
 	@Output() error: EventEmitter<void> = new EventEmitter<void>();
 
+	private readonly webComponent: DescopeWebComponent;
+
 	constructor(
 		private elementRef: ElementRef,
 		private authService: DescopeAuthService
-	) {}
-
+	) {
+		DescopeWc.sdkConfigOverrides = { baseHeaders };
+		this.webComponent = new DescopeWebComponent();
+	}
 	ngOnChanges(): void {
 		this.setupWebComponent();
 	}
 
 	private setupWebComponent() {
-		const webComponent = new DescopeWebComponent();
-		DescopeWc.sdkConfigOverrides = { baseHeaders };
-		webComponent.setAttribute('project-id', this.projectId);
-		webComponent.setAttribute('flow-id', this.flowId);
+		this.webComponent.setAttribute('project-id', this.projectId);
+		this.webComponent.setAttribute('flow-id', this.flowId);
 		if (this.locale) {
-			webComponent.setAttribute('locale', this.locale);
+			this.webComponent.setAttribute('locale', this.locale);
 		}
 		if (this.theme) {
-			webComponent.setAttribute('theme', this.theme);
+			this.webComponent.setAttribute('theme', this.theme);
 		}
 		if (this.tenant) {
-			webComponent.setAttribute('tenant', this.tenant);
+			this.webComponent.setAttribute('tenant', this.tenant);
 		}
 		if (this.telemetryKey) {
-			webComponent.setAttribute('telemetryKey', this.telemetryKey);
+			this.webComponent.setAttribute('telemetryKey', this.telemetryKey);
 		}
 		if (this.redirectUrl) {
-			webComponent.setAttribute('redirect-url', this.redirectUrl);
+			this.webComponent.setAttribute('redirect-url', this.redirectUrl);
 		}
 		if (this.autoFocus) {
-			webComponent.setAttribute('auto-focus', this.autoFocus.toString());
+			this.webComponent.setAttribute('auto-focus', this.autoFocus.toString());
 		}
 		if (this.debug) {
-			webComponent.setAttribute('debug', this.debug.toString());
+			this.webComponent.setAttribute('debug', this.debug.toString());
 		}
 
 		if (this.errorTransformer) {
-			webComponent.errorTransformer = this.errorTransformer;
+			this.webComponent.errorTransformer = this.errorTransformer;
 		}
 
 		if (this.logger) {
-			webComponent.logger = this.logger;
+			this.webComponent.logger = this.logger;
 		}
 
 		if (this.success) {
-			webComponent.addEventListener('success', () => {
+			this.webComponent.addEventListener('success', () => {
 				from(
 					this.authService.sdk.httpClient.hooks?.afterRequest!(
 						// eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -93,7 +95,7 @@ export class DescopeComponent implements OnChanges {
 		}
 
 		if (this.error) {
-			webComponent.addEventListener('error', () => {
+			this.webComponent.addEventListener('error', () => {
 				this.error?.emit();
 			});
 		}
@@ -102,6 +104,6 @@ export class DescopeComponent implements OnChanges {
 		while (nativeElement.lastElementChild) {
 			nativeElement.removeChild(nativeElement.lastElementChild);
 		}
-		nativeElement.appendChild(webComponent);
+		nativeElement.appendChild(this.webComponent);
 	}
 }
