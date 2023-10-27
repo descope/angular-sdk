@@ -4,10 +4,9 @@
 	<button (click)="changeTheme('light')">Light Mode</button>
 	<button (click)="changeTheme('dark')">Dark Mode</button>
 </div>
-<descope
-	(success)="onSuccess()"
-	(error)="onError()"
-	[projectId]="projectId"
-	[theme]="theme"
-	flowId="sign-in"
-></descope>
+<descope-sign-in-flow
+		(success)="onSuccess()"
+		(error)="onError()"
+		[projectId]="projectId"
+		[theme]="theme"
+></descope-sign-in-flow>

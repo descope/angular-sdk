@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { DescopeAuthConfig } from '../descope-auth.module';
 import type { UserResponse } from '@descope/web-js-sdk';
 import createSdk from '@descope/web-js-sdk';
 import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
 import { observabilify, Observablefied } from '../utils/helpers';
 import {baseHeaders, IS_BROWSER} from '../utils/constants';
+import {DescopeAuthConfig} from "../types/types";
 
 type DescopeSDK = ReturnType<typeof createSdk>;
 type AngularDescopeSDK = Observablefied<DescopeSDK>;
