@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import DescopeWebComponent from '@descope/web-component';
 import DescopeWc, { ILogger } from '@descope/web-component';
-import { DescopeAuthService } from '../../descope-auth.service';
+import { DescopeAuthService } from '../../services/descope-auth.service';
 import { from } from 'rxjs';
-import { baseHeaders } from '../../constants';
+import { baseHeaders } from '../../utils/constants';
 
 @Component({
 	selector: 'descope[projectId][flowId]',

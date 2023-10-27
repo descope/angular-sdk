@@ -4,7 +4,7 @@ import {
 	HttpRequest
 } from '@angular/common/http';
 import { inject } from '@angular/core';
-import { DescopeAuthService } from 'projects/angular-sdk/src/lib/descope-auth.service';
+import { DescopeAuthService } from '../../../../angular-sdk/src/lib/services/descope-auth.service';
 
 export const authenticationInterceptor: HttpInterceptorFn = (
 	req: HttpRequest<unknown>,

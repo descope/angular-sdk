@@ -3,7 +3,7 @@ import {
 	DescopeAuthService,
 	DescopeSession,
 	DescopeUser
-} from '../../../angular-sdk/src/lib/descope-auth.service';
+} from '../../../angular-sdk/src/lib/services/descope-auth.service';
 import { Observable, of, tap } from 'rxjs';
 
 @Component({
