@@ -9,6 +9,8 @@ import { DescopeComponent } from './descope/descope.component';
 
 export class DescopeAuthConfig {
 	projectId = '';
+	baseUrl?: string;
+	sessionTokenViaCookie?: boolean
 }
 
 @NgModule({
