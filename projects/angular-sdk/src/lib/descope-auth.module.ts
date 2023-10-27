@@ -5,7 +5,10 @@ import {
 	Optional,
 	SkipSelf
 } from '@angular/core';
-import { DescopeComponent } from './descope/descope.component';
+import {DescopeComponent} from "./components/descope/descope.component";
+import { SignInFlowComponent } from './components/sign-in-flow/sign-in-flow.component';
+import { SignUpFlowComponent } from './components/sign-up-flow/sign-up-flow.component';
+import { SignUpOrInFlowComponent } from './components/sign-up-or-in-flow/sign-up-or-in-flow.component';
 
 export class DescopeAuthConfig {
 	projectId = '';
@@ -17,7 +20,7 @@ export class DescopeAuthConfig {
 	imports: [],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
 	exports: [DescopeComponent],
-	declarations: [DescopeComponent]
+	declarations: [DescopeComponent, SignInFlowComponent, SignUpFlowComponent, SignUpOrInFlowComponent]
 })
 export class DescopeAuthModule {
 	constructor(@Optional() @SkipSelf() parentModule?: DescopeAuthModule) {
