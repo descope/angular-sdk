@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ProtectedComponent } from './protected.component';
 import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
-import {DescopeAuthConfig} from "../../../../angular-sdk/src/lib/types/types";
+import { DescopeAuthConfig } from '../../../../angular-sdk/src/lib/types/types';
 
 jest.mock('@descope/web-js-sdk');
 

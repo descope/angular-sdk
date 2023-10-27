@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { DescopeAuthService } from './descope-auth.service';
 import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
-import {DescopeAuthConfig} from "../types/types";
+import { DescopeAuthConfig } from '../types/types';
 
 jest.mock('@descope/web-js-sdk');
 

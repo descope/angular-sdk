@@ -4,7 +4,7 @@ import { HomeComponent } from './home.component';
 import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import {DescopeAuthConfig} from "../../../../angular-sdk/src/lib/types/types";
+import { DescopeAuthConfig } from '../../../../angular-sdk/src/lib/types/types';
 
 jest.mock('@descope/web-js-sdk');
 
