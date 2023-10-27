@@ -4,7 +4,7 @@ import type { UserResponse } from '@descope/web-js-sdk';
 import createSdk from '@descope/web-js-sdk';
 import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
 import { observabilify, Observablefied } from './helpers';
-import { baseHeaders } from './constants';
+import {baseHeaders, IS_BROWSER} from './constants';
 
 type DescopeSDK = ReturnType<typeof createSdk>;
 type AngularDescopeSDK = Observablefied<DescopeSDK>;
@@ -39,8 +39,8 @@ export class DescopeAuthService {
 		this.sdk = observabilify<DescopeSDK>(
 			createSdk({
 				...config,
-				persistTokens: true,
-				autoRefresh: true,
+				persistTokens: IS_BROWSER as true,
+				autoRefresh: IS_BROWSER as true,
 				baseHeaders
 			})
 		);
@@ -127,7 +127,36 @@ export class DescopeAuthService {
 	}
 
 	getSessionToken() {
-		return this.sessionSubject.value.sessionToken;
+		if (IS_BROWSER) {
+			return (this.sdk as AngularDescopeSDK & {getSessionToken: () => string | null}).getSessionToken();
+		}
+		console.warn('Get session token is not supported in SSR');
+		return '';
+	}
+
+	getRefreshToken() {
+		if (IS_BROWSER) {
+			return (this.sdk as AngularDescopeSDK & {getRefreshToken: () => string | null}).getRefreshToken();
+		}
+		this.sdk.getJwtPermissions
+		console.warn('Get refresh token is not supported in SSR');
+		return '';
+	}
+
+	getJwtPermissions(token = this.getSessionToken(), tenant?: string) {
+		if (token === null) {
+			console.error("Could not get JWT Permissions - not authenticated");
+			return [];
+		}
+		return this.sdk.getJwtPermissions(token, tenant)
+	}
+
+	getJwtRoles(token = this.getSessionToken(), tenant?: string) {
+		if (token === null) {
+			console.error("Could not get JWT Roles - not authenticated");
+			return [];
+		}
+		return this.sdk.getJwtRoles(token, tenant)
 	}
 
 	isAuthenticated() {
