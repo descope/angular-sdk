@@ -1,6 +1,10 @@
 {
 	"name": "angular-sdk",
 	"version": "0.0.0",
+  "engines": {
+    "node": "^16.14.0 || ^18.10.0",
+    "npm": ">= 8.1.0"
+  },
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
@@ -15,20 +19,20 @@
 	},
 	"private": true,
 	"dependencies": {
-		"@angular/animations": "^16.2.9",
-		"@angular/common": "^16.2.9",
-		"@angular/compiler": "^16.2.9",
-		"@angular/core": "^16.2.9",
-		"@angular/forms": "^16.2.9",
-		"@angular/platform-browser": "^16.2.9",
-		"@angular/platform-browser-dynamic": "^16.2.9",
-		"@angular/router": "^16.2.9",
-		"@descope/web-component": "2.11.8",
-		"rxjs": "~7.8.1",
-		"tslib": "^2.6.2",
-		"zone.js": "~0.13.0"
 	},
 	"devDependencies": {
+    "@angular/animations": "^16.2.9",
+    "@angular/common": "^16.2.9",
+    "@angular/compiler": "^16.2.9",
+    "@angular/core": "^16.2.9",
+    "@angular/forms": "^16.2.9",
+    "@angular/platform-browser": "^16.2.9",
+    "@angular/platform-browser-dynamic": "^16.2.9",
+    "@angular/router": "^16.2.9",
+    "@descope/web-component": "2.11.8",
+    "rxjs": "~7.8.1",
+    "tslib": "^2.6.2",
+    "zone.js": "~0.13.0",
 		"@angular-devkit/build-angular": "^16.2.6",
 		"@angular-eslint/builder": "16.2.0",
 		"@angular-eslint/eslint-plugin": "16.2.0",
