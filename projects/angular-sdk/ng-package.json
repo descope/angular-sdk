@@ -3,5 +3,6 @@
 	"dest": "../../dist/angular-sdk",
 	"lib": {
 		"entryFile": "src/public-api.ts"
-	}
+	},
+  "allowedNonPeerDependencies": ["@descope/web-component"]
 }

@@ -10,7 +10,8 @@
 		"@angular/core": "^16.0.0"
 	},
 	"dependencies": {
-		"tslib": "^2.3.0"
-	},
+		"tslib": "^2.3.0",
+    "@descope/web-component": "2.11.8"
+  },
 	"sideEffects": false
 }
