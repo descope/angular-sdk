@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { DescopeAuthService } from '../../../../angular-sdk/src/lib/descope-auth.service';
+import { DescopeAuthService } from '../../../../angular-sdk/src/lib/services/descope-auth.service';
 
 @Component({
 	selector: 'app-protected',

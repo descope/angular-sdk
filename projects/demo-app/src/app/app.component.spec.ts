@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { DescopeAuthConfig } from '../../../angular-sdk/src/lib/descope-auth.module';
 import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
+import { DescopeAuthConfig } from '../../../angular-sdk/src/lib/types/types';
 
 jest.mock('@descope/web-js-sdk');
 

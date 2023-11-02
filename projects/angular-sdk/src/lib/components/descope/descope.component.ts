@@ -8,9 +8,9 @@ import {
 } from '@angular/core';
 import DescopeWebComponent from '@descope/web-component';
 import DescopeWc, { ILogger } from '@descope/web-component';
-import { DescopeAuthService } from '../descope-auth.service';
+import { DescopeAuthService } from '../../services/descope-auth.service';
 import { from } from 'rxjs';
-import { baseHeaders } from '../constants';
+import { baseHeaders } from '../../utils/constants';
 
 @Component({
 	selector: 'descope[projectId][flowId]',
@@ -81,12 +81,12 @@ export class DescopeComponent implements OnChanges {
 		}
 
 		if (this.success) {
-			this.webComponent.addEventListener('success', () => {
+			this.webComponent.addEventListener('success', (e: Event) => {
 				from(
 					this.authService.sdk.httpClient.hooks?.afterRequest!(
 						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						{} as any,
-						new Response(JSON.stringify({}))
+						new Response(JSON.stringify((e as CustomEvent).detail))
 					) as Promise<unknown>
 				).subscribe(() => {
 					this.success?.emit();

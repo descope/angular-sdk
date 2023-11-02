@@ -1,19 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';
 
-import { DescopeComponent } from './descope.component';
-import { DescopeAuthConfig } from '../descope-auth.module';
+import { DescopeAuthService } from './descope-auth.service';
 import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
+import { DescopeAuthConfig } from '../types/types';
 
 jest.mock('@descope/web-js-sdk');
-//Mock DescopeWebComponent
-jest.mock('@descope/web-component', () => {
-	return jest.fn();
-});
 
-describe('DescopeComponent', () => {
-	let component: DescopeComponent;
-	let fixture: ComponentFixture<DescopeComponent>;
+describe('DescopeAuthService', () => {
+	let service: DescopeAuthService;
 	let mockedCreateSdk: jest.Mock;
 	const onSessionTokenChangeSpy = jest.fn();
 	const onUserChangeSpy = jest.fn();
@@ -30,19 +25,20 @@ describe('DescopeComponent', () => {
 		});
 
 		TestBed.configureTestingModule({
-			declarations: [DescopeComponent],
 			providers: [
 				DescopeAuthConfig,
 				{ provide: DescopeAuthConfig, useValue: mockConfig }
 			]
 		});
-
-		fixture = TestBed.createComponent(DescopeComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
+		service = TestBed.inject(DescopeAuthService);
 	});
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
+	it('should be created', () => {
+		expect(service).toBeTruthy();
+		expect(mockedCreateSdk).toHaveBeenCalledWith(
+			expect.objectContaining(mockConfig)
+		);
+		expect(onSessionTokenChangeSpy).toHaveBeenCalled();
+		expect(onUserChangeSpy).toHaveBeenCalled();
 	});
 });
