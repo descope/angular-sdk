@@ -1,10 +1,10 @@
 {
 	"name": "angular-sdk",
 	"version": "0.0.0",
-  "engines": {
-    "node": "^16.14.0 || ^18.10.0",
-    "npm": ">= 8.1.0"
-  },
+	"engines": {
+		"node": "^16.14.0 || ^18.10.0",
+		"npm": ">= 8.1.0"
+	},
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
@@ -18,29 +18,24 @@
 		"format-check": "prettier . --check --ignore-path .gitignore"
 	},
 	"private": true,
-	"dependencies": {
-	},
 	"devDependencies": {
-    "@angular/animations": "^16.2.9",
-    "@angular/common": "^16.2.9",
-    "@angular/compiler": "^16.2.9",
-    "@angular/core": "^16.2.9",
-    "@angular/forms": "^16.2.9",
-    "@angular/platform-browser": "^16.2.9",
-    "@angular/platform-browser-dynamic": "^16.2.9",
-    "@angular/router": "^16.2.9",
-    "@descope/web-component": "2.11.8",
-    "rxjs": "~7.8.1",
-    "tslib": "^2.6.2",
-    "zone.js": "~0.13.0",
 		"@angular-devkit/build-angular": "^16.2.6",
 		"@angular-eslint/builder": "16.2.0",
 		"@angular-eslint/eslint-plugin": "16.2.0",
 		"@angular-eslint/eslint-plugin-template": "16.2.0",
 		"@angular-eslint/schematics": "16.2.0",
 		"@angular-eslint/template-parser": "16.2.0",
+		"@angular/animations": "^16.2.9",
 		"@angular/cli": "^16.2.6",
+		"@angular/common": "^16.2.9",
+		"@angular/compiler": "^16.2.9",
 		"@angular/compiler-cli": "^16.2.9",
+		"@angular/core": "^16.2.9",
+		"@angular/forms": "^16.2.9",
+		"@angular/platform-browser": "^16.2.9",
+		"@angular/platform-browser-dynamic": "^16.2.9",
+		"@angular/router": "^16.2.9",
+		"@descope/web-component": "2.11.8",
 		"@types/jest": "^29.5.5",
 		"@typescript-eslint/eslint-plugin": "6.9.1",
 		"@typescript-eslint/parser": "6.9.1",
@@ -50,6 +45,9 @@
 		"ng-mocks": "^14.11.0",
 		"ng-packagr": "^16.2.3",
 		"prettier": "3.0.3",
-		"typescript": "~5.1.6"
+		"rxjs": "~7.8.1",
+		"tslib": "^2.6.2",
+		"typescript": "~5.1.6",
+		"zone.js": "~0.13.0"
 	}
 }
