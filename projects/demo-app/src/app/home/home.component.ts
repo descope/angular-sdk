@@ -10,25 +10,11 @@ import { environment } from '../../environments/environment';
 })
 export class HomeComponent {
 	projectId: string = environment.descopeProjectId;
-  flowId = environment.descopeFlowId ?? 'sign-up-or-in';
-	theme = (environment.descopeTheme) as 'light' | 'dark' | 'os';
-  telemetryKey = environment.descopeTelemetryKey;
-  debugMode = environment.descopeDebugMode;
-  tenantId = environment.descopeTenantId;
-  locale = environment.descopeLocale;
-  redirectUrl = environment.descopeRedirectUrl;
 
 	constructor(
 		private router: Router,
 		private authService: DescopeAuthService
 	) {}
-
-  errorTransformer = (error: { text: string; type: string }): string => {
-    const translationMap: { [key: string]: string } = {
-      SAMLStartFailed: 'Failed to start SAML flow'
-    };
-    return translationMap[error.type] || error.text;
-  }
 
 	signUp() {
 		const user = {
@@ -54,32 +40,7 @@ export class HomeComponent {
 	}
 
 	login() {
-		this.authService.sdk.password
-			.signIn('piotr+angular@velocit.dev', '!QAZ2wsx')
-			.subscribe((resp) => {
-				if (!resp.ok) {
-					console.log('Failed to sign in via password');
-					console.log('Status Code: ' + resp.code);
-					console.log('Error Code: ' + resp.error?.errorCode);
-					console.log('Error Description: ' + resp.error?.errorDescription);
-					console.log('Error Message: ' + resp.error?.errorMessage);
-				} else {
-					console.log('Successfully signed in via password');
-					console.log(resp);
-					this.router
-						.navigate(['/protected'])
-						.catch((err) => console.error(err));
-				}
-			});
-	}
-
-	onSuccess() {
-		console.log('SUCCESSFULLY LOGGED IN FROM WEB COMPONENT');
-		this.router.navigate(['/protected']).catch((err) => console.error(err));
-	}
-
-	onError() {
-		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT');
+    this.router.navigate(['/login']).catch((err) => console.error(err));
 	}
 
 }

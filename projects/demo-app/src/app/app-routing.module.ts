@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ProtectedComponent } from './protected/protected.component';
 import { descopeAuthGuard } from '../../../angular-sdk/src/lib/services/descope-auth.guard';
+import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
 	{
@@ -11,6 +12,7 @@ const routes: Routes = [
 		canActivate: [descopeAuthGuard],
 		data: { descopeFallbackUrl: '/' }
 	},
+	{ path: 'login', component: LoginComponent },
 	{ path: '**', component: HomeComponent }
 ];
 

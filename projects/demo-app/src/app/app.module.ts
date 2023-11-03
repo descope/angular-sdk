@@ -9,13 +9,14 @@ import { ProtectedComponent } from './protected/protected.component';
 import { environment } from '../environments/environment';
 import { DescopeAuthService } from 'projects/angular-sdk/src/public-api';
 import { zip } from 'rxjs';
+import { LoginComponent } from './login/login.component';
 
 export function initializeApp(authService: DescopeAuthService) {
 	return () => zip([authService.refreshSession(), authService.refreshUser()]);
 }
 
 @NgModule({
-	declarations: [AppComponent, HomeComponent, ProtectedComponent],
+	declarations: [AppComponent, HomeComponent, ProtectedComponent, LoginComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
