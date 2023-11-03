@@ -15,27 +15,3 @@ main {
   transform: translateY(-50%);
 }
 
-.card-wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 4rem;
-}
-
-.card {
-	padding: 1rem;
-	border: 2px solid black;
-	width: 550px;
-	height: 550px;
-	white-space: pre-wrap;
-	white-space: -moz-pre-wrap;
-	white-space: -o-pre-wrap;
-	word-wrap: break-word;
-	font-family: 'Arial', serif;
-	margin: 2rem;
-	button {
-		width: 100%;
-		margin: auto;
-	}
-	overflow: scroll;
-}

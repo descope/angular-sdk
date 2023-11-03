@@ -1,8 +1,10 @@
 :host {
-	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	gap: 20px;
+}
+
+.logout-button {
+  margin-top: 2rem;
 }

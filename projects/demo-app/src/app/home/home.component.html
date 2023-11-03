@@ -1,2 +1,8 @@
-<button (click)="login()">LOGIN</button>
+<h2>ANGULAR SDK DEMO APP</h2>
+<button *ngIf="!isAuthenticated" (click)="login()">LOGIN</button>
+<ng-container *ngIf="isAuthenticated">
+  <h3>Hello {{userName}}</h3>
+  <div *ngIf="roles">Roles: {{roles}}</div>
+  <button class="logout-button" (click)="logout()">LOGOUT</button>
+</ng-container>
 

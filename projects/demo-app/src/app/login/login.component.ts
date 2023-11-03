@@ -29,7 +29,7 @@ export class LoginComponent {
 
   onSuccess() {
     console.log('SUCCESSFULLY LOGGED IN FROM WEB COMPONENT');
-    this.router.navigate(['/protected']).catch((err) => console.error(err));
+    this.router.navigate(['/']).catch((err) => console.error(err));
   }
 
   onError() {
