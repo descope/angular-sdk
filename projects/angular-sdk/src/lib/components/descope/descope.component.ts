@@ -1,10 +1,10 @@
 import {
-	Component,
-	ElementRef,
-	EventEmitter,
-	Input,
-	OnChanges,
-	Output
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges, OnInit,
+  Output
 } from '@angular/core';
 import DescopeWebComponent from '@descope/web-component';
 import DescopeWc, { ILogger } from '@descope/web-component';
@@ -16,7 +16,7 @@ import { baseHeaders } from '../../utils/constants';
 	selector: 'descope[projectId][flowId]',
 	template: ''
 })
-export class DescopeComponent implements OnChanges {
+export class DescopeComponent implements OnInit, OnChanges {
 	@Input() projectId: string;
 	@Input() flowId: string;
 
@@ -43,6 +43,12 @@ export class DescopeComponent implements OnChanges {
 		DescopeWc.sdkConfigOverrides = { baseHeaders };
 		this.webComponent = new DescopeWebComponent();
 	}
+
+	ngOnInit() {
+    this.setupWebComponent();
+    this.elementRef.nativeElement.appendChild(this.webComponent);
+  }
+
 	ngOnChanges(): void {
 		this.setupWebComponent();
 	}
@@ -100,10 +106,5 @@ export class DescopeComponent implements OnChanges {
 			});
 		}
 
-		const nativeElement = this.elementRef.nativeElement;
-		while (nativeElement.lastElementChild) {
-			nativeElement.removeChild(nativeElement.lastElementChild);
-		}
-		nativeElement.appendChild(this.webComponent);
 	}
 }
