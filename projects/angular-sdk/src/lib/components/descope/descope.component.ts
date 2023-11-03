@@ -1,10 +1,11 @@
 import {
-  Component,
-  ElementRef,
-  EventEmitter,
-  Input,
-  OnChanges, OnInit,
-  Output
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	OnChanges,
+	OnInit,
+	Output
 } from '@angular/core';
 import DescopeWebComponent from '@descope/web-component';
 import DescopeWc, { ILogger } from '@descope/web-component';
@@ -34,20 +35,18 @@ export class DescopeComponent implements OnInit, OnChanges {
 	@Output() success: EventEmitter<void> = new EventEmitter<void>();
 	@Output() error: EventEmitter<void> = new EventEmitter<void>();
 
-	private readonly webComponent: DescopeWebComponent;
+	private readonly webComponent: DescopeWebComponent = new DescopeWebComponent();
 
 	constructor(
 		private elementRef: ElementRef,
 		private authService: DescopeAuthService
-	) {
-		DescopeWc.sdkConfigOverrides = { baseHeaders };
-		this.webComponent = new DescopeWebComponent();
-	}
+	) {}
 
 	ngOnInit() {
+    DescopeWc.sdkConfigOverrides = { baseHeaders };
     this.setupWebComponent();
-    this.elementRef.nativeElement.appendChild(this.webComponent);
-  }
+		this.elementRef.nativeElement.appendChild(this.webComponent);
+	}
 
 	ngOnChanges(): void {
 		this.setupWebComponent();
@@ -105,6 +104,5 @@ export class DescopeComponent implements OnInit, OnChanges {
 				this.error?.emit();
 			});
 		}
-
 	}
 }

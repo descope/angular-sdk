@@ -8,7 +8,12 @@ import { DescopeAuthConfig } from '../../types/types';
 jest.mock('@descope/web-js-sdk');
 //Mock DescopeWebComponent
 jest.mock('@descope/web-component', () => {
-	return jest.fn();
+	return jest.fn(() => {
+		const element = document.createElement('div'); // Create a mock DOM element
+		element.setAttribute = jest.fn();
+		element.addEventListener = jest.fn();
+		return element;
+	});
 });
 
 describe('DescopeComponent', () => {
