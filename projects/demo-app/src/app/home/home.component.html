@@ -1,9 +1,15 @@
 <button (click)="signUp()">Sign Up</button>
 <button (click)="login()">Login</button>
 <descope
-	flowId="sign-in"
 	(success)="onSuccess()"
 	(error)="onError()"
 	[projectId]="projectId"
 	[theme]="theme"
+  [flowId]="flowId"
+  [locale]="locale"
+  [redirectUrl]="redirectUrl"
+  [telemetryKey]="telemetryKey"
+  [tenant]="tenantId"
+  [debug]="debugMode"
+  [errorTransformer]="errorTransformer"
 ></descope>

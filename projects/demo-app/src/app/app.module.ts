@@ -21,6 +21,7 @@ export function initializeApp(authService: DescopeAuthService) {
 		AppRoutingModule,
 		DescopeAuthModule.forRoot({
 			projectId: environment.descopeProjectId,
+			baseUrl: environment.descopeBaseUrl,
 			sessionTokenViaCookie: false
 		})
 	],
