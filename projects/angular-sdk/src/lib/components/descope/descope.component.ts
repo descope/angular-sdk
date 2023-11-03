@@ -35,7 +35,8 @@ export class DescopeComponent implements OnInit, OnChanges {
 	@Output() success: EventEmitter<void> = new EventEmitter<void>();
 	@Output() error: EventEmitter<void> = new EventEmitter<void>();
 
-	private readonly webComponent: DescopeWebComponent = new DescopeWebComponent();
+	private readonly webComponent: DescopeWebComponent =
+		new DescopeWebComponent();
 
 	constructor(
 		private elementRef: ElementRef,
@@ -43,8 +44,8 @@ export class DescopeComponent implements OnInit, OnChanges {
 	) {}
 
 	ngOnInit() {
-    DescopeWc.sdkConfigOverrides = { baseHeaders };
-    this.setupWebComponent();
+		DescopeWc.sdkConfigOverrides = { baseHeaders };
+		this.setupWebComponent();
 		this.elementRef.nativeElement.appendChild(this.webComponent);
 	}
 
