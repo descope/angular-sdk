@@ -15,7 +15,7 @@ export interface DescopeSession {
 	sessionToken: string | null;
 }
 
-export type DescopeUser = { user: UserResponse; isUserLoading: boolean };
+export type DescopeUser = { user?: UserResponse; isUserLoading: boolean };
 
 @Injectable({
 	providedIn: 'root'
@@ -26,14 +26,6 @@ export class DescopeAuthService {
 	private readonly userSubject: BehaviorSubject<DescopeUser>;
 	readonly descopeSession$: Observable<DescopeSession>;
 	readonly descopeUser$: Observable<DescopeUser>;
-
-	private readonly EMPTY_USER = {
-		loginIds: [],
-		userId: '',
-		createTime: 0,
-		TOTP: false,
-		SAML: false
-	};
 
 	constructor(config: DescopeAuthConfig) {
 		this.sdk = observabilify<DescopeSDK>(
@@ -53,8 +45,7 @@ export class DescopeAuthService {
 		});
 		this.descopeSession$ = this.sessionSubject.asObservable();
 		this.userSubject = new BehaviorSubject<DescopeUser>({
-			isUserLoading: false,
-			user: this.EMPTY_USER
+			isUserLoading: false
 		});
 		this.descopeUser$ = this.userSubject.asObservable();
 	}
@@ -101,18 +92,12 @@ export class DescopeAuthService {
 		return this.sdk.me().pipe(
 			tap((data) => {
 				const afterRequestUser = this.userSubject.value;
-				console.log(data);
 				if (data.data) {
 					this.userSubject.next({
 						...afterRequestUser,
 						user: {
 							...data.data
 						}
-					});
-				} else {
-					this.userSubject.next({
-						...afterRequestUser,
-						user: this.EMPTY_USER
 					});
 				}
 			}),
