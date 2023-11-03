@@ -69,7 +69,4 @@ export class HomeComponent {
 		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT');
 	}
 
-	changeTheme(theme: 'light' | 'dark') {
-		this.theme = theme;
-	}
 }
