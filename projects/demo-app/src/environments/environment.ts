@@ -12,4 +12,5 @@ export const environment = {
   descopeRedirectUrl: '',
   descopeTenantId: '',
   descopeTelemetryKey: '',
+  descopeStepUpFlowId: '',
 };

@@ -1,1 +1,13 @@
-<button (click)="logout()">Logout</button>
+<descope
+  (success)="onSuccess()"
+  (error)="onError()"
+  [projectId]="projectId"
+  [theme]="theme"
+  [flowId]="flowId"
+  [locale]="locale"
+  [redirectUrl]="redirectUrl"
+  [telemetryKey]="telemetryKey"
+  [tenant]="tenantId"
+  [debug]="debugMode"
+  [errorTransformer]="errorTransformer"
+></descope>

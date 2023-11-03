@@ -7,7 +7,7 @@ import { LoginComponent } from './login/login.component';
 
 const routes: Routes = [
 	{
-		path: 'protected',
+		path: 'step-up',
 		component: ProtectedComponent,
 		canActivate: [descopeAuthGuard],
 		data: { descopeFallbackUrl: '/' }
