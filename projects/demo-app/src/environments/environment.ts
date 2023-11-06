@@ -3,5 +3,14 @@
  * Fill the env vars according to your needs
  */
 export const environment = {
-	descopeProjectId: '<prod_key>'
+	descopeProjectId: '',
+	descopeBaseUrl: '',
+	descopeFlowId: '',
+	descopeDebugMode: false,
+	descopeTheme: '',
+	descopeLocale: '',
+	descopeRedirectUrl: '',
+	descopeTenantId: '',
+	descopeTelemetryKey: '',
+	descopeStepUpFlowId: ''
 };

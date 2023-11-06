@@ -1,13 +1,15 @@
 :host {
-	height: 100%;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-	gap: 20px;
 }
-
-.theme-wrapper {
-	display: flex;
-	gap: 20px;
+.action-button {
+	border: 1px solid #00ace1;
+	background-color: white;
+	color: #00ace1;
+	margin-bottom: 1rem;
+	&:first-of-type {
+		margin-top: 1rem;
+	}
 }

@@ -1,13 +1,11 @@
-<button (click)="signUp()">Sign Up</button>
-<button (click)="login()">Login</button>
-<div class="theme-wrapper">
-	<button (click)="changeTheme('light')">Light Mode</button>
-	<button (click)="changeTheme('dark')">Dark Mode</button>
-</div>
-<descope
-	flowId="sign-in"
-	(success)="onSuccess()"
-	(error)="onError()"
-	[projectId]="projectId"
-	[theme]="theme"
-></descope>
+<h2>ANGULAR SDK DEMO APP</h2>
+<button *ngIf="!isAuthenticated" (click)="login()">LOGIN</button>
+<ng-container *ngIf="isAuthenticated">
+	<h3>Hello {{ userName }}</h3>
+	<div *ngIf="roles">Roles: {{ roles }}</div>
+	<button class="action-button" (click)="fetchData()">FETCH DATA</button>
+	<button *ngIf="stepUpConfigured" class="action-button" (click)="stepUp()">
+		STEP UP
+	</button>
+	<button class="logout-button" (click)="logout()">LOGOUT</button>
+</ng-container>

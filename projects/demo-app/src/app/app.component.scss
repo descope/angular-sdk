@@ -1,28 +1,18 @@
+:host {
+	height: 100vh;
+	position: relative;
+}
 main {
-	padding-top: 4rem;
-}
-
-.card-wrapper {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 4rem;
-}
-
-.card {
-	padding: 1rem;
-	border: 2px solid black;
-	width: 550px;
-	height: 550px;
-	white-space: pre-wrap;
-	white-space: -moz-pre-wrap;
-	white-space: -o-pre-wrap;
-	word-wrap: break-word;
-	font-family: 'Arial', serif;
-	margin: 2rem;
-	button {
-		width: 100%;
-		margin: auto;
-	}
-	overflow: scroll;
+	border-radius: 10px;
+	margin: auto;
+	border: 1px solid lightgray;
+	padding: 20px;
+	max-width: 400px;
+	box-shadow:
+		13px 13px 20px #cbced1,
+		-13px -13px 20px #fff;
+	background: #ecf0f3;
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
 }

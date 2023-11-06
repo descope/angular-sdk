@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DescopeAuthService } from '../../../../angular-sdk/src/lib/services/descope-auth.service';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
@@ -8,68 +8,45 @@ import { environment } from '../../environments/environment';
 	templateUrl: './home.component.html',
 	styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 	projectId: string = environment.descopeProjectId;
-	theme: 'light' | 'dark' = 'light';
+	isAuthenticated: boolean = false;
+	roles: string[] = [];
+	userName: string = '';
+	stepUpConfigured = environment.descopeStepUpFlowId.length > 0;
 
 	constructor(
 		private router: Router,
 		private authService: DescopeAuthService
 	) {}
 
-	signUp() {
-		const user = {
-			name: 'Joe Person',
-			phone: '+15555555555',
-			email: 'email@company.com'
-		};
-
-		this.authService.sdk.password
-			.signUp('piotr+angular@velocit.dev', '!QAZ2wsx', user)
-			.subscribe((resp) => {
-				if (!resp.ok) {
-					console.log('Failed to sign up via password');
-					console.log('Status Code: ' + resp.code);
-					console.log('Error Code: ' + resp.error?.errorCode);
-					console.log('Error Description: ' + resp.error?.errorDescription);
-					console.log('Error Message: ' + resp.error?.errorMessage);
-				} else {
-					console.log('Successfully signed up via password');
-					console.log(resp);
-				}
-			});
+	ngOnInit() {
+		this.authService.descopeSession$.subscribe((session) => {
+			this.isAuthenticated = session.isAuthenticated;
+			if (session.sessionToken) {
+				this.roles = this.authService.getJwtRoles(session.sessionToken);
+			}
+		});
+		this.authService.descopeUser$.subscribe((descopeUser) => {
+			if (descopeUser.user) {
+				this.userName = descopeUser.user.name ?? '';
+			}
+		});
 	}
 
 	login() {
-		this.authService.sdk.password
-			.signIn('piotr+angular@velocit.dev', '!QAZ2wsx')
-			.subscribe((resp) => {
-				if (!resp.ok) {
-					console.log('Failed to sign in via password');
-					console.log('Status Code: ' + resp.code);
-					console.log('Error Code: ' + resp.error?.errorCode);
-					console.log('Error Description: ' + resp.error?.errorDescription);
-					console.log('Error Message: ' + resp.error?.errorMessage);
-				} else {
-					console.log('Successfully signed in via password');
-					console.log(resp);
-					this.router
-						.navigate(['/protected'])
-						.catch((err) => console.error(err));
-				}
-			});
+		this.router.navigate(['/login']).catch((err) => console.error(err));
 	}
 
-	onSuccess() {
-		console.log('SUCCESSFULLY LOGGED IN FROM WEB COMPONENT');
-		this.router.navigate(['/protected']).catch((err) => console.error(err));
+	logout() {
+		this.authService.sdk.logout();
 	}
 
-	onError() {
-		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT');
+	fetchData() {
+		// TODO IMPLEMENT WITH INTERCEPTOR
 	}
 
-	changeTheme(theme: 'light' | 'dark') {
-		this.theme = theme;
+	stepUp() {
+		this.router.navigate(['/step-up']).catch((err) => console.error(err));
 	}
 }
