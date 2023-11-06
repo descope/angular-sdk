@@ -13,5 +13,8 @@
 		"tslib": "^2.3.0",
 		"@descope/web-component": "2.11.8"
 	},
+  "optionalDependencies": {
+    "@descope/web-js-sdk": ">=1"
+  },
 	"sideEffects": false
 }
