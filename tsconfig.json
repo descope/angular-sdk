@@ -5,6 +5,7 @@
 		"paths": {
 			"angular-sdk": ["dist/angular-sdk"]
 		},
+		"typeRoots": ["./node_modules/@types", "./node_modules/@descope"],
 		"baseUrl": "./",
 		"outDir": "./dist/out-tsc",
 		"forceConsistentCasingInFileNames": true,
