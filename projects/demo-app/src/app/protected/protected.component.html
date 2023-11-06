@@ -1,4 +1,4 @@
-<descope
+<descope *ngIf="!stepUpSuccess"
 	(success)="onSuccess()"
 	(error)="onError()"
 	[projectId]="projectId"
@@ -11,3 +11,8 @@
 	[debug]="debugMode"
 	[errorTransformer]="errorTransformer"
 ></descope>
+
+<ng-container *ngIf="stepUpSuccess">
+  <h2>STEP UP SUCCESS</h2>
+  <button (click)="goBack()">GO BACK</button>
+</ng-container>
