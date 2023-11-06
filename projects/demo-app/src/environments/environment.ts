@@ -4,13 +4,13 @@
  */
 export const environment = {
 	descopeProjectId: '',
-  descopeBaseUrl: '',
-  descopeFlowId: '',
-  descopeDebugMode: false,
-  descopeTheme: '',
-  descopeLocale: '',
-  descopeRedirectUrl: '',
-  descopeTenantId: '',
-  descopeTelemetryKey: '',
-  descopeStepUpFlowId: '',
+	descopeBaseUrl: '',
+	descopeFlowId: '',
+	descopeDebugMode: false,
+	descopeTheme: '',
+	descopeLocale: '',
+	descopeRedirectUrl: '',
+	descopeTenantId: '',
+	descopeTelemetryKey: '',
+	descopeStepUpFlowId: ''
 };

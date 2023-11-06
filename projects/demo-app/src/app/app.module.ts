@@ -16,7 +16,12 @@ export function initializeApp(authService: DescopeAuthService) {
 }
 
 @NgModule({
-	declarations: [AppComponent, HomeComponent, ProtectedComponent, LoginComponent],
+	declarations: [
+		AppComponent,
+		HomeComponent,
+		ProtectedComponent,
+		LoginComponent
+	],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,

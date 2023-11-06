@@ -4,7 +4,7 @@ import { ProtectedComponent } from './protected.component';
 import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
 import { DescopeAuthConfig } from '../../../../angular-sdk/src/lib/types/types';
-import {NO_ERRORS_SCHEMA} from "@angular/core";
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 jest.mock('@descope/web-js-sdk');
 
@@ -25,8 +25,8 @@ describe('ProtectedComponent', () => {
 
 		TestBed.configureTestingModule({
 			declarations: [ProtectedComponent],
-      schemas: [NO_ERRORS_SCHEMA],
-      providers: [
+			schemas: [NO_ERRORS_SCHEMA],
+			providers: [
 				DescopeAuthConfig,
 				{ provide: DescopeAuthConfig, useValue: { projectId: 'test' } }
 			]
