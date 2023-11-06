@@ -17,7 +17,7 @@ export class ProtectedComponent {
 	locale = environment.descopeLocale;
 	redirectUrl = environment.descopeRedirectUrl;
 
-  stepUpSuccess = false;
+	stepUpSuccess = false;
 	constructor(private router: Router) {}
 
 	errorTransformer = (error: { text: string; type: string }): string => {
@@ -28,14 +28,14 @@ export class ProtectedComponent {
 	};
 
 	onSuccess() {
-    this.stepUpSuccess = true;
+		this.stepUpSuccess = true;
 	}
 
 	onError() {
 		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT');
 	}
 
-  goBack() {
-    this.router.navigate(['/']).catch((err) => console.error(err));
-  }
+	goBack() {
+		this.router.navigate(['/']).catch((err) => console.error(err));
+	}
 }
