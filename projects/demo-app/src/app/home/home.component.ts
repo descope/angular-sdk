@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DescopeAuthService } from '../../../../angular-sdk/src/lib/services/descope-auth.service';
 import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
+import {HttpClient} from "@angular/common/http";
 
 @Component({
 	selector: 'app-home',
@@ -14,9 +15,12 @@ export class HomeComponent implements OnInit {
 	roles: string[] = [];
 	userName: string = '';
 	stepUpConfigured = environment.descopeStepUpFlowId.length > 0;
+	backendUrl = environment.descopeBackendUrl;
+
 
 	constructor(
 		private router: Router,
+		private httpClient: HttpClient,
 		private authService: DescopeAuthService
 	) {}
 
@@ -43,7 +47,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	fetchData() {
-		// TODO IMPLEMENT WITH INTERCEPTOR
+		this.httpClient.get(this.backendUrl).subscribe(data => alert(data));
 	}
 
 	stepUp() {

@@ -26,7 +26,7 @@ export class DescopeInterceptor implements HttpInterceptor {
 	): Observable<HttpEvent<unknown>> {
 		if (this.shouldIntercept(request)) {
 			const token = this.authService.getSessionToken();
-			if (token === null) {
+			if (!token) {
 				return this.refreshAndRetry(request, next);
 			}
 			const requestWithToken = this.addTokenToRequest(request, token);
