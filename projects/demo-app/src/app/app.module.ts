@@ -10,8 +10,8 @@ import { environment } from '../environments/environment';
 import { DescopeAuthService } from 'projects/angular-sdk/src/public-api';
 import { zip } from 'rxjs';
 import { LoginComponent } from './login/login.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
-import {DescopeInterceptor} from "../../../angular-sdk/src/lib/services/descope.interceptor";
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { DescopeInterceptor } from '../../../angular-sdk/src/lib/services/descope.interceptor';
 
 export function initializeApp(authService: DescopeAuthService) {
 	return () => zip([authService.refreshSession(), authService.refreshUser()]);
@@ -31,7 +31,7 @@ export function initializeApp(authService: DescopeAuthService) {
 		DescopeAuthModule.forRoot({
 			projectId: environment.descopeProjectId,
 			baseUrl: environment.descopeBaseUrl,
-			sessionTokenViaCookie: false,
+			sessionTokenViaCookie: false
 		})
 	],
 	providers: [

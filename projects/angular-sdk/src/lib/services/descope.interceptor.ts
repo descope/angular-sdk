@@ -9,17 +9,18 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { DescopeAuthService } from './descope-auth.service';
-import {DescopeAuthConfig} from "../types/types";
+import { DescopeAuthConfig } from '../types/types';
 
 @Injectable()
 export class DescopeInterceptor implements HttpInterceptor {
 	private pathsToIntercept: string[] = [];
 
-	constructor(private authService: DescopeAuthService, config: DescopeAuthConfig) {
+	constructor(
+		private authService: DescopeAuthService,
+		config: DescopeAuthConfig
+	) {
 		this.pathsToIntercept = config.pathsToIntercept ?? [];
 	}
-
-
 
 	intercept(
 		request: HttpRequest<unknown>,
@@ -59,7 +60,9 @@ export class DescopeInterceptor implements HttpInterceptor {
 					);
 					return next.handle(requestWithRefreshedToken);
 				} else {
-					return throwError(() => error ?? new Error('Could not refresh session!'));
+					return throwError(
+						() => error ?? new Error('Could not refresh session!')
+					);
 				}
 			})
 		);
