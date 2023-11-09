@@ -5,6 +5,7 @@ import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { DescopeAuthConfig } from '../../../../angular-sdk/src/lib/types/types';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 jest.mock('@descope/web-js-sdk');
 
@@ -24,6 +25,7 @@ describe('HomeComponent', () => {
 		});
 
 		TestBed.configureTestingModule({
+			imports: [HttpClientTestingModule],
 			schemas: [NO_ERRORS_SCHEMA],
 			declarations: [HomeComponent],
 			providers: [
