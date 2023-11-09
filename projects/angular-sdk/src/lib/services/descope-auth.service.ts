@@ -3,7 +3,7 @@ import type { UserResponse } from '@descope/web-js-sdk';
 import createSdk from '@descope/web-js-sdk';
 import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
 import { observabilify, Observablefied } from '../utils/helpers';
-import { baseHeaders, IS_BROWSER } from '../utils/constants';
+import { baseHeaders, isBrowser } from '../utils/constants';
 import { DescopeAuthConfig } from '../types/types';
 
 type DescopeSDK = ReturnType<typeof createSdk>;
@@ -31,8 +31,8 @@ export class DescopeAuthService {
 		this.sdk = observabilify<DescopeSDK>(
 			createSdk({
 				...config,
-				persistTokens: IS_BROWSER as true,
-				autoRefresh: IS_BROWSER as true,
+				persistTokens: isBrowser() as true,
+				autoRefresh: isBrowser() as true,
 				baseHeaders
 			})
 		);
@@ -112,7 +112,7 @@ export class DescopeAuthService {
 	}
 
 	getSessionToken() {
-		if (IS_BROWSER) {
+		if (isBrowser()) {
 			return (
 				this.sdk as AngularDescopeSDK & { getSessionToken: () => string | null }
 			).getSessionToken();
@@ -122,7 +122,7 @@ export class DescopeAuthService {
 	}
 
 	getRefreshToken() {
-		if (IS_BROWSER) {
+		if (isBrowser()) {
 			return (
 				this.sdk as AngularDescopeSDK & { getRefreshToken: () => string | null }
 			).getRefreshToken();
