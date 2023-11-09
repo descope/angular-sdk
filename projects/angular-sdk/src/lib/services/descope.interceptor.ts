@@ -9,16 +9,17 @@ import {
 import { Observable, throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { DescopeAuthService } from './descope-auth.service';
+import {DescopeAuthConfig} from "../types/types";
 
 @Injectable()
 export class DescopeInterceptor implements HttpInterceptor {
-	constructor(private authService: DescopeAuthService) {}
-
 	private pathsToIntercept: string[] = [];
 
-	setPathsToIntercept(paths: string[]) {
-		this.pathsToIntercept = paths;
+	constructor(private authService: DescopeAuthService, config: DescopeAuthConfig) {
+		this.pathsToIntercept = config.pathsToIntercept ?? [];
 	}
+
+
 
 	intercept(
 		request: HttpRequest<unknown>,
