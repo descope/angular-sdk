@@ -47,7 +47,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	fetchData() {
-		this.httpClient.get(this.backendUrl).subscribe(data => alert(data));
+		this.httpClient.get(this.backendUrl, {responseType: 'text'}).subscribe(data => alert(data));
 	}
 
 	stepUp() {
