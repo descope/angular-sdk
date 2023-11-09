@@ -39,6 +39,9 @@ describe('DescopeAuthService', () => {
 			refresh: refreshSpy
 		});
 
+		onSessionTokenChangeSpy.mockImplementation((fn) => fn())
+		onUserChangeSpy.mockImplementation((fn) => fn())
+
 		TestBed.configureTestingModule({
 			providers: [
 				DescopeAuthConfig,
@@ -163,7 +166,7 @@ describe('DescopeAuthService', () => {
 						{
 							isAuthenticated: false,
 							isSessionLoading: true,
-							sessionToken: ''
+							sessionToken: undefined
 						},
 						{
 							isAuthenticated: true,
@@ -176,6 +179,7 @@ describe('DescopeAuthService', () => {
 							sessionToken: 'newToken'
 						}
 					]);
+					expect(service.isAuthenticated()).toBeTruthy();
 					done();
 				},
 				error: (err) => {
@@ -196,7 +200,7 @@ describe('DescopeAuthService', () => {
 						{
 							isAuthenticated: false,
 							isSessionLoading: true,
-							sessionToken: ''
+							sessionToken: undefined
 						},
 						{
 							isAuthenticated: false,
@@ -209,6 +213,7 @@ describe('DescopeAuthService', () => {
 							sessionToken: ''
 						}
 					]);
+					expect(service.isAuthenticated()).toBeFalsy();
 					done();
 				},
 				error: (err) => {
@@ -229,7 +234,7 @@ describe('DescopeAuthService', () => {
 			service.descopeUser$.pipe(take(4), toArray()).subscribe({
 				next: (result) => {
 					expect(result.slice(1)).toStrictEqual([
-						{ isUserLoading: true },
+						{ isUserLoading: true, user: undefined },
 						{ isUserLoading: true, user: { name: 'test' } },
 						{ isUserLoading: false, user: { name: 'test' } }
 					]);
@@ -250,8 +255,8 @@ describe('DescopeAuthService', () => {
 			service.descopeUser$.pipe(take(3), toArray()).subscribe({
 				next: (result) => {
 					expect(result.slice(1)).toStrictEqual([
-						{ isUserLoading: true },
-						{ isUserLoading: false }
+						{ isUserLoading: true, user: undefined },
+						{ isUserLoading: false, user: undefined }
 					]);
 					done();
 				},
@@ -262,4 +267,5 @@ describe('DescopeAuthService', () => {
 			service.refreshUser().subscribe();
 		});
 	});
+
 });

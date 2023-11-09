@@ -36,8 +36,7 @@ export class DescopeAuthService {
 				baseHeaders
 			})
 		);
-		this.sdk.onSessionTokenChange(this.setSession.bind(this));
-		this.sdk.onUserChange(this.setUser.bind(this));
+
 		this.sessionSubject = new BehaviorSubject<DescopeSession>({
 			isAuthenticated: false,
 			isSessionLoading: false,
@@ -48,6 +47,8 @@ export class DescopeAuthService {
 			isUserLoading: false
 		});
 		this.descopeUser$ = this.userSubject.asObservable();
+		this.sdk.onSessionTokenChange(this.setSession.bind(this));
+		this.sdk.onUserChange(this.setUser.bind(this));
 	}
 
 	refreshSession() {
