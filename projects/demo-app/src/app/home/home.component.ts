@@ -14,8 +14,8 @@ export class HomeComponent implements OnInit {
 	isAuthenticated: boolean = false;
 	roles: string[] = [];
 	userName: string = '';
-	stepUpConfigured = environment.descopeStepUpFlowId.length > 0;
-	backendUrl = environment.descopeBackendUrl;
+	stepUpConfigured = (environment.descopeStepUpFlowId ?? '').length > 0;
+	backendUrl = environment.descopeBackendUrl ?? '';
 
 	constructor(
 		private router: Router,
@@ -46,9 +46,13 @@ export class HomeComponent implements OnInit {
 	}
 
 	fetchData() {
-		this.httpClient
-			.get(this.backendUrl, { responseType: 'text' })
-			.subscribe((data) => alert(data));
+		if (this.backendUrl) {
+			this.httpClient
+				.get(this.backendUrl, { responseType: 'text' })
+				.subscribe((data) => alert(data));
+		} else {
+			console.warn('Please setup backendUrl in your environment');
+		}
 	}
 
 	stepUp() {

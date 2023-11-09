@@ -30,7 +30,7 @@ export function initializeApp(authService: DescopeAuthService) {
 		HttpClientModule,
 		DescopeAuthModule.forRoot({
 			projectId: environment.descopeProjectId,
-			baseUrl: environment.descopeBaseUrl,
+			baseUrl: environment.descopeBaseUrl || '',
 			sessionTokenViaCookie: false
 		})
 	],
