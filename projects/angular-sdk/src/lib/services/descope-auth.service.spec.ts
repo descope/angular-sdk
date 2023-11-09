@@ -1,9 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
-import { DescopeAuthService } from './descope-auth.service';
+import {DescopeAuthService} from './descope-auth.service';
 import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
 import { DescopeAuthConfig } from '../types/types';
+import { of, take, toArray } from 'rxjs';
 
 jest.mock('@descope/web-js-sdk');
 
@@ -17,6 +18,8 @@ describe('DescopeAuthService', () => {
 	const getRefreshTokenSpy = jest.fn();
 	const getJwtPermissionsSpy = jest.fn();
 	const getJwtRolesSpy = jest.fn();
+	const meSpy = jest.fn();
+	const refreshSpy = jest.fn();
 	const mockConfig: DescopeAuthConfig = {
 		projectId: 'someProject'
 	};
@@ -32,7 +35,8 @@ describe('DescopeAuthService', () => {
 			getRefreshToken: getRefreshTokenSpy,
 			getJwtPermissions: getJwtPermissionsSpy,
 			getJwtRoles: getJwtRolesSpy,
-
+			me: meSpy,
+			refresh: refreshSpy
 		});
 
 		TestBed.configureTestingModule({
@@ -107,38 +111,155 @@ describe('DescopeAuthService', () => {
 	describe('getJwtPermissions', () => {
 		it('should return permissions for token from sdk', () => {
 			const permissions = ['edit'];
-			getJwtPermissionsSpy.mockReturnValueOnce(permissions)
+			getJwtPermissionsSpy.mockReturnValueOnce(permissions);
 			const result = service.getJwtPermissions('token');
 			expect(getJwtPermissionsSpy).toHaveBeenCalledWith('token', undefined);
 			expect(result).toStrictEqual(permissions);
-		})
+		});
 
 		it('should return empty array and log error when there is no token', () => {
 			const errorSpy = jest.spyOn(console, 'error');
 			getSessionTokenSpy.mockReturnValueOnce(null);
 			const result = service.getJwtPermissions();
-			expect(errorSpy).toHaveBeenCalledWith('Could not get JWT Permissions - not authenticated')
+			expect(errorSpy).toHaveBeenCalledWith(
+				'Could not get JWT Permissions - not authenticated'
+			);
 			expect(getJwtPermissionsSpy).not.toHaveBeenCalled();
 			expect(result).toStrictEqual([]);
-		})
-	})
+		});
+	});
 
 	describe('getJwtRoles', () => {
 		it('should return roles for token from sdk', () => {
 			const roles = ['admin'];
-			getJwtRolesSpy.mockReturnValueOnce(roles)
+			getJwtRolesSpy.mockReturnValueOnce(roles);
 			const result = service.getJwtRoles('token');
 			expect(getJwtRolesSpy).toHaveBeenCalledWith('token', undefined);
 			expect(result).toStrictEqual(roles);
-		})
+		});
 
 		it('should return empty array and log error when there is no token', () => {
 			const errorSpy = jest.spyOn(console, 'error');
 			getSessionTokenSpy.mockReturnValueOnce(null);
 			const result = service.getJwtRoles();
-			expect(errorSpy).toHaveBeenCalledWith('Could not get JWT Roles - not authenticated')
+			expect(errorSpy).toHaveBeenCalledWith(
+				'Could not get JWT Roles - not authenticated'
+			);
 			expect(getJwtRolesSpy).not.toHaveBeenCalled();
 			expect(result).toStrictEqual([]);
-		})
-	})
+		});
+	});
+
+	describe('refreshSession', () => {
+
+		it('correctly handle descopeSession stream when session is successfully refreshed', (done: jest.DoneCallback) => {
+			refreshSpy.mockReturnValueOnce(
+				of({ ok: true, data: { sessionJwt: 'newToken' } })
+			);
+			// Taking 4 values from stream: first is initial value, next 3 are the result of refreshSession
+			service.descopeSession$.pipe(take(4), toArray()).subscribe({
+				next: (result) => {
+					expect(result.slice(1)).toStrictEqual([
+						{
+							isAuthenticated: false,
+							isSessionLoading: true,
+							sessionToken: ''
+						},
+						{
+							isAuthenticated: true,
+							isSessionLoading: true,
+							sessionToken: 'newToken'
+						},
+						{
+							isAuthenticated: true,
+							isSessionLoading: false,
+							sessionToken: 'newToken'
+						}
+					]);
+					done();
+				},
+				error: (err) => {
+					done.fail(err);
+				},
+			});
+			service.refreshSession().subscribe();
+		});
+
+		it('correctly handle descopeSession stream when refresh session failed', (done: jest.DoneCallback) => {
+			refreshSpy.mockReturnValueOnce(
+				of({ ok: false, data: { sessionJwt: 'newToken' } })
+			);
+			// Taking 4 values from stream: first is initial value, next 3 are the result of refreshSession
+			service.descopeSession$.pipe(take(4), toArray()).subscribe({
+				next: (result) => {
+					expect(result.slice(1)).toStrictEqual([
+						{
+							isAuthenticated: false,
+							isSessionLoading: true,
+							sessionToken: ''
+						},
+						{
+							isAuthenticated: false,
+							isSessionLoading: true,
+							sessionToken: ''
+						},
+						{
+							isAuthenticated: false,
+							isSessionLoading: false,
+							sessionToken: ''
+						}
+					]);
+					done();
+				},
+				error: (err) => {
+					done.fail(err);
+				},
+			});
+			service.refreshSession().subscribe();
+		});
+	});
+
+	describe('refreshUser', () => {
+
+		it('correctly handle descopeUser stream when user is successfully refreshed', (done: jest.DoneCallback) => {
+			meSpy.mockReturnValueOnce(
+				of({ ok: true, data: { name: 'test' } })
+			);
+			// Taking 4 values from stream: first is initial value, next 3 are the result of refreshUser
+			service.descopeUser$.pipe(take(4), toArray()).subscribe({
+				next: (result) => {
+					expect(result.slice(1)).toStrictEqual([
+						{ isUserLoading: true },
+						{ isUserLoading: true, user: { name: 'test' } },
+						{ isUserLoading: false, user: { name: 'test' } }
+					]);
+					done();
+				},
+				error: (err) => {
+					done.fail(err);
+				},
+			});
+			service.refreshUser().subscribe();
+		});
+
+		it('correctly handle descopeUser stream when refresh session failed', (done: jest.DoneCallback) => {
+			meSpy.mockReturnValueOnce(
+				of({ ok: false })
+			);
+			// Taking 3 values from stream: first is initial value, next 2 are the result of refreshUser
+			service.descopeUser$.pipe(take(3), toArray()).subscribe({
+				next: (result) => {
+					expect(result.slice(1)).toStrictEqual([
+						{ isUserLoading: true },
+						{ isUserLoading: false }
+					]);
+					done();
+				},
+				error: (err) => {
+					done.fail(err);
+				},
+			});
+			service.refreshUser().subscribe();
+		});
+	});
 });
