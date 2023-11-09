@@ -15,6 +15,8 @@ describe('DescopeAuthService', () => {
 	const onUserChangeSpy = jest.fn();
 	const getSessionTokenSpy = jest.fn();
 	const getRefreshTokenSpy = jest.fn();
+	const getJwtPermissionsSpy = jest.fn();
+	const getJwtRolesSpy = jest.fn();
 	const mockConfig: DescopeAuthConfig = {
 		projectId: 'someProject'
 	};
@@ -27,7 +29,10 @@ describe('DescopeAuthService', () => {
 			onSessionTokenChange: onSessionTokenChangeSpy,
 			onUserChange: onUserChangeSpy,
 			getSessionToken: getSessionTokenSpy,
-			getRefreshToken: getRefreshTokenSpy
+			getRefreshToken: getRefreshTokenSpy,
+			getJwtPermissions: getJwtPermissionsSpy,
+			getJwtRoles: getJwtRolesSpy,
+
 		});
 
 		TestBed.configureTestingModule({
@@ -42,6 +47,8 @@ describe('DescopeAuthService', () => {
 	afterEach(() => {
 		getSessionTokenSpy.mockReset();
 		getRefreshTokenSpy.mockReset();
+		getJwtPermissionsSpy.mockReset();
+		getJwtRolesSpy.mockReset();
 	});
 
 	it('should be created', () => {
@@ -55,8 +62,11 @@ describe('DescopeAuthService', () => {
 
 	describe('getSessionToken', () => {
 		it('should call getSessionToken from sdk', () => {
-			service.getSessionToken();
+			const token = 'abcd';
+			getSessionTokenSpy.mockReturnValueOnce(token);
+			const result = service.getSessionToken();
 			expect(getSessionTokenSpy).toHaveBeenCalled();
+			expect(result).toStrictEqual(token);
 		});
 
 		it('should warn when using getSessionToken in non browser environment', () => {
@@ -74,8 +84,11 @@ describe('DescopeAuthService', () => {
 
 	describe('getRefreshToken', () => {
 		it('should call getRefreshToken from sdk', () => {
-			service.getRefreshToken();
+			const token = 'abcd';
+			getRefreshTokenSpy.mockReturnValueOnce(token);
+			const result = service.getRefreshToken();
 			expect(getRefreshTokenSpy).toHaveBeenCalled();
+			expect(result).toStrictEqual(token);
 		});
 
 		it('should warn when using getRefreshToken in non browser environment', () => {
@@ -90,4 +103,42 @@ describe('DescopeAuthService', () => {
 			expect(getRefreshTokenSpy).not.toHaveBeenCalled();
 		});
 	});
+
+	describe('getJwtPermissions', () => {
+		it('should return permissions for token from sdk', () => {
+			const permissions = ['edit'];
+			getJwtPermissionsSpy.mockReturnValueOnce(permissions)
+			const result = service.getJwtPermissions('token');
+			expect(getJwtPermissionsSpy).toHaveBeenCalledWith('token', undefined);
+			expect(result).toStrictEqual(permissions);
+		})
+
+		it('should return empty array and log error when there is no token', () => {
+			const errorSpy = jest.spyOn(console, 'error');
+			getSessionTokenSpy.mockReturnValueOnce(null);
+			const result = service.getJwtPermissions();
+			expect(errorSpy).toHaveBeenCalledWith('Could not get JWT Permissions - not authenticated')
+			expect(getJwtPermissionsSpy).not.toHaveBeenCalled();
+			expect(result).toStrictEqual([]);
+		})
+	})
+
+	describe('getJwtRoles', () => {
+		it('should return roles for token from sdk', () => {
+			const roles = ['admin'];
+			getJwtRolesSpy.mockReturnValueOnce(roles)
+			const result = service.getJwtRoles('token');
+			expect(getJwtRolesSpy).toHaveBeenCalledWith('token', undefined);
+			expect(result).toStrictEqual(roles);
+		})
+
+		it('should return empty array and log error when there is no token', () => {
+			const errorSpy = jest.spyOn(console, 'error');
+			getSessionTokenSpy.mockReturnValueOnce(null);
+			const result = service.getJwtRoles();
+			expect(errorSpy).toHaveBeenCalledWith('Could not get JWT Roles - not authenticated')
+			expect(getJwtRolesSpy).not.toHaveBeenCalled();
+			expect(result).toStrictEqual([]);
+		})
+	})
 });
