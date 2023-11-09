@@ -4,6 +4,7 @@ export class DescopeAuthConfig {
 	projectId = '';
 	baseUrl?: string;
 	sessionTokenViaCookie?: boolean;
+	pathsToIntercept?: string[];
 }
 
 export type { ILogger };

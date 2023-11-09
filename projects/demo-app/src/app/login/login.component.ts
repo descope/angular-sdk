@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
 export class LoginComponent {
 	projectId: string = environment.descopeProjectId;
 	flowId = environment.descopeFlowId ?? 'sign-up-or-in';
-	theme = environment.descopeTheme as 'light' | 'dark' | 'os';
-	telemetryKey = environment.descopeTelemetryKey;
-	debugMode = environment.descopeDebugMode;
-	tenantId = environment.descopeTenantId;
-	locale = environment.descopeLocale;
-	redirectUrl = environment.descopeRedirectUrl;
+	theme = (environment.descopeTheme as 'light' | 'dark' | 'os') ?? 'os';
+	telemetryKey = environment.descopeTelemetryKey ?? '';
+	debugMode = environment.descopeDebugMode ?? false;
+	tenantId = environment.descopeTenantId ?? '';
+	locale = environment.descopeLocale ?? '';
+	redirectUrl = environment.descopeRedirectUrl ?? '';
 
 	constructor(private router: Router) {}
 

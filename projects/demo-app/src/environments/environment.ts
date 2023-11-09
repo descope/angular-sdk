@@ -1,8 +1,10 @@
+import { Env } from './conifg';
+
 /**
  * Create environment.development.ts file and copy content of this file to it.
  * Fill the env vars according to your needs
  */
-export const environment = {
+export const environment: Env = {
 	descopeProjectId: '',
 	descopeBaseUrl: '',
 	descopeFlowId: '',
@@ -12,5 +14,6 @@ export const environment = {
 	descopeRedirectUrl: '',
 	descopeTenantId: '',
 	descopeTelemetryKey: '',
-	descopeStepUpFlowId: ''
+	descopeStepUpFlowId: '',
+	descopeBackendUrl: ''
 };
