@@ -1,9 +1,9 @@
-import {ComponentFixture, fakeAsync, TestBed} from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DescopeComponent } from './descope.component';
 import createSdk from '@descope/web-js-sdk';
 import { DescopeAuthConfig } from '../../types/types';
-import {CUSTOM_ELEMENTS_SCHEMA, EventEmitter} from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import mocked = jest.mocked;
 
 jest.mock('@descope/web-js-sdk');
@@ -21,17 +21,22 @@ describe('DescopeComponent', () => {
 	let mockedCreateSdk: jest.Mock;
 	const onSessionTokenChangeSpy = jest.fn();
 	const onUserChangeSpy = jest.fn();
+	const afterRequestHooksSpy = jest.fn();
 	const mockConfig: DescopeAuthConfig = {
 		projectId: 'someProject'
 	};
-	const errorMock = new EventEmitter<void>
 
 	beforeEach(() => {
 		mockedCreateSdk = mocked(createSdk);
 
 		mockedCreateSdk.mockReturnValue({
 			onSessionTokenChange: onSessionTokenChangeSpy,
-			onUserChange: onUserChangeSpy
+			onUserChange: onUserChangeSpy,
+			httpClient: {
+				hooks: {
+					afterRequest: afterRequestHooksSpy
+				}
+			}
 		});
 
 		TestBed.configureTestingModule({
@@ -46,9 +51,12 @@ describe('DescopeComponent', () => {
 		fixture = TestBed.createComponent(DescopeComponent);
 		component = fixture.componentInstance;
 		component.projectId = '123';
-		component.flowId='sign-in';
-		component.locale='en-US';
-		component.error = new EventEmitter<void>
+		component.flowId = 'sign-in';
+		component.locale = 'en-US';
+		component.success = new EventEmitter<void>();
+		component.error = new EventEmitter<void>();
+		component.logger = { info: jest.fn(), error: jest.fn(), warn: jest.fn() };
+		component.errorTransformer = jest.fn();
 		fixture.detectChanges();
 	});
 
@@ -65,7 +73,24 @@ describe('DescopeComponent', () => {
 		expect(webComponentHtml.getAttribute('project-id')).toStrictEqual('123');
 		expect(webComponentHtml.getAttribute('flow-id')).toStrictEqual('sign-in');
 		expect(webComponentHtml.getAttribute('locale')).toStrictEqual('en-US');
+		expect(webComponentHtml.getAttribute('logger')).toBeDefined();
+		expect(webComponentHtml.getAttribute('error-transformer')).toBeDefined();
 		expect(webComponentHtml.getAttribute('redirect-url')).toBeNull();
+	});
+
+	it('should emit success when web component emits success', () => {
+		const html: HTMLElement = fixture.nativeElement;
+		const webComponentHtml = html.querySelector('descope-wc')!;
+
+		component.success.subscribe(() => {
+			expect(true).toBeTruthy();
+			expect(afterRequestHooksSpy).toHaveBeenCalled();
+		});
+		webComponentHtml.dispatchEvent(
+			new CustomEvent('success', {
+				detail: { user: { name: 'user1' }, sessionJwt: 'session1' }
+			})
+		);
 	});
 
 	it('should emit error when web component emits error', () => {
@@ -74,9 +99,7 @@ describe('DescopeComponent', () => {
 
 		component.error.subscribe(() => {
 			expect(true).toBeTruthy();
-		})
+		});
 		webComponentHtml.dispatchEvent(new CustomEvent('error'));
-
 	});
-
 });
