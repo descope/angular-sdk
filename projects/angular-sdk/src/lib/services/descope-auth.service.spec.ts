@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import {DescopeAuthService} from './descope-auth.service';
+import { DescopeAuthService } from './descope-auth.service';
 import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
 import { DescopeAuthConfig } from '../types/types';
@@ -39,8 +39,8 @@ describe('DescopeAuthService', () => {
 			refresh: refreshSpy
 		});
 
-		onSessionTokenChangeSpy.mockImplementation((fn) => fn())
-		onUserChangeSpy.mockImplementation((fn) => fn())
+		onSessionTokenChangeSpy.mockImplementation((fn) => fn());
+		onUserChangeSpy.mockImplementation((fn) => fn());
 
 		TestBed.configureTestingModule({
 			providers: [
@@ -154,7 +154,6 @@ describe('DescopeAuthService', () => {
 	});
 
 	describe('refreshSession', () => {
-
 		it('correctly handle descopeSession stream when session is successfully refreshed', (done: jest.DoneCallback) => {
 			refreshSpy.mockReturnValueOnce(
 				of({ ok: true, data: { sessionJwt: 'newToken' } })
@@ -184,7 +183,7 @@ describe('DescopeAuthService', () => {
 				},
 				error: (err) => {
 					done.fail(err);
-				},
+				}
 			});
 			service.refreshSession().subscribe();
 		});
@@ -218,18 +217,15 @@ describe('DescopeAuthService', () => {
 				},
 				error: (err) => {
 					done.fail(err);
-				},
+				}
 			});
 			service.refreshSession().subscribe();
 		});
 	});
 
 	describe('refreshUser', () => {
-
 		it('correctly handle descopeUser stream when user is successfully refreshed', (done: jest.DoneCallback) => {
-			meSpy.mockReturnValueOnce(
-				of({ ok: true, data: { name: 'test' } })
-			);
+			meSpy.mockReturnValueOnce(of({ ok: true, data: { name: 'test' } }));
 			// Taking 4 values from stream: first is initial value, next 3 are the result of refreshUser
 			service.descopeUser$.pipe(take(4), toArray()).subscribe({
 				next: (result) => {
@@ -242,15 +238,13 @@ describe('DescopeAuthService', () => {
 				},
 				error: (err) => {
 					done.fail(err);
-				},
+				}
 			});
 			service.refreshUser().subscribe();
 		});
 
 		it('correctly handle descopeUser stream when refresh session failed', (done: jest.DoneCallback) => {
-			meSpy.mockReturnValueOnce(
-				of({ ok: false })
-			);
+			meSpy.mockReturnValueOnce(of({ ok: false }));
 			// Taking 3 values from stream: first is initial value, next 2 are the result of refreshUser
 			service.descopeUser$.pipe(take(3), toArray()).subscribe({
 				next: (result) => {
@@ -262,10 +256,9 @@ describe('DescopeAuthService', () => {
 				},
 				error: (err) => {
 					done.fail(err);
-				},
+				}
 			});
 			service.refreshUser().subscribe();
 		});
 	});
-
 });

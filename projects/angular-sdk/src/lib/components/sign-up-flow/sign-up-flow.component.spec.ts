@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignUpFlowComponent } from './sign-up-flow.component';
 import { DescopeComponent } from '../descope/descope.component';
-import {MockComponent, ngMocks} from 'ng-mocks';
+import { MockComponent, ngMocks } from 'ng-mocks';
 
 describe('SignUpFlowComponent', () => {
 	let component: SignUpFlowComponent;
@@ -19,9 +19,8 @@ describe('SignUpFlowComponent', () => {
 
 	it('should create and be correctly configured', () => {
 		expect(component).toBeTruthy();
-		const mockComponent = ngMocks.find<DescopeComponent>(
-			'[flowId=sign-up]',
-		).componentInstance;
-		expect(mockComponent.flowId).toStrictEqual('sign-up')
+		const mockComponent =
+			ngMocks.find<DescopeComponent>('[flowId=sign-up]').componentInstance;
+		expect(mockComponent.flowId).toStrictEqual('sign-up');
 	});
 });
