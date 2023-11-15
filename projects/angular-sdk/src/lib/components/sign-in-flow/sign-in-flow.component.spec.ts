@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignInFlowComponent } from './sign-in-flow.component';
-import { MockComponent } from 'ng-mocks';
+import { MockComponent, ngMocks } from 'ng-mocks';
 import { DescopeComponent } from '../descope/descope.component';
 
 describe('SignInFlowComponent', () => {
@@ -17,7 +17,10 @@ describe('SignInFlowComponent', () => {
 		fixture.detectChanges();
 	});
 
-	it('should create', () => {
+	it('should create and be correctly configured', () => {
 		expect(component).toBeTruthy();
+		const mockComponent =
+			ngMocks.find<DescopeComponent>('[flowId=sign-in]').componentInstance;
+		expect(mockComponent.flowId).toStrictEqual('sign-in');
 	});
 });
