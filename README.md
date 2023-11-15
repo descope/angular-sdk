@@ -272,85 +272,17 @@ When developing a full-stack application, it is common to have private server AP
 
 Note: Descope also provides server-side SDKs in various languages (NodeJS, Go, Python, etc). Descope's server SDKs have out-of-the-box session validation API that supports the options described bellow. To read more about session validation, Read [this section](https://docs.descope.com/build/guides/gettingstarted/#session-validation) in Descope documentation.
 
-There are 2 ways to achieve that:
-
-1. Using `getSessionToken` to get the token, and pass it on the `Authorization` Header (Recommended)
-2. Passing `sessionTokenViaCookie` boolean prop to the `AuthProvider` component (Use cautiously, session token may grow, especially in cases of using authorization, or adding custom claim)
-
-#### 1. Using `getSessionToken` to get the token
-
-An example for api function, and passing the token on the `Authorization` header:
-
-```js
-import { getSessionToken } from '@descope/react-sdk';
-
-// fetch data using back
-// Note: Descope backend SDKs support extracting session token from the Authorization header
-export const fetchData = async () => {
-	const sessionToken = getSessionToken();
-	const res = await fetch('/path/to/server/api', {
-		headers: {
-			Authorization: `Bearer ${sessionToken}`
-		}
-	});
-	// ... use res
-};
-```
-
-An example for component that uses `fetchData` function from above
-
-```js
-// Component code
-import { fetchData } from 'path/to/api/file'
-import { useCallback } from 'react'
-
-const Component = () => {
-    const onClick = useCallback(() => {
-        fetchData()
-    },[])
-    return (
-        {...}
-        {
-            // button that triggers an API that may use session token
-            <button onClick={onClick}>Click Me</button>
-        }
-    )
-}
-```
-
-#### 2. Passing `sessionTokenViaCookie` boolean prop to the `AuthProvider`
-
-Passing `sessionTokenViaCookie` prop to `AuthProvider` component. Descope SDK will automatically store session token on the `DS` cookie.
-
-Note: Use this option if session token will stay small (less than 1k). Session token can grow, especially in cases of using authorization, or adding custom claims
-
-Example:
-
-```js
-import { AuthProvider } from '@descope/react-sdk';
-
-const AppRoot = () => {
-	return (
-		<AuthProvider projectId="my-project-id" sessionTokenViaCookie>
-			<App />
-		</AuthProvider>
-	);
-};
-```
-
-Now, whenever you call `fetch`, the cookie will automatically be sent with the request. Descope backend SDKs also support extracting the token from the `DS` cookie.
-
-Note:
-The session token cookie is set as a [`Secure`](https://datatracker.ietf.org/doc/html/rfc6265#section-5.2.5) cookie. It will be sent only over HTTPS connections.
-In addition, some browsers (e.g. Safari) may not store `Secure` cookie if the hosted page is running on an HTTP protocol.
+You can securely communicate with your backend either by using `DescopeInterceptor` or manually adding token to your requests (ie. by using `DescopeAuthService.getSessionToken()` helper function)
 
 ### Helper Functions
 
-You can also use the following functions to assist with various actions managing your JWT.
+You can also use the following helper methods on `DescopeAuthService` to assist with various actions managing your JWT.
 
 `getSessionToken()` - Get current session token.
 `getRefreshToken()` - Get current refresh token.
-`refresh(token = getRefreshToken())` - Force a refresh on current session token using an existing valid refresh token.
+`isAuthenticated()` - Returns boolean whether user is authenticated
+`refreshSession` - Force a refresh on current session token using an existing valid refresh token.
+`refreshUser` - Force a refresh on current user using an existing valid refresh token.
 `getJwtRoles(token = getSessionToken(), tenant = '')` - Get current roles from an existing session token. Provide tenant id for specific tenant roles.
 `getJwtPermissions(token = getSessionToken(), tenant = '')` - Fet current permissions from an existing session token. Provide tenant id for specific tenant permissions.
 
@@ -359,7 +291,7 @@ You can also use the following functions to assist with various actions managing
 Descope SDK is automatically refreshes the session token when it is about to expire. This is done in the background using the refresh token, without any additional configuration.
 
 If the Descope project settings are configured to manage tokens in cookies.
-you must also configure a custom domain, and set it as the `baseUrl` prop in the `AuthProvider` component. See the above [`AuthProvider` usage](https://github.com/descope/react-sdk#wrap-your-app-with-auth-provider) for usage example.
+you must also configure a custom domain, and set it as the `baseUrl` in `DescopeAuthModule`.
 
 ## Code Example
 
