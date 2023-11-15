@@ -293,6 +293,38 @@ Descope SDK is automatically refreshes the session token when it is about to exp
 If the Descope project settings are configured to manage tokens in cookies.
 you must also configure a custom domain, and set it as the `baseUrl` in `DescopeAuthModule`.
 
+### Descope Guard
+
+`angular-sdk` provides a convenient route guard that prevents from accessing given route for users that are not authenticated:
+
+```ts
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { ProtectedComponent } from './protected/protected.component';
+import { descopeAuthGuard } from '@descope/angular-sdk';
+import { LoginComponent } from './login/login.component';
+
+const routes: Routes = [
+	{
+		path: 'step-up',
+		component: ProtectedComponent,
+		canActivate: [descopeAuthGuard],
+		data: { descopeFallbackUrl: '/' }
+	},
+	{ path: 'login', component: LoginComponent },
+	{ path: '**', component: HomeComponent }
+];
+
+@NgModule({
+	imports: [RouterModule.forRoot(routes, { enableTracing: false })],
+	exports: [RouterModule]
+})
+export class AppRoutingModule {}
+```
+
+If not authenticated user tries to access protected route it will be redirected to `descopeFallbackUrl`
+
 ## Code Example
 
 You can find an example react app in the [examples folder](./examples).
