@@ -278,13 +278,13 @@ You can securely communicate with your backend either by using `DescopeIntercept
 
 You can also use the following helper methods on `DescopeAuthService` to assist with various actions managing your JWT.
 
-`getSessionToken()` - Get current session token.
-`getRefreshToken()` - Get current refresh token.
-`isAuthenticated()` - Returns boolean whether user is authenticated
-`refreshSession` - Force a refresh on current session token using an existing valid refresh token.
-`refreshUser` - Force a refresh on current user using an existing valid refresh token.
-`getJwtRoles(token = getSessionToken(), tenant = '')` - Get current roles from an existing session token. Provide tenant id for specific tenant roles.
-`getJwtPermissions(token = getSessionToken(), tenant = '')` - Fet current permissions from an existing session token. Provide tenant id for specific tenant permissions.
+* `getSessionToken()` - Get current session token.
+* `getRefreshToken()` - Get current refresh token.
+* `isAuthenticated()` - Returns boolean whether user is authenticated
+* `refreshSession` - Force a refresh on current session token using an existing valid refresh token.
+* `refreshUser` - Force a refresh on current user using an existing valid refresh token.
+* `getJwtRoles(token = getSessionToken(), tenant = '')` - Get current roles from an existing session token. Provide tenant id for specific tenant roles.
+* `getJwtPermissions(token = getSessionToken(), tenant = '')` - Fet current permissions from an existing session token. Provide tenant id for specific tenant permissions.
 
 ### Refresh token lifecycle
 
