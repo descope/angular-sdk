@@ -48,7 +48,7 @@ You can use **default flows** or **provide flow id** directly to the descope com
 #### 1. Default flows
 
 `app.component.html`
-```html
+```angular2html
 <descope-sign-in-flow
         projectId="<your_project_id>"
         (success)="onSuccess()"
@@ -79,7 +79,7 @@ export class AppComponent {
 
 #### 2. Provide flow id
 
-```html 
+```angular2html
 <descope
         projectId="<your_project_id>"
         flowId="<your_flow_id>"
@@ -142,7 +142,7 @@ export class AppComponent {
 ></descope>
 ```
 
-### Use the `useDescope`, `useSession` and `useUser` hooks in your components in order to get authentication state, user details and utilities
+### Use the `DescopeAuthService` and its exposed fields (`sdk`, `descopeSession$`, `descopeUser$`) to access authentication state, user details and utilities
 
 This can be helpful to implement application-specific logic. Examples:
 
@@ -150,46 +150,117 @@ This can be helpful to implement application-specific logic. Examples:
 - Render user's content
 - Logout button
 
-```js
-import { useDescope, useSession, useUser } from '@descope/react-sdk';
-import { useCallback } from 'react';
-
-const App = () => {
-	// NOTE - `useDescope`, `useSession`, `useUser` should be used inside `AuthProvider` context,
-	// and will throw an exception if this requirement is not met
-	const { isAuthenticated, isSessionLoading } = useSession();
-	const { user, isUserLoading } = useUser();
-	const { logout } = useDescope();
-
-	if (isSessionLoading || isUserLoading) {
-		return <p>Loading...</p>;
-	}
-
-	const handleLogout = useCallback(() => {
-		logout();
-	}, [logout]);
-
-	if (isAuthenticated) {
-		return (
-			<>
-				<p>Hello {user.name}</p>
-				<button onClick={handleLogout}>Logout</button>
-			</>
-		);
-	}
-
-	return <p>You are not logged in</p>;
-};
+`app.component.html`
+```angular2html
+<p *ngIf="!isAuthenticated"> You are not logged in</p>
+<button *ngIf="isAuthenticated" (click)="logout()">LOGOUT</button>
 ```
 
-Note: `useSession` triggers a single request to the Descope backend to attempt to refresh the session. If you **don't** `useSession` on your app, the session will not be refreshed automatically. If your app does not require `useSession`, you can trigger the refresh manually by calling `refresh` from `useDescope` hook. Example:
+`app.component.ts`
+```ts
+import { Component, OnInit } from '@angular/core';
+import { DescopeAuthService } from '@descope/angular-sdk';
 
-```js
-const { refresh } = useDescope();
-useEffect(() => {
-	refresh();
-}, [refresh]);
+@Component({
+    selector: 'app-home',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss']
+})
+export class AppComponent implements OnInit {
+    isAuthenticated: boolean = false;
+
+    constructor(private authService: DescopeAuthService) {}
+
+    ngOnInit() {
+        this.authService.descopeSession$.subscribe((session) => {
+            this.isAuthenticated = session.isAuthenticated;
+        });
+    }
+
+    logout() {
+        this.authService.sdk.logout();
+    }
+}
+
 ```
+
+### Session Refresh
+
+`DescopeAuthService` provides `refreshSession` and `refreshUser` methods that triggers a single request to the Descope backend to attempt to refresh the session or user. You can use them whenever you want to refresh the session/user. For example you can use `APP_INITIALIZER` provider to attempt to refresh session and user on each page refresh:
+
+`app.module.ts`
+```ts
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { DescopeAuthModule, DescopeAuthService } from '@descope/angular-sdk';
+import { zip } from 'rxjs';
+
+export function initializeApp(authService: DescopeAuthService) {
+    return () => zip([authService.refreshSession(), authService.refreshUser()]);
+}
+
+@NgModule({
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        DescopeAuthModule.forRoot({
+            projectId: "<your_project_id>"
+        })
+    ],
+    providers: [
+        {
+            provide: APP_INITIALIZER,
+            useFactory: initializeApp,
+            deps: [DescopeAuthService],
+            multi: true
+        }
+    ],
+    bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+You can also use `DescopeInterceptor` to attempt to refresh session on each HTTP request that gets `401` or `403` response:
+
+`app.module.ts`
+```ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { DescopeAuthModule, DescopeInterceptor } from '@descope/angular-sdk';
+
+@NgModule({
+	declarations: [AppComponent],
+	imports: [
+		BrowserModule,
+		HttpClientModule,
+		DescopeAuthModule.forRoot({
+			projectId: '<your_project_id>',
+			pathsToIntercept: ['/protectedPath']
+		})
+	],
+	providers: [
+		{
+			provide: HTTP_INTERCEPTORS,
+			useClass: DescopeInterceptor,
+			multi: true
+		}
+	],
+	bootstrap: [AppComponent]
+})
+export class AppModule {}
+```
+
+`DescopeInterceptor`:
+* is configured for requests that urls contain one of `pathsToIntercept`
+* attaches session token as `Authorization` header in `Bearer <token>` format
+* if requests get with `401` or `403` it automatically attempts to refresh session
+* if refresh attempt is successful, it automatically retries original request, otherwise it fails with original error
+
+
 
 **For more SDK usage examples refer to [docs](https://docs.descope.com/build/guides/client_sdks/)**
 
