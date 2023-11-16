@@ -152,6 +152,7 @@ This can be helpful to implement application-specific logic. Examples:
 ```angular2html
 <p *ngIf="!isAuthenticated"> You are not logged in</p>
 <button *ngIf="isAuthenticated" (click)="logout()">LOGOUT</button>
+<p>User: {{userName}}</p>
 ```
 
 `app.component.ts`
@@ -167,6 +168,7 @@ import { DescopeAuthService } from '@descope/angular-sdk';
 })
 export class AppComponent implements OnInit {
 	isAuthenticated: boolean = false;
+  userName: string = '';  
 
 	constructor(private authService: DescopeAuthService) {}
 
@@ -174,6 +176,11 @@ export class AppComponent implements OnInit {
 		this.authService.descopeSession$.subscribe((session) => {
 			this.isAuthenticated = session.isAuthenticated;
 		});
+    this.authService.descopeUser$.subscribe((descopeUser) => {
+      if (descopeUser.user) {
+        this.userName = descopeUser.user.name ?? '';
+      }
+    });    
 	}
 
 	logout() {
