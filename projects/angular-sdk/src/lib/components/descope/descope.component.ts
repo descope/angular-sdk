@@ -89,7 +89,7 @@ export class DescopeComponent implements OnInit, OnChanges {
 		if (this.success) {
 			this.webComponent.addEventListener('success', (e: Event) => {
 				from(
-					this.authService.sdk.httpClient.hooks?.afterRequest!(
+					this.authService.descopeSdk.httpClient.hooks?.afterRequest!(
 						// eslint-disable-next-line @typescript-eslint/no-explicit-any
 						{} as any,
 						new Response(JSON.stringify((e as CustomEvent).detail))

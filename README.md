@@ -139,7 +139,7 @@ export class AppComponent {
 ></descope>
 ```
 
-### Use the `DescopeAuthService` and its exposed fields (`sdk`, `descopeSession$`, `descopeUser$`) to access authentication state, user details and utilities
+### Use the `DescopeAuthService` and its exposed fields (`descopeSdk`, `session$`, `user$`) to access authentication state, user details and utilities
 
 This can be helpful to implement application-specific logic. Examples:
 
@@ -173,10 +173,10 @@ export class AppComponent implements OnInit {
 	constructor(private authService: DescopeAuthService) {}
 
 	ngOnInit() {
-		this.authService.descopeSession$.subscribe((session) => {
+		this.authService.session$.subscribe((session) => {
 			this.isAuthenticated = session.isAuthenticated;
 		});
-		this.authService.descopeUser$.subscribe((descopeUser) => {
+		this.authService.user$.subscribe((descopeUser) => {
 			if (descopeUser.user) {
 				this.userName = descopeUser.user.name ?? '';
 			}
@@ -184,7 +184,7 @@ export class AppComponent implements OnInit {
 	}
 
 	logout() {
-		this.authService.sdk.logout();
+		this.authService.descopeSdk.logout();
 	}
 }
 ```

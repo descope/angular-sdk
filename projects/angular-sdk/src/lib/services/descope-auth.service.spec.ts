@@ -159,7 +159,7 @@ describe('DescopeAuthService', () => {
 				of({ ok: true, data: { sessionJwt: 'newToken' } })
 			);
 			// Taking 4 values from stream: first is initial value, next 3 are the result of refreshSession
-			service.descopeSession$.pipe(take(4), toArray()).subscribe({
+			service.session$.pipe(take(4), toArray()).subscribe({
 				next: (result) => {
 					expect(result.slice(1)).toStrictEqual([
 						{
@@ -193,7 +193,7 @@ describe('DescopeAuthService', () => {
 				of({ ok: false, data: { sessionJwt: 'newToken' } })
 			);
 			// Taking 4 values from stream: first is initial value, next 3 are the result of refreshSession
-			service.descopeSession$.pipe(take(4), toArray()).subscribe({
+			service.session$.pipe(take(4), toArray()).subscribe({
 				next: (result) => {
 					expect(result.slice(1)).toStrictEqual([
 						{
@@ -227,7 +227,7 @@ describe('DescopeAuthService', () => {
 		it('correctly handle descopeUser stream when user is successfully refreshed', (done: jest.DoneCallback) => {
 			meSpy.mockReturnValueOnce(of({ ok: true, data: { name: 'test' } }));
 			// Taking 4 values from stream: first is initial value, next 3 are the result of refreshUser
-			service.descopeUser$.pipe(take(4), toArray()).subscribe({
+			service.user$.pipe(take(4), toArray()).subscribe({
 				next: (result) => {
 					expect(result.slice(1)).toStrictEqual([
 						{ isUserLoading: true, user: undefined },
@@ -246,7 +246,7 @@ describe('DescopeAuthService', () => {
 		it('correctly handle descopeUser stream when refresh session failed', (done: jest.DoneCallback) => {
 			meSpy.mockReturnValueOnce(of({ ok: false }));
 			// Taking 3 values from stream: first is initial value, next 2 are the result of refreshUser
-			service.descopeUser$.pipe(take(3), toArray()).subscribe({
+			service.user$.pipe(take(3), toArray()).subscribe({
 				next: (result) => {
 					expect(result.slice(1)).toStrictEqual([
 						{ isUserLoading: true, user: undefined },
