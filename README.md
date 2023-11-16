@@ -255,9 +255,9 @@ export class AppModule {}
 ```
 
 `DescopeInterceptor`:
-* is configured for requests that urls contain one of `pathsToIntercept`
+* is configured for requests that urls contain one of `pathsToIntercept`. If not provided it will be used for all requests.
 * attaches session token as `Authorization` header in `Bearer <token>` format
-* if requests get with `401` or `403` it automatically attempts to refresh session
+* if requests get response with `401` or `403` it automatically attempts to refresh session
 * if refresh attempt is successful, it automatically retries original request, otherwise it fails with original error
 
 
@@ -323,7 +323,7 @@ const routes: Routes = [
 export class AppRoutingModule {}
 ```
 
-If not authenticated user tries to access protected route it will be redirected to `descopeFallbackUrl`
+If not authenticated user tries to access protected route they will be redirected to `descopeFallbackUrl`
 
 ## Code Example
 
