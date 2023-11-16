@@ -115,7 +115,9 @@ export class DescopeAuthService {
 	getSessionToken() {
 		if (isBrowser()) {
 			return (
-				this.descopeSdk as AngularDescopeSDK & { getSessionToken: () => string | null }
+				this.descopeSdk as AngularDescopeSDK & {
+					getSessionToken: () => string | null;
+				}
 			).getSessionToken();
 		}
 		console.warn('Get session token is not supported in SSR');
@@ -125,7 +127,9 @@ export class DescopeAuthService {
 	getRefreshToken() {
 		if (isBrowser()) {
 			return (
-				this.descopeSdk as AngularDescopeSDK & { getRefreshToken: () => string | null }
+				this.descopeSdk as AngularDescopeSDK & {
+					getRefreshToken: () => string | null;
+				}
 			).getRefreshToken();
 		}
 		this.descopeSdk.getJwtPermissions;

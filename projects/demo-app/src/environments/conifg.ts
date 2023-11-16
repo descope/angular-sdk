@@ -9,5 +9,5 @@ export interface Env {
 	descopeTenantId?: string;
 	descopeTelemetryKey?: string;
 	descopeStepUpFlowId?: string;
-  backendUrl?: string;
+	backendUrl?: string;
 }
