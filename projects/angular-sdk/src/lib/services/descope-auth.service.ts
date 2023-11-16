@@ -21,14 +21,14 @@ export type DescopeUser = { user?: UserResponse; isUserLoading: boolean };
 	providedIn: 'root'
 })
 export class DescopeAuthService {
-	public sdk: AngularDescopeSDK;
+	public descopeSdk: AngularDescopeSDK;
 	private readonly sessionSubject: BehaviorSubject<DescopeSession>;
 	private readonly userSubject: BehaviorSubject<DescopeUser>;
-	readonly descopeSession$: Observable<DescopeSession>;
-	readonly descopeUser$: Observable<DescopeUser>;
+	readonly session$: Observable<DescopeSession>;
+	readonly user$: Observable<DescopeUser>;
 
 	constructor(config: DescopeAuthConfig) {
-		this.sdk = observabilify<DescopeSDK>(
+		this.descopeSdk = observabilify<DescopeSDK>(
 			createSdk({
 				...config,
 				persistTokens: isBrowser() as true,
@@ -42,13 +42,13 @@ export class DescopeAuthService {
 			isSessionLoading: false,
 			sessionToken: ''
 		});
-		this.descopeSession$ = this.sessionSubject.asObservable();
+		this.session$ = this.sessionSubject.asObservable();
 		this.userSubject = new BehaviorSubject<DescopeUser>({
 			isUserLoading: false
 		});
-		this.descopeUser$ = this.userSubject.asObservable();
-		this.sdk.onSessionTokenChange(this.setSession.bind(this));
-		this.sdk.onUserChange(this.setUser.bind(this));
+		this.user$ = this.userSubject.asObservable();
+		this.descopeSdk.onSessionTokenChange(this.setSession.bind(this));
+		this.descopeSdk.onUserChange(this.setUser.bind(this));
 	}
 
 	refreshSession() {
@@ -57,7 +57,7 @@ export class DescopeAuthService {
 			...beforeRefreshSession,
 			isSessionLoading: true
 		});
-		return this.sdk.refresh().pipe(
+		return this.descopeSdk.refresh().pipe(
 			tap((data) => {
 				const afterRequestSession = this.sessionSubject.value;
 				if (data.ok && data.data) {
@@ -90,7 +90,7 @@ export class DescopeAuthService {
 			...beforeRefreshUser,
 			isUserLoading: true
 		});
-		return this.sdk.me().pipe(
+		return this.descopeSdk.me().pipe(
 			tap((data) => {
 				const afterRequestUser = this.userSubject.value;
 				if (data.data) {
@@ -115,7 +115,7 @@ export class DescopeAuthService {
 	getSessionToken() {
 		if (isBrowser()) {
 			return (
-				this.sdk as AngularDescopeSDK & { getSessionToken: () => string | null }
+				this.descopeSdk as AngularDescopeSDK & { getSessionToken: () => string | null }
 			).getSessionToken();
 		}
 		console.warn('Get session token is not supported in SSR');
@@ -125,10 +125,10 @@ export class DescopeAuthService {
 	getRefreshToken() {
 		if (isBrowser()) {
 			return (
-				this.sdk as AngularDescopeSDK & { getRefreshToken: () => string | null }
+				this.descopeSdk as AngularDescopeSDK & { getRefreshToken: () => string | null }
 			).getRefreshToken();
 		}
-		this.sdk.getJwtPermissions;
+		this.descopeSdk.getJwtPermissions;
 		console.warn('Get refresh token is not supported in SSR');
 		return '';
 	}
@@ -138,7 +138,7 @@ export class DescopeAuthService {
 			console.error('Could not get JWT Permissions - not authenticated');
 			return [];
 		}
-		return this.sdk.getJwtPermissions(token, tenant);
+		return this.descopeSdk.getJwtPermissions(token, tenant);
 	}
 
 	getJwtRoles(token = this.getSessionToken(), tenant?: string) {
@@ -146,7 +146,7 @@ export class DescopeAuthService {
 			console.error('Could not get JWT Roles - not authenticated');
 			return [];
 		}
-		return this.sdk.getJwtRoles(token, tenant);
+		return this.descopeSdk.getJwtRoles(token, tenant);
 	}
 
 	isAuthenticated() {

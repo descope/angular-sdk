@@ -24,13 +24,13 @@ export class HomeComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
-		this.authService.descopeSession$.subscribe((session) => {
+		this.authService.session$.subscribe((session) => {
 			this.isAuthenticated = session.isAuthenticated;
 			if (session.sessionToken) {
 				this.roles = this.authService.getJwtRoles(session.sessionToken);
 			}
 		});
-		this.authService.descopeUser$.subscribe((descopeUser) => {
+		this.authService.user$.subscribe((descopeUser) => {
 			if (descopeUser.user) {
 				this.userName = descopeUser.user.name ?? '';
 			}
@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
 	}
 
 	logout() {
-		this.authService.sdk.logout();
+		this.authService.descopeSdk.logout();
 	}
 
 	fetchData() {
