@@ -327,20 +327,22 @@ If not authenticated user tries to access protected route it will be redirected 
 
 ## Code Example
 
-You can find an example react app in the [examples folder](./examples).
+You can find an example angular app in the [examples folder](./projects/demo-app).
 
 ### Setup
 
-To run the examples, set your `Project ID` by setting the `DESCOPE_PROJECT_ID` env var or directly
-in the sample code.
+To run the examples, create `environment.development.ts` file in `environments` folder.
+
+```ts
+import {Env} from "./conifg";
+
+export const environment: Env = {
+  descopeProjectId: "<your_project_id>",
+};
+
+```
 Find your Project ID in the [Descope console](https://app.descope.com/settings/project).
 
-```bash
-export DESCOPE_PROJECT_ID=<Project-ID>
-```
-
-Alternatively, put the environment variable in `.env` file in the project root directory.
-See bellow for an `.env` file template with more information.
 
 ### Run Example
 
@@ -354,42 +356,37 @@ npm i && npm start
 
 See the following table for customization environment variables for the example app:
 
-| Env Variable            | Description                                                                                                   | Default value     |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------- |
-| DESCOPE_FLOW_ID         | Which flow ID to use in the login page                                                                        | **sign-up-or-in** |
-| DESCOPE_BASE_URL        | Custom Descope base URL                                                                                       | None              |
-| DESCOPE_THEME           | Flow theme                                                                                                    | None              |
-| DESCOPE_LOCALE          | Flow locale                                                                                                   | Browser's locale  |
-| DESCOPE_REDIRECT_URL    | Flow redirect URL for OAuth/SSO/Magic Link/Enchanted Link                                                     | None              |
-| DESCOPE_TENANT_ID       | Flow tenant ID for SSO/SAML                                                                                   | None              |
-| DESCOPE_DEBUG_MODE      | **"true"** - Enable debugger</br>**"false"** - Disable flow debugger                                          | None              |
-| DESCOPE_STEP_UP_FLOW_ID | Step up flow ID to show to logged in user (via button). e.g. "step-up". Button will be hidden if not provided | None              |
-| DESCOPE_TELEMETRY_KEY   | **String** - Telemetry public key provided by Descope Inc                                                     | None              |
-|                         |                                                                                                               |                   |
+| Env Variable        | Description                                                                                                   | Default value     |
+|---------------------|---------------------------------------------------------------------------------------------------------------|-------------------|
+| descopeFlowId       | Which flow ID to use in the login page                                                                        | **sign-up-or-in** |
+| descopeBaseUrl      | Custom Descope base URL                                                                                       | None              |
+| descopeTheme        | Flow theme                                                                                                    | None              |
+| descopeLocale       | Flow locale                                                                                                   | Browser's locale  |
+| descopeRedirectUrl  | Flow redirect URL for OAuth/SSO/Magic Link/Enchanted Link                                                     | None              |
+| descopeTenantId     | Flow tenant ID for SSO/SAML                                                                                   | None              |
+| descopeDebugMode    | **"true"** - Enable debugger</br>**"false"** - Disable flow debugger                                          | None              |
+| descopeStepUpFlowId | Step up flow ID to show to logged in user (via button). e.g. "step-up". Button will be hidden if not provided | None              |
+| descopeTelemetryKey | **String** - Telemetry public key provided by Descope Inc                                                     | None              |
+| descopeBackendUrl   | Url to your test backend app in case you want to test e2e                                                     | None              |
 
-Example for `.env` file template:
+Example `environment.development.ts` file:
 
-```
-# Your project ID
-DESCOPE_PROJECT_ID="<Project-ID>"
-# Login flow ID
-DESCOPE_FLOW_ID=""
-# Descope base URL
-DESCOPE_BASE_URL=""
-# Set flow theme to dark
-DESCOPE_THEME=dark
-# Set flow locale, default is browser's locale
-DESCOPE_LOCALE=""
-# Flow Redirect URL
-DESCOPE_REDIRECT_URL=""
-# Tenant ID
-DESCOPE_TENANT_ID=""
-# Enable debugger
-DESCOPE_DEBUG_MODE=true
-# Show step-up flow for logged in user
-DESCOPE_STEP_UP_FLOW_ID=step-up
-# Telemetry key
-DESCOPE_TELEMETRY_KEY=""
+```ts
+import {Env} from "./conifg";
+
+export const environment: Env = {
+  descopeProjectId: "<your_project_id>",
+  descopeBaseUrl: '<your_base_url>',
+  descopeFlowId: 'sign-in',
+  descopeDebugMode: false,
+  descopeTheme: 'os',
+  descopeLocale: 'en_US',
+  descopeRedirectUrl: '<your_redirect_url>',
+  descopeTelemetryKey: '<your_telemetry_key>',
+  descopeStepUpFlowId: 'step-up',
+  descopeBackendUrl: 'http://localhost:8080/protected',
+};
+
 ```
 
 ## Learn More
