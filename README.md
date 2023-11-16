@@ -220,6 +220,7 @@ export function initializeApp(authService: DescopeAuthService) {
 export class AppModule {}
 ```
 
+### Descope Interceptor
 You can also use `DescopeInterceptor` to attempt to refresh session on each HTTP request that gets `401` or `403` response:
 
 `app.module.ts`
