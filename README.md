@@ -81,64 +81,61 @@ export class AppComponent {
 
 ```angular2html
 <descope
-        projectId="<your_project_id>"
-        flowId="<your_flow_id>"
-        (success)="<your_success_function>"
-        (error)="<your_error_function>"
-        // theme can be "light", "dark" or "os", which auto select a theme based on the OS theme. Default is "light"
-        // theme="dark"
+     projectId="<your_project_id>"
+     flowId="<your_flow_id>"
+     (success)="<your_success_function>"
+     (error)="<your_error_function>"
+<!-- theme can be "light", "dark" or "os", which auto select a theme based on the OS theme. Default is "light"
+     theme="dark"    
 
-        // locale can be any supported locale which the flow's screen translated to, if not provided, the locale is taken from the browser's locale.
-        // locale="en"
+     locale can be any supported locale which the flow's screen translated to, if not provided, the locale is taken from the browser's locale.    
+     locale="en"    
 
-        // debug can be set to true to enable debug mode
-        // debug="true"
+     debug can be set to true to enable debug mode    
+     debug="true"    
 
-        // tenant ID for SSO (SAML) login. If not provided, Descope will use the domain of available email to choose the tenant
-        // tenant=<tenantId>
+     tenant ID for SSO (SAML) login. If not provided, Descope will use the domain of available email to choose the tenant    
+     tenant=<tenantId>    
 
-        // Redirect URL for OAuth and SSO (will be used when redirecting back from the OAuth provider / IdP), or for "Magic Link" and "Enchanted Link" (will be used as a link in the message sent to the the user)
-        // redirectUrl=<redirectUrl>
+     Redirect URL for OAuth and SSO (will be used when redirecting back from the OAuth provider / IdP), or for "Magic Link" and "Enchanted Link" (will be used as a link in the message sent to the the user)    
+     redirectUrl=<redirectUrl>    
 
-        // telemetryKey=<telemtry_key>
+     telemetryKey=<telemtry_key>    
 
-        // autoFocus can be true, false or "skipFirstScreen". Default is true.
-        // - true: automatically focus on the first input of each screen
-        // - false: do not automatically focus on screen's inputs
-        // - "skipFirstScreen": automatically focus on the first input of each screen, except first screen
-        // autoFocus="skipFirstScreen"
+     autoFocus can be true, false or "skipFirstScreen". Default is true.    
+     - true: automatically focus on the first input of each screen    
+     - false: do not automatically focus on screen's inputs    
+     - "skipFirstScreen": automatically focus on the first input of each screen, except first screen    
+     autoFocus="skipFirstScreen"    
 
-        // errorTransformer is a function that receives an error object and returns a string. The returned string will be displayed to the user.
-        // NOTE: errorTransformer is not required. If not provided, the error object will be displayed as is.
-        // Example:
-        // errorTransformer = (error: { text: string; type: string }): string => {
-        //     const translationMap: { [key: string]: string } = {
-        //         SAMLStartFailed: 'Failed to start SAML flow'
-        //     };
-        //     return translationMap[error.type] || error.text;
-        // };
-        // ...
-        // errorTransformer={errorTransformer}
-        // ...
+     errorTransformer is a function that receives an error object and returns a string. The returned string will be displayed to the user.    
+     NOTE: errorTransformer is not required. If not provided, the error object will be displayed as is.    
+     Example:    
+     errorTransformer = (error: { text: string; type: string }): string => {    
+         const translationMap: { [key: string]: string } = {    
+             SAMLStartFailed: 'Failed to start SAML flow'    
+         };    
+         return translationMap[error.type] || error.text;    
+     };    
+     ...    
+     errorTransformer={errorTransformer}    
 
-
-        // logger is an object describing how to log info, warn and errors.
-        // NOTE: logger is not required. If not provided, the logs will be printed to the console.
-        // Example:
-        // const logger = {
-        // 	info: (title: string, description: string, state: any) => {
-        //      console.log(title, description, JSON.stringify(state));
-        //  },
-        // 	warn: (title: string, description: string) => {
-        //      console.warn(title);
-        //  },
-        // 	error: (title: string, description: string) => {
-        //      console.error('OH NOO');
-        //  },
-        // }
-        // ...
-        // logger={logger}
-        // ...
+     logger is an object describing how to log info, warn and errors.    
+     NOTE: logger is not required. If not provided, the logs will be printed to the console.    
+     Example:    
+     const logger = {    
+     	info: (title: string, description: string, state: any) => {    
+          console.log(title, description, JSON.stringify(state));    
+      },    
+     	warn: (title: string, description: string) => {    
+          console.warn(title);    
+      },    
+     	error: (title: string, description: string) => {    
+          console.error('OH NOO');    
+      },    
+     }    
+     ...    
+     logger={logger}-->
 ></descope>
 ```
 
