@@ -20,7 +20,8 @@ npm i --save @descope/angular-sdk
 ### Import `DescopeAuthModule` to your application
 
 `app.module.ts`
-```ts 
+
+```ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -28,17 +29,16 @@ import { AppComponent } from './app.component';
 import { DescopeAuthModule } from '@descope/angular-sdk';
 
 @NgModule({
-    declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        DescopeAuthModule.forRoot({
-            projectId: "<your_project_id>"
-        })
-    ],
-    bootstrap: [AppComponent]
+	declarations: [AppComponent],
+	imports: [
+		BrowserModule,
+		DescopeAuthModule.forRoot({
+			projectId: '<your_project_id>'
+		})
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule {}
-
 ```
 
 ### Use Descope to render specific flow
@@ -48,6 +48,7 @@ You can use **default flows** or **provide flow id** directly to the descope com
 #### 1. Default flows
 
 `app.component.html`
+
 ```angular2html
 <descope-sign-in-flow
         projectId="<your_project_id>"
@@ -57,6 +58,7 @@ You can use **default flows** or **provide flow id** directly to the descope com
 ```
 
 `app.component.ts`
+
 ```ts
 import { Component } from '@angular/core';
 
@@ -65,7 +67,6 @@ import { Component } from '@angular/core';
 	templateUrl: './app.component.html'
 })
 export class AppComponent {
-
 	onSuccess() {
 		console.log('SUCCESSFULLY LOGGED IN FROM WEB COMPONENT');
 	}
@@ -74,7 +75,6 @@ export class AppComponent {
 		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT');
 	}
 }
-
 ```
 
 #### 2. Provide flow id
@@ -87,27 +87,27 @@ export class AppComponent {
         (error)="<your_error_function>"
         // theme can be "light", "dark" or "os", which auto select a theme based on the OS theme. Default is "light"
         // theme="dark"
-        
+
         // locale can be any supported locale which the flow's screen translated to, if not provided, the locale is taken from the browser's locale.
         // locale="en"
-        
+
         // debug can be set to true to enable debug mode
         // debug="true"
-        
+
         // tenant ID for SSO (SAML) login. If not provided, Descope will use the domain of available email to choose the tenant
         // tenant=<tenantId>
 
         // Redirect URL for OAuth and SSO (will be used when redirecting back from the OAuth provider / IdP), or for "Magic Link" and "Enchanted Link" (will be used as a link in the message sent to the the user)
         // redirectUrl=<redirectUrl>
-    
+
         // telemetryKey=<telemtry_key>
-    
+
         // autoFocus can be true, false or "skipFirstScreen". Default is true.
         // - true: automatically focus on the first input of each screen
         // - false: do not automatically focus on screen's inputs
         // - "skipFirstScreen": automatically focus on the first input of each screen, except first screen
         // autoFocus="skipFirstScreen"
-    
+
         // errorTransformer is a function that receives an error object and returns a string. The returned string will be displayed to the user.
         // NOTE: errorTransformer is not required. If not provided, the error object will be displayed as is.
         // Example:
@@ -120,7 +120,7 @@ export class AppComponent {
         // ...
         // errorTransformer={errorTransformer}
         // ...
-    
+
 
         // logger is an object describing how to log info, warn and errors.
         // NOTE: logger is not required. If not provided, the logs will be printed to the console.
@@ -151,37 +151,38 @@ This can be helpful to implement application-specific logic. Examples:
 - Logout button
 
 `app.component.html`
+
 ```angular2html
 <p *ngIf="!isAuthenticated"> You are not logged in</p>
 <button *ngIf="isAuthenticated" (click)="logout()">LOGOUT</button>
 ```
 
 `app.component.ts`
+
 ```ts
 import { Component, OnInit } from '@angular/core';
 import { DescopeAuthService } from '@descope/angular-sdk';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+	selector: 'app-home',
+	templateUrl: './app.component.html',
+	styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-    isAuthenticated: boolean = false;
+	isAuthenticated: boolean = false;
 
-    constructor(private authService: DescopeAuthService) {}
+	constructor(private authService: DescopeAuthService) {}
 
-    ngOnInit() {
-        this.authService.descopeSession$.subscribe((session) => {
-            this.isAuthenticated = session.isAuthenticated;
-        });
-    }
+	ngOnInit() {
+		this.authService.descopeSession$.subscribe((session) => {
+			this.isAuthenticated = session.isAuthenticated;
+		});
+	}
 
-    logout() {
-        this.authService.sdk.logout();
-    }
+	logout() {
+		this.authService.sdk.logout();
+	}
 }
-
 ```
 
 ### Session Refresh
@@ -189,6 +190,7 @@ export class AppComponent implements OnInit {
 `DescopeAuthService` provides `refreshSession` and `refreshUser` methods that triggers a single request to the Descope backend to attempt to refresh the session or user. You can use them whenever you want to refresh the session/user. For example you can use `APP_INITIALIZER` provider to attempt to refresh session and user on each page refresh:
 
 `app.module.ts`
+
 ```ts
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -197,26 +199,26 @@ import { DescopeAuthModule, DescopeAuthService } from '@descope/angular-sdk';
 import { zip } from 'rxjs';
 
 export function initializeApp(authService: DescopeAuthService) {
-    return () => zip([authService.refreshSession(), authService.refreshUser()]);
+	return () => zip([authService.refreshSession(), authService.refreshUser()]);
 }
 
 @NgModule({
-    declarations: [AppComponent],
-    imports: [
-        BrowserModule,
-        DescopeAuthModule.forRoot({
-            projectId: "<your_project_id>"
-        })
-    ],
-    providers: [
-        {
-            provide: APP_INITIALIZER,
-            useFactory: initializeApp,
-            deps: [DescopeAuthService],
-            multi: true
-        }
-    ],
-    bootstrap: [AppComponent]
+	declarations: [AppComponent],
+	imports: [
+		BrowserModule,
+		DescopeAuthModule.forRoot({
+			projectId: '<your_project_id>'
+		})
+	],
+	providers: [
+		{
+			provide: APP_INITIALIZER,
+			useFactory: initializeApp,
+			deps: [DescopeAuthService],
+			multi: true
+		}
+	],
+	bootstrap: [AppComponent]
 })
 export class AppModule {}
 ```
@@ -224,6 +226,7 @@ export class AppModule {}
 You can also use `DescopeInterceptor` to attempt to refresh session on each HTTP request that gets `401` or `403` response:
 
 `app.module.ts`
+
 ```ts
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -255,12 +258,11 @@ export class AppModule {}
 ```
 
 `DescopeInterceptor`:
-* is configured for requests that urls contain one of `pathsToIntercept`. If not provided it will be used for all requests.
-* attaches session token as `Authorization` header in `Bearer <token>` format
-* if requests get response with `401` or `403` it automatically attempts to refresh session
-* if refresh attempt is successful, it automatically retries original request, otherwise it fails with original error
 
-
+- is configured for requests that urls contain one of `pathsToIntercept`. If not provided it will be used for all requests.
+- attaches session token as `Authorization` header in `Bearer <token>` format
+- if requests get response with `401` or `403` it automatically attempts to refresh session
+- if refresh attempt is successful, it automatically retries original request, otherwise it fails with original error
 
 **For more SDK usage examples refer to [docs](https://docs.descope.com/build/guides/client_sdks/)**
 
@@ -278,13 +280,13 @@ You can securely communicate with your backend either by using `DescopeIntercept
 
 You can also use the following helper methods on `DescopeAuthService` to assist with various actions managing your JWT.
 
-* `getSessionToken()` - Get current session token.
-* `getRefreshToken()` - Get current refresh token.
-* `isAuthenticated()` - Returns boolean whether user is authenticated
-* `refreshSession` - Force a refresh on current session token using an existing valid refresh token.
-* `refreshUser` - Force a refresh on current user using an existing valid refresh token.
-* `getJwtRoles(token = getSessionToken(), tenant = '')` - Get current roles from an existing session token. Provide tenant id for specific tenant roles.
-* `getJwtPermissions(token = getSessionToken(), tenant = '')` - Fet current permissions from an existing session token. Provide tenant id for specific tenant permissions.
+- `getSessionToken()` - Get current session token.
+- `getRefreshToken()` - Get current refresh token.
+- `isAuthenticated()` - Returns boolean whether user is authenticated
+- `refreshSession` - Force a refresh on current session token using an existing valid refresh token.
+- `refreshUser` - Force a refresh on current user using an existing valid refresh token.
+- `getJwtRoles(token = getSessionToken(), tenant = '')` - Get current roles from an existing session token. Provide tenant id for specific tenant roles.
+- `getJwtPermissions(token = getSessionToken(), tenant = '')` - Fet current permissions from an existing session token. Provide tenant id for specific tenant permissions.
 
 ### Refresh token lifecycle
 
@@ -334,15 +336,14 @@ You can find an example angular app in the [examples folder](./projects/demo-app
 To run the examples, create `environment.development.ts` file in `environments` folder.
 
 ```ts
-import {Env} from "./conifg";
+import { Env } from './conifg';
 
 export const environment: Env = {
-  descopeProjectId: "<your_project_id>",
+	descopeProjectId: '<your_project_id>'
 };
-
 ```
-Find your Project ID in the [Descope console](https://app.descope.com/settings/project).
 
+Find your Project ID in the [Descope console](https://app.descope.com/settings/project).
 
 ### Run Example
 
@@ -357,7 +358,7 @@ npm i && npm start
 See the following table for customization environment variables for the example app:
 
 | Env Variable        | Description                                                                                                   | Default value     |
-|---------------------|---------------------------------------------------------------------------------------------------------------|-------------------|
+| ------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------- |
 | descopeFlowId       | Which flow ID to use in the login page                                                                        | **sign-up-or-in** |
 | descopeBaseUrl      | Custom Descope base URL                                                                                       | None              |
 | descopeTheme        | Flow theme                                                                                                    | None              |
@@ -372,21 +373,20 @@ See the following table for customization environment variables for the example 
 Example `environment.development.ts` file:
 
 ```ts
-import {Env} from "./conifg";
+import { Env } from './conifg';
 
 export const environment: Env = {
-  descopeProjectId: "<your_project_id>",
-  descopeBaseUrl: '<your_base_url>',
-  descopeFlowId: 'sign-in',
-  descopeDebugMode: false,
-  descopeTheme: 'os',
-  descopeLocale: 'en_US',
-  descopeRedirectUrl: '<your_redirect_url>',
-  descopeTelemetryKey: '<your_telemetry_key>',
-  descopeStepUpFlowId: 'step-up',
-  descopeBackendUrl: 'http://localhost:8080/protected',
+	descopeProjectId: '<your_project_id>',
+	descopeBaseUrl: '<your_base_url>',
+	descopeFlowId: 'sign-in',
+	descopeDebugMode: false,
+	descopeTheme: 'os',
+	descopeLocale: 'en_US',
+	descopeRedirectUrl: '<your_redirect_url>',
+	descopeTelemetryKey: '<your_telemetry_key>',
+	descopeStepUpFlowId: 'step-up',
+	descopeBackendUrl: 'http://localhost:8080/protected'
 };
-
 ```
 
 ## Learn More
