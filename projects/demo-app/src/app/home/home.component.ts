@@ -15,7 +15,7 @@ export class HomeComponent implements OnInit {
 	roles: string[] = [];
 	userName: string = '';
 	stepUpConfigured = (environment.descopeStepUpFlowId ?? '').length > 0;
-	backendUrl = environment.descopeBackendUrl ?? '';
+	backendUrl = environment.backendUrl ?? '';
 
 	constructor(
 		private router: Router,
