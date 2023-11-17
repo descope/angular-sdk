@@ -8,7 +8,6 @@ import { environment } from '../../environments/environment';
 	styleUrls: ['./protected.component.scss']
 })
 export class ProtectedComponent {
-	projectId: string = environment.descopeProjectId;
 	flowId = environment.descopeStepUpFlowId ?? 'sign-up-or-in';
 	theme = (environment.descopeTheme as 'light' | 'dark' | 'os') ?? 'os';
 	telemetryKey = environment.descopeTelemetryKey ?? '';

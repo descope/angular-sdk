@@ -7,7 +7,6 @@ import { Router } from '@angular/router';
 	templateUrl: './login.component.html'
 })
 export class LoginComponent {
-	projectId: string = environment.descopeProjectId;
 	flowId = environment.descopeFlowId ?? 'sign-up-or-in';
 	theme = (environment.descopeTheme as 'light' | 'dark' | 'os') ?? 'os';
 	telemetryKey = environment.descopeTelemetryKey ?? '';
