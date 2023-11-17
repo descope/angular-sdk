@@ -12,20 +12,19 @@ import { SignUpOrInFlowComponent } from './components/sign-up-or-in-flow/sign-up
 import { DescopeAuthConfig } from './types/types';
 
 @NgModule({
-	imports: [],
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  imports: [
+    DescopeComponent,
+    SignInFlowComponent,
+    SignUpFlowComponent,
+    SignUpOrInFlowComponent
+  ],
 	exports: [
 		DescopeComponent,
 		SignInFlowComponent,
 		SignUpFlowComponent,
 		SignUpOrInFlowComponent
 	],
-	declarations: [
-		DescopeComponent,
-		SignInFlowComponent,
-		SignUpFlowComponent,
-		SignUpOrInFlowComponent
-	]
 })
 export class DescopeAuthModule {
 	constructor(@Optional() @SkipSelf() parentModule?: DescopeAuthModule) {

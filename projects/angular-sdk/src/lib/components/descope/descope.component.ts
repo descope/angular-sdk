@@ -15,6 +15,7 @@ import { baseHeaders } from '../../utils/constants';
 
 @Component({
 	selector: 'descope[projectId][flowId]',
+  standalone: true,
 	template: ''
 })
 export class DescopeComponent implements OnInit, OnChanges {

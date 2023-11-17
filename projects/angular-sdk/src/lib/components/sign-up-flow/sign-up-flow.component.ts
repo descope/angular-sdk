@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ILogger } from '@descope/web-component';
+import {DescopeComponent} from "../descope/descope.component";
 
 @Component({
 	selector: 'descope-sign-up-flow[projectId]',
-	templateUrl: './sign-up-flow.component.html'
+  standalone: true,
+  imports: [DescopeComponent],
+  templateUrl: './sign-up-flow.component.html'
 })
 export class SignUpFlowComponent {
 	@Input() projectId: string;
