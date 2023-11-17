@@ -40,7 +40,6 @@ describe('DescopeComponent', () => {
 		});
 
 		TestBed.configureTestingModule({
-			declarations: [DescopeComponent],
 			schemas: [CUSTOM_ELEMENTS_SCHEMA],
 			providers: [
 				DescopeAuthConfig,
