@@ -13,18 +13,18 @@ import { DescopeAuthConfig } from './types/types';
 
 @NgModule({
 	schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  imports: [
-    DescopeComponent,
-    SignInFlowComponent,
-    SignUpFlowComponent,
-    SignUpOrInFlowComponent
-  ],
-	exports: [
+	imports: [
 		DescopeComponent,
 		SignInFlowComponent,
 		SignUpFlowComponent,
 		SignUpOrInFlowComponent
 	],
+	exports: [
+		DescopeComponent,
+		SignInFlowComponent,
+		SignUpFlowComponent,
+		SignUpOrInFlowComponent
+	]
 })
 export class DescopeAuthModule {
 	constructor(@Optional() @SkipSelf() parentModule?: DescopeAuthModule) {

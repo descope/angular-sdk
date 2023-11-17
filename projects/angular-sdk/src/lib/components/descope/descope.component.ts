@@ -12,11 +12,11 @@ import DescopeWc, { ILogger } from '@descope/web-component';
 import { DescopeAuthService } from '../../services/descope-auth.service';
 import { from } from 'rxjs';
 import { baseHeaders } from '../../utils/constants';
-import {DescopeAuthConfig} from "../../types/types";
+import { DescopeAuthConfig } from '../../types/types';
 
 @Component({
 	selector: 'descope[flowId]',
-  standalone: true,
+	standalone: true,
 	template: ''
 })
 export class DescopeComponent implements OnInit, OnChanges {
@@ -43,10 +43,10 @@ export class DescopeComponent implements OnInit, OnChanges {
 	constructor(
 		private elementRef: ElementRef,
 		private authService: DescopeAuthService,
-    descopeConfig: DescopeAuthConfig,
+		descopeConfig: DescopeAuthConfig
 	) {
-    this.projectId = descopeConfig.projectId;
-  }
+		this.projectId = descopeConfig.projectId;
+	}
 
 	ngOnInit() {
 		DescopeWc.sdkConfigOverrides = { baseHeaders };

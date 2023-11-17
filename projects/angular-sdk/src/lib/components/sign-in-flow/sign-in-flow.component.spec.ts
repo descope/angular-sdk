@@ -3,29 +3,29 @@ import { SignInFlowComponent } from './sign-in-flow.component';
 import { ngMocks } from 'ng-mocks';
 import { DescopeComponent } from '../descope/descope.component';
 import { DescopeAuthConfig } from '../../types/types';
-import createSdk from "@descope/web-js-sdk";
+import createSdk from '@descope/web-js-sdk';
 import mocked = jest.mocked;
 
 jest.mock('@descope/web-js-sdk');
 jest.mock('@descope/web-component', () => {
-  return jest.fn(() => {
-    // Create a mock DOM element
-    return document.createElement('descope-wc');
-  });
+	return jest.fn(() => {
+		// Create a mock DOM element
+		return document.createElement('descope-wc');
+	});
 });
 
 describe('SignInFlowComponent', () => {
 	let component: SignInFlowComponent;
 	let fixture: ComponentFixture<SignInFlowComponent>;
-  let mockedCreateSdk: jest.Mock;
+	let mockedCreateSdk: jest.Mock;
 
-  beforeEach(() => {
-    mockedCreateSdk = mocked(createSdk);
+	beforeEach(() => {
+		mockedCreateSdk = mocked(createSdk);
 
-    mockedCreateSdk.mockReturnValue({
-      onSessionTokenChange: jest.fn(),
-      onUserChange: jest.fn(),
-    });
+		mockedCreateSdk.mockReturnValue({
+			onSessionTokenChange: jest.fn(),
+			onUserChange: jest.fn()
+		});
 
 		TestBed.configureTestingModule({
 			providers: [

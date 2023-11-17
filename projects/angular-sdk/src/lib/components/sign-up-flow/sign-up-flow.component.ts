@@ -1,13 +1,13 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ILogger } from '@descope/web-component';
-import {DescopeComponent} from "../descope/descope.component";
-import {DescopeAuthConfig} from "../../types/types";
+import { DescopeComponent } from '../descope/descope.component';
+import { DescopeAuthConfig } from '../../types/types';
 
 @Component({
 	selector: 'descope-sign-up-flow',
-  standalone: true,
-  imports: [DescopeComponent],
-  templateUrl: './sign-up-flow.component.html'
+	standalone: true,
+	imports: [DescopeComponent],
+	templateUrl: './sign-up-flow.component.html'
 })
 export class SignUpFlowComponent {
 	projectId: string;
@@ -26,7 +26,7 @@ export class SignUpFlowComponent {
 	@Output() success: EventEmitter<void> = new EventEmitter<void>();
 	@Output() error: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(descopeConfig: DescopeAuthConfig) {
-    this.projectId = descopeConfig.projectId;
-  }
+	constructor(descopeConfig: DescopeAuthConfig) {
+		this.projectId = descopeConfig.projectId;
+	}
 }
