@@ -1,9 +1,9 @@
 import { inject } from '@angular/core';
 import {
-  HttpErrorResponse,
-  HttpHandlerFn,
-  HttpInterceptorFn,
-  HttpRequest
+	HttpErrorResponse,
+	HttpHandlerFn,
+	HttpInterceptorFn,
+	HttpRequest
 } from '@angular/common/http';
 import { throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -11,8 +11,8 @@ import { DescopeAuthService } from './descope-auth.service';
 import { DescopeAuthConfig } from '../types/types';
 
 export const descopeInterceptor: HttpInterceptorFn = (request, next) => {
-  const config = inject(DescopeAuthConfig);
-  const authService = inject(DescopeAuthService);
+	const config = inject(DescopeAuthConfig);
+	const authService = inject(DescopeAuthService);
 
 	function refreshAndRetry(
 		request: HttpRequest<unknown>,
@@ -39,8 +39,9 @@ export const descopeInterceptor: HttpInterceptorFn = (request, next) => {
 	function shouldIntercept(request: HttpRequest<unknown>): boolean {
 		return (
 			(config.pathsToIntercept?.length === 0 ||
-				config.pathsToIntercept?.some((path) => request.url.includes(path)))
-		) ?? true;
+				config.pathsToIntercept?.some((path) => request.url.includes(path))) ??
+			true
+		);
 	}
 
 	function addTokenToRequest(
@@ -73,4 +74,3 @@ export const descopeInterceptor: HttpInterceptorFn = (request, next) => {
 		return next(request);
 	}
 };
-

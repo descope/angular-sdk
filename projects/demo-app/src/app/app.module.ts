@@ -11,12 +11,11 @@ import { DescopeAuthService } from 'projects/angular-sdk/src/public-api';
 import { zip } from 'rxjs';
 import { LoginComponent } from './login/login.component';
 import {
-	HTTP_INTERCEPTORS,
 	HttpClientModule,
 	provideHttpClient,
 	withInterceptors
 } from '@angular/common/http';
-import { DescopeAuthConfig, descopeInterceptor } from 'angular-sdk';
+import { descopeInterceptor } from '../../../angular-sdk/src/lib/services/descope.interceptor';
 
 export function initializeApp(authService: DescopeAuthService) {
 	return () => zip([authService.refreshSession(), authService.refreshUser()]);
@@ -34,26 +33,18 @@ export function initializeApp(authService: DescopeAuthService) {
 		AppRoutingModule,
 		HttpClientModule,
 		DescopeAuthModule.forRoot({
-      projectId: environment.descopeProjectId,
-      baseUrl: environment.descopeBaseUrl || '',
-      sessionTokenViaCookie: false
-    })
+			projectId: environment.descopeProjectId,
+			baseUrl: environment.descopeBaseUrl || '',
+			sessionTokenViaCookie: false
+		})
 	],
 	providers: [
 		{
-			provide: DescopeAuthConfig,
-			useValue: {
-				projectId: environment.descopeProjectId,
-				baseUrl: environment.descopeBaseUrl || '',
-				sessionTokenViaCookie: false
-			}
+			provide: APP_INITIALIZER,
+			useFactory: initializeApp,
+			deps: [DescopeAuthService],
+			multi: true
 		},
-		// {
-		// 	provide: APP_INITIALIZER,
-		// 	useFactory: initializeApp,
-		// 	deps: [DescopeAuthService],
-		// 	multi: true
-		// },
 		provideHttpClient(withInterceptors([descopeInterceptor]))
 	],
 	bootstrap: [AppComponent]
