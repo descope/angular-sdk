@@ -68,7 +68,6 @@ You can use **default flows** or **provide flow id** directly to the descope com
 
 ```angular2html
 <descope-sign-in-flow
-        projectId="<your_project_id>"
         (success)="onSuccess()"
         (error)="onError()"
 ></descope-sign-in-flow>
@@ -98,7 +97,6 @@ export class AppComponent {
 
 ```angular2html
 <descope
-     projectId="<your_project_id>"
      flowId="<your_flow_id>"
      (success)="<your_success_function>"
      (error)="<your_error_function>"
