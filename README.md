@@ -17,7 +17,7 @@ npm i --save @descope/angular-sdk
 
 ## Usage
 
-### Import `DescopeAuthModule` to your application
+### NgModule - Import `DescopeAuthModule` to your application
 
 `app.module.ts`
 
@@ -41,6 +41,22 @@ import { DescopeAuthModule } from '@descope/angular-sdk';
 export class AppModule {}
 ```
 
+### Standalone Mode - Configure Descope SDK for your application
+
+`main.ts`
+
+```ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { DescopeAuthConfig } from '@descope/angular-sdk';
+
+bootstrapApplication(AppComponent, {
+	providers: [
+		{ provide: DescopeAuthConfig, useValue: { projectId: '<your_project_id>' } }
+	]
+}).catch((err) => console.error(err));
+```
+
 ### Use Descope to render specific flow
 
 You can use **default flows** or **provide flow id** directly to the descope component
@@ -51,7 +67,6 @@ You can use **default flows** or **provide flow id** directly to the descope com
 
 ```angular2html
 <descope-sign-in-flow
-        projectId="<your_project_id>"
         (success)="onSuccess()"
         (error)="onError()"
 ></descope-sign-in-flow>
@@ -81,7 +96,6 @@ export class AppComponent {
 
 ```angular2html
 <descope
-     projectId="<your_project_id>"
      flowId="<your_flow_id>"
      (success)="<your_success_function>"
      (error)="<your_error_function>"
@@ -138,6 +152,10 @@ export class AppComponent {
      logger={logger}-->
 ></descope>
 ```
+
+#### Standalone Mode Note:
+
+All components in the sdk are standalone, so you can use them by directly importing them to your components.
 
 ### Use the `DescopeAuthService` and its exposed fields (`descopeSdk`, `session$`, `user$`) to access authentication state, user details and utilities
 
@@ -227,6 +245,10 @@ export function initializeApp(authService: DescopeAuthService) {
 export class AppModule {}
 ```
 
+#### Standalone Mode Note:
+
+You can use the same approach with `APP_INITIALIZER` in standalone mode, by adding it to `providers` array of the application.
+
 ### Descope Interceptor
 
 You can also use `DescopeInterceptor` to attempt to refresh session on each HTTP request that gets `401` or `403` response:
@@ -237,9 +259,12 @@ You can also use `DescopeInterceptor` to attempt to refresh session on each HTTP
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { DescopeAuthModule, DescopeInterceptor } from '@descope/angular-sdk';
+import {
+	HttpClientModule,
+	provideHttpClient,
+	withInterceptors
+} from '@angular/common/http';
+import { DescopeAuthModule, descopeInterceptor } from '@descope/angular-sdk';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -251,13 +276,7 @@ import { DescopeAuthModule, DescopeInterceptor } from '@descope/angular-sdk';
 			pathsToIntercept: ['/protectedPath']
 		})
 	],
-	providers: [
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: DescopeInterceptor,
-			multi: true
-		}
-	],
+	providers: [provideHttpClient(withInterceptors([descopeInterceptor]))],
 	bootstrap: [AppComponent]
 })
 export class AppModule {}

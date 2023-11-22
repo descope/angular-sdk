@@ -1,17 +1,42 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SignUpFlowComponent } from './sign-up-flow.component';
 import { DescopeComponent } from '../descope/descope.component';
-import { MockComponent, ngMocks } from 'ng-mocks';
+import { ngMocks } from 'ng-mocks';
+import createSdk from '@descope/web-js-sdk';
+import { DescopeAuthConfig } from '../../types/types';
+import mocked = jest.mocked;
 
+jest.mock('@descope/web-js-sdk');
+jest.mock('@descope/web-component', () => {
+	return jest.fn(() => {
+		// Create a mock DOM element
+		return document.createElement('descope-wc');
+	});
+});
 describe('SignUpFlowComponent', () => {
 	let component: SignUpFlowComponent;
 	let fixture: ComponentFixture<SignUpFlowComponent>;
+	let mockedCreateSdk: jest.Mock;
 
 	beforeEach(() => {
-		TestBed.configureTestingModule({
-			declarations: [MockComponent(DescopeComponent), SignUpFlowComponent]
+		mockedCreateSdk = mocked(createSdk);
+
+		mockedCreateSdk.mockReturnValue({
+			onSessionTokenChange: jest.fn(),
+			onUserChange: jest.fn()
 		});
 
+		TestBed.configureTestingModule({
+			providers: [
+				DescopeAuthConfig,
+				{
+					provide: DescopeAuthConfig,
+					useValue: {
+						projectId: 'someProject'
+					}
+				}
+			]
+		});
 		fixture = TestBed.createComponent(SignUpFlowComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
