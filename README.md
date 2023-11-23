@@ -426,6 +426,7 @@ export const environment: Env = {
 ## Troubleshooting
 
 If you encounter warning during build of your application:
+
 ```
 ▲ [WARNING] Module 'lodash.get' used by 'node_modules/@descope/web-component/node_modules/@descope/core-js-sdk/dist/index.esm.js' is not ESM
 ```
