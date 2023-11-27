@@ -15,6 +15,15 @@ Install the package with:
 npm i --save @descope/angular-sdk
 ```
 
+Add Descope type definitions to your `tsconfig.ts`
+
+```
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@descope"],
+    <other options>
+  }
+```
+
 ## Usage
 
 ### NgModule - Import `DescopeAuthModule` to your application
@@ -412,6 +421,30 @@ export const environment: Env = {
 	descopeStepUpFlowId: 'step-up',
 	descopeBackendUrl: 'http://localhost:8080/protected'
 };
+```
+
+## Troubleshooting
+
+If you encounter warning during build of your application:
+
+```
+▲ [WARNING] Module 'lodash.get' used by 'node_modules/@descope/web-component/node_modules/@descope/core-js-sdk/dist/index.esm.js' is not ESM
+```
+
+add `lodash.get` to allowed CommonJS dependencies in `angular.json`
+
+```json
+"architect": {
+	"build": {
+		"builder": "@angular-devkit/build-angular:browser",
+		"options": {
+			"allowedCommonJsDependencies": ["lodash.get"],
+			<other_options>
+		}
+		<other_config>
+	}
+	<other_config>
+}
 ```
 
 ## Learn More
