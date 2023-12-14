@@ -10,7 +10,7 @@
 		"start": "ng serve",
 		"prepare": "husky install",
 		"format-lint": "pretty-quick --staged --ignore-path .gitignore && lint-staged",
-		"prebuild:ci": "node set-version.js",
+		"prebuild:ci": "node scripts/setversion/setversion.js",
 		"build:ci": "npm run build:lib",
 		"build:lib": "ng build angular-sdk",
 		"build:app": "ng build demo-app",
@@ -19,7 +19,8 @@
 		"test:app": "jest --config jest.app.config.js",
 		"lint": "ng lint",
 		"format": "prettier . -w --ignore-path .gitignore",
-		"format-check": "prettier . --check --ignore-path .gitignore"
+		"format-check": "prettier . --check --ignore-path .gitignore",
+		"leaks": "bash ./scripts/gitleaks/gitleaks.sh"
 	},
 	"lint-staged": {
 		"+(src|test|examples)/**/*.{js,ts,html}": [
