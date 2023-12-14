@@ -125,4 +125,4 @@ jobs:
       - run: npm rebuild && npm run prepare --if-present
       - name: License validation
         shell: bash
-        run: ./thirdPartyLicenseCollector_linux_amd64 -npm-project .
+        run: ./thirdPartyLicenseCollector_linux_amd64 -npm-project ./projects/angular-sdk -npm-node-modules . # We are checking the
