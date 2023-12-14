@@ -1,6 +1,6 @@
 {
 	"name": "angular-sdk",
-	"version": "0.0.0",
+	"version": "0.0.1",
 	"engines": {
 		"node": "^16.14.0 || ^18.10.0",
 		"npm": ">= 8.1.0"
@@ -8,6 +8,8 @@
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
+		"prebuild:ci": "node set-version.js",
+		"build:ci": "npm run build:lib",
 		"build:lib": "ng build angular-sdk",
 		"build:app": "ng build demo-app",
 		"watch": "ng build --watch --configuration development",
