@@ -1,5 +1,5 @@
 {
-	"name": "angular-sdk",
+	"name": "@descope/angular-sdk",
 	"version": "0.0.2",
 	"license": "MIT",
 	"engines": {
