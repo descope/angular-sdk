@@ -7,21 +7,15 @@ on:
       - init # TODO: remove this branch
 
 env:
-  NODE_VERSION: 16.14
+  NODE_VERSION: 20
 
 jobs:
   publish:
     name: 📢 Publish Next
-    permissions:
-      packages: write
-      contents: write
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal token
-          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ env.NODE_VERSION }}
@@ -39,14 +33,8 @@ jobs:
           yarn version --new-version ${NEW_VERSION}
           cat package.json
       - name: Install dependencies
-        run: npm ci --ignore-scripts
-        env:
-          CI: true
-          NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_READ_ORG }}
-      # `npm rebuild` will run all those post-install scripts for us.
-      - run: npm rebuild && npm run prepare --if-present
+        run: npm ci
       - name: Publish to NPM Package Registry
         run: npm publish --access=public --tag next
         env:
-          CI: true
           NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_REGISTRY }}
