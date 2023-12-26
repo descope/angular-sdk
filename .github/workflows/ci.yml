@@ -92,17 +92,15 @@ jobs:
         env:
           CI: true
       #          NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_READ_ORG }}
-      - name: Testing Lib
-        run: npm run test:lib
-      - name: Testing Demo App
-        run: npm run test:app
-      # - name: Coverage check
-      #   uses: devmasx/coverage-check-action@v1.2.0
-      #   with:
-      #     type: lcov
-      #     min_coverage: 94.5
-      #     result_path: coverage/lcov.info
-      #     token: ${{ github.token }}
+      - name: Testing
+        run: npm run test
+      - name: Coverage check
+        uses: devmasx/coverage-check-action@v1.2.0
+        with:
+          type: lcov
+          min_coverage: 90.0
+          result_path: coverage/lcov.info
+          token: ${{ github.token }}
 
   license-validation:
     name: 🪪 License Validation
