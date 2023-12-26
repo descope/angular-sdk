@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - init # TODO: remove this branch
 
 env:
   NODE_VERSION: 20
