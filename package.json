@@ -1,6 +1,6 @@
 {
 	"name": "angular-sdk",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"license": "MIT",
 	"engines": {
 		"node": "^16.14.0 || ^18.10.0",
