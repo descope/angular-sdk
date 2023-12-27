@@ -1,5 +1,13 @@
 {
 	"name": "@descope/angular-sdk",
+	"version": "0.0.1-alpha.1",
+	"peerDependencies": {
+		"@angular/common": ">=16.0.0",
+		"@angular/core": ">=16.0.0"
+	},
+	"files": [
+		"dist"
+	],
 	"license": "MIT",
 	"engines": {
 		"node": "^16.14.0 || >=18.10.0",
@@ -12,7 +20,7 @@
 		"format-lint": "pretty-quick --staged --ignore-path .gitignore && lint-staged",
 		"prebuild:ci": "node scripts/setversion/setversion.js",
 		"build:ci": "npm run build:lib",
-		"build:lib": "ng build angular-sdk",
+		"build:lib": "cp package.json ./projects/angular-sdk && ng build angular-sdk",
 		"build:app": "ng build demo-app",
 		"watch": "ng build --watch --configuration development",
 		"test": "jest --config jest.config.js",
@@ -26,6 +34,13 @@
 		"+(src|test|examples)/**/*.{js,ts,html}": [
 			"npm run lint"
 		]
+	},
+	"dependencies": {
+		"tslib": "^2.3.0",
+		"@descope/web-component": "3.0.0"
+	},
+	"optionalDependencies": {
+		"@descope/web-js-sdk": ">=1"
 	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^16.2.6",
