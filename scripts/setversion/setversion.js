@@ -1,5 +1,5 @@
 const { writeFile } = require('fs');
-const { version } = require('./package.json');
+const { version } = require('./../../package.json');
 const envFile = `export const environment = {
   buildVersion: '${version}'
 };
