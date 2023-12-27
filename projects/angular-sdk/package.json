@@ -1,5 +1,6 @@
 {
 	"name": "@descope/angular-sdk",
+	"version": "0.0.1",
 	"engines": {
 		"node": "^16.14.0 || ^18.10.0",
 		"npm": ">= 8.1.0"
