@@ -34,8 +34,6 @@ jobs:
           cat package.json
       - name: Install dependencies
         run: npm ci
-      - name: Build Library
-        run: npm run build:ci
       - name: Publish to NPM Package Registry
         run: |
           cd dist
