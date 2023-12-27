@@ -20,6 +20,7 @@
 		"lint": "ng lint",
 		"format": "prettier . -w --ignore-path .gitignore",
 		"format-check": "prettier . --check --ignore-path .gitignore",
+		"prepublishOnly": "npm run build:ci",
 		"leaks": "bash ./scripts/gitleaks/gitleaks.sh"
 	},
 	"lint-staged": {
