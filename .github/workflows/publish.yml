@@ -21,8 +21,12 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Install dependencies
         run: npm ci
+      - name: Build Library
+        run: npm run build:ci
       - name: Publish to NPM Package Registry
-        run: npm publish --access=public
+        run: |
+          cd dist
+          npm publish --access=public
         env:
           CI: true
           NODE_AUTH_TOKEN: ${{ secrets.CI_NPM_REGISTRY }}
