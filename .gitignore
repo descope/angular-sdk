@@ -43,3 +43,6 @@ Thumbs.db
 
 # env files
 environment.development.ts
+
+# angular sdk package json, we use the top level package.json instead
+projects/angular-sdk/package.json

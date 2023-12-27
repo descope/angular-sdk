@@ -33,9 +33,8 @@ jobs:
           minor-wording: 'MINOR'
         env:
           GITHUB_TOKEN: ${{ steps.get_token.outputs.token }}
-          PACKAGEJSON_DIR: 'projects/angular-sdk'
       - name: cat angular-sdk package.json
-        run: cat ./projects/angular-sdk/package.json
+        run: cat ./package.json
       - name: Output Step
         env:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
