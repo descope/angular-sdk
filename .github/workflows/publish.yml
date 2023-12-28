@@ -25,6 +25,7 @@ jobs:
         run: npm run build:ci
       - name: Publish to NPM Package Registry
         run: |
+          cd dist
           npm publish --access=public
         env:
           CI: true
