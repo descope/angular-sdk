@@ -30,7 +30,6 @@ jobs:
         run: |
           git config --global user.email "info@descope.com"
           git config --global user.name "Descope"
-          cd projects/angular-sdk
           yarn version --new-version ${NEW_VERSION}
           cat package.json
       - name: Install dependencies

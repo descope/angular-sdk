@@ -95,4 +95,4 @@ jobs:
         run: npm ci
       - name: License validation
         shell: bash
-        run: ./thirdPartyLicenseCollector_linux_amd64 -npm-node-modules .
+        run: ./thirdPartyLicenseCollector_linux_amd64 -npm-project .
