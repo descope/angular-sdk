@@ -1,64 +1,32 @@
-import { Injectable } from '@angular/core';
+import { inject } from '@angular/core';
 import {
 	HttpErrorResponse,
-	HttpEvent,
-	HttpHandler,
-	HttpInterceptor,
+	HttpHandlerFn,
+	HttpInterceptorFn,
 	HttpRequest
 } from '@angular/common/http';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { catchError, switchMap } from 'rxjs/operators';
 import { DescopeAuthService } from './descope-auth.service';
 import { DescopeAuthConfig } from '../types/types';
 
-@Injectable()
-export class DescopeInterceptor implements HttpInterceptor {
-	private pathsToIntercept: string[] = [];
+export const descopeInterceptor: HttpInterceptorFn = (request, next) => {
+	const config = inject(DescopeAuthConfig);
+	const authService = inject(DescopeAuthService);
 
-	constructor(
-		private authService: DescopeAuthService,
-		config: DescopeAuthConfig
-	) {
-		this.pathsToIntercept = config.pathsToIntercept ?? [];
-	}
-
-	intercept(
+	function refreshAndRetry(
 		request: HttpRequest<unknown>,
-		next: HttpHandler
-	): Observable<HttpEvent<unknown>> {
-		if (this.shouldIntercept(request)) {
-			const token = this.authService.getSessionToken();
-			if (!token) {
-				return this.refreshAndRetry(request, next);
-			}
-			const requestWithToken = this.addTokenToRequest(request, token);
-			return next.handle(requestWithToken).pipe(
-				catchError((error: HttpErrorResponse) => {
-					if (error.status === 401 || error.status === 403) {
-						return this.refreshAndRetry(request, next, error);
-					} else {
-						return throwError(() => error);
-					}
-				})
-			);
-		} else {
-			return next.handle(request);
-		}
-	}
-
-	private refreshAndRetry(
-		request: HttpRequest<unknown>,
-		next: HttpHandler,
+		next: HttpHandlerFn,
 		error?: HttpErrorResponse
 	) {
-		return this.authService.refreshSession().pipe(
+		return authService.refreshSession().pipe(
 			switchMap((refreshed) => {
 				if (refreshed.ok && refreshed.data) {
-					const requestWithRefreshedToken = this.addTokenToRequest(
+					const requestWithRefreshedToken = addTokenToRequest(
 						request,
 						refreshed.data?.sessionJwt
 					);
-					return next.handle(requestWithRefreshedToken);
+					return next(requestWithRefreshedToken);
 				} else {
 					return throwError(
 						() => error ?? new Error('Could not refresh session!')
@@ -68,14 +36,15 @@ export class DescopeInterceptor implements HttpInterceptor {
 		);
 	}
 
-	private shouldIntercept(request: HttpRequest<unknown>): boolean {
+	function shouldIntercept(request: HttpRequest<unknown>): boolean {
 		return (
-			this.pathsToIntercept.length === 0 ||
-			this.pathsToIntercept.some((path) => request.url.includes(path))
+			(config.pathsToIntercept?.length === 0 ||
+				config.pathsToIntercept?.some((path) => request.url.includes(path))) ??
+			true
 		);
 	}
 
-	private addTokenToRequest(
+	function addTokenToRequest(
 		request: HttpRequest<unknown>,
 		token: string
 	): HttpRequest<unknown> {
@@ -85,4 +54,23 @@ export class DescopeInterceptor implements HttpInterceptor {
 			}
 		});
 	}
-}
+
+	if (shouldIntercept(request)) {
+		const token = authService.getSessionToken();
+		if (!token) {
+			return refreshAndRetry(request, next);
+		}
+		const requestWithToken = addTokenToRequest(request, token);
+		return next(requestWithToken).pipe(
+			catchError((error: HttpErrorResponse) => {
+				if (error.status === 401 || error.status === 403) {
+					return refreshAndRetry(request, next, error);
+				} else {
+					return throwError(() => error);
+				}
+			})
+		);
+	} else {
+		return next(request);
+	}
+};

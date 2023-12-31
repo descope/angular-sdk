@@ -12,13 +12,15 @@ import DescopeWc, { ILogger } from '@descope/web-component';
 import { DescopeAuthService } from '../../services/descope-auth.service';
 import { from } from 'rxjs';
 import { baseHeaders } from '../../utils/constants';
+import { DescopeAuthConfig } from '../../types/types';
 
 @Component({
-	selector: 'descope[projectId][flowId]',
+	selector: 'descope[flowId]',
+	standalone: true,
 	template: ''
 })
 export class DescopeComponent implements OnInit, OnChanges {
-	@Input() projectId: string;
+	projectId: string;
 	@Input() flowId: string;
 
 	@Input() locale: string;
@@ -30,6 +32,8 @@ export class DescopeComponent implements OnInit, OnChanges {
 
 	@Input() debug: boolean;
 	@Input() errorTransformer: (error: { text: string; type: string }) => string;
+	@Input() client: Record<string, any>;
+	@Input() form: Record<string, any>;
 	@Input() logger: ILogger;
 
 	@Output() success: EventEmitter<void> = new EventEmitter<void>();
@@ -40,8 +44,11 @@ export class DescopeComponent implements OnInit, OnChanges {
 
 	constructor(
 		private elementRef: ElementRef,
-		private authService: DescopeAuthService
-	) {}
+		private authService: DescopeAuthService,
+		descopeConfig: DescopeAuthConfig
+	) {
+		this.projectId = descopeConfig.projectId;
+	}
 
 	ngOnInit() {
 		DescopeWc.sdkConfigOverrides = { baseHeaders };
@@ -80,6 +87,14 @@ export class DescopeComponent implements OnInit, OnChanges {
 
 		if (this.errorTransformer) {
 			this.webComponent.errorTransformer = this.errorTransformer;
+		}
+
+		if (this.client) {
+			this.webComponent.setAttribute('client', JSON.stringify(this.client));
+		}
+
+		if (this.form) {
+			this.webComponent.setAttribute('form', JSON.stringify(this.form));
 		}
 
 		if (this.logger) {

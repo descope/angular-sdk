@@ -1,12 +1,16 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ILogger } from '@descope/web-component';
+import { DescopeComponent } from '../descope/descope.component';
+import { DescopeAuthConfig } from '../../types/types';
 
 @Component({
-	selector: 'descope-sign-up-flow[projectId]',
+	selector: 'descope-sign-up-flow',
+	standalone: true,
+	imports: [DescopeComponent],
 	templateUrl: './sign-up-flow.component.html'
 })
 export class SignUpFlowComponent {
-	@Input() projectId: string;
+	projectId: string;
 
 	@Input() locale: string;
 	@Input() theme: 'light' | 'dark' | 'os';
@@ -17,8 +21,14 @@ export class SignUpFlowComponent {
 
 	@Input() debug: boolean;
 	@Input() errorTransformer: (error: { text: string; type: string }) => string;
+	@Input() client: Record<string, any>;
+	@Input() form: Record<string, any>;
 	@Input() logger: ILogger;
 
 	@Output() success: EventEmitter<void> = new EventEmitter<void>();
 	@Output() error: EventEmitter<void> = new EventEmitter<void>();
+
+	constructor(descopeConfig: DescopeAuthConfig) {
+		this.projectId = descopeConfig.projectId;
+	}
 }
