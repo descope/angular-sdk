@@ -21,6 +21,8 @@ export class SignUpOrInFlowComponent {
 
 	@Input() debug: boolean;
 	@Input() errorTransformer: (error: { text: string; type: string }) => string;
+	@Input() client: Record<string, any>;
+	@Input() form: Record<string, any>;
 	@Input() logger: ILogger;
 
 	@Output() success: EventEmitter<void> = new EventEmitter<void>();

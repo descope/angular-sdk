@@ -56,6 +56,8 @@ describe('DescopeComponent', () => {
 		component.error = new EventEmitter<void>();
 		component.logger = { info: jest.fn(), error: jest.fn(), warn: jest.fn() };
 		component.errorTransformer = jest.fn();
+		component.client = {};
+		component.form = {};
 		fixture.detectChanges();
 	});
 

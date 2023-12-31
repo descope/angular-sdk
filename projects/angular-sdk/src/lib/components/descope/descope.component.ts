@@ -32,6 +32,8 @@ export class DescopeComponent implements OnInit, OnChanges {
 
 	@Input() debug: boolean;
 	@Input() errorTransformer: (error: { text: string; type: string }) => string;
+	@Input() client: Record<string, any>;
+	@Input() form: Record<string, any>;
 	@Input() logger: ILogger;
 
 	@Output() success: EventEmitter<void> = new EventEmitter<void>();
@@ -85,6 +87,14 @@ export class DescopeComponent implements OnInit, OnChanges {
 
 		if (this.errorTransformer) {
 			this.webComponent.errorTransformer = this.errorTransformer;
+		}
+
+		if (this.client) {
+			this.webComponent.setAttribute('client', JSON.stringify(this.client));
+		}
+
+		if (this.form) {
+			this.webComponent.setAttribute('form', JSON.stringify(this.form));
 		}
 
 		if (this.logger) {
