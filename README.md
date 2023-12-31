@@ -162,7 +162,7 @@ export class AppComponent {
 ></descope>
 ```
 
-#### Standalone Mode Note:
+#### Standalone Mode
 
 All components in the sdk are standalone, so you can use them by directly importing them to your components.
 
