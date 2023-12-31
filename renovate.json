@@ -6,7 +6,10 @@
 			"matchDepNames": [
 				"prettier",
 				"@angular-devkit/build-angular",
-				"@angular/*"
+				"ng-packagr",
+				"typescript",
+				"@angular/*",
+				"@angular-eslint/*"
 			],
 			"enabled": false
 		}
