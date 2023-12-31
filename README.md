@@ -15,9 +15,18 @@ Install the package with:
 npm i --save @descope/angular-sdk
 ```
 
+Add Descope type definitions to your `tsconfig.ts`
+
+```
+  "compilerOptions": {
+    "typeRoots": ["./node_modules/@descope"],
+    <other options>
+  }
+```
+
 ## Usage
 
-### Import `DescopeAuthModule` to your application
+### NgModule - Import `DescopeAuthModule` to your application
 
 `app.module.ts`
 
@@ -41,6 +50,22 @@ import { DescopeAuthModule } from '@descope/angular-sdk';
 export class AppModule {}
 ```
 
+### Standalone Mode - Configure Descope SDK for your application
+
+`main.ts`
+
+```ts
+import { bootstrapApplication } from '@angular/platform-browser';
+import { AppComponent } from './app/app.component';
+import { DescopeAuthConfig } from '@descope/angular-sdk';
+
+bootstrapApplication(AppComponent, {
+	providers: [
+		{ provide: DescopeAuthConfig, useValue: { projectId: '<your_project_id>' } }
+	]
+}).catch((err) => console.error(err));
+```
+
 ### Use Descope to render specific flow
 
 You can use **default flows** or **provide flow id** directly to the descope component
@@ -51,7 +76,6 @@ You can use **default flows** or **provide flow id** directly to the descope com
 
 ```angular2html
 <descope-sign-in-flow
-        projectId="<your_project_id>"
         (success)="onSuccess()"
         (error)="onError()"
 ></descope-sign-in-flow>
@@ -81,7 +105,6 @@ export class AppComponent {
 
 ```angular2html
 <descope
-     projectId="<your_project_id>"
      flowId="<your_flow_id>"
      (success)="<your_success_function>"
      (error)="<your_error_function>"
@@ -120,6 +143,19 @@ export class AppComponent {
      ...
      errorTransformer={errorTransformer}
 
+    form is an object the initial form context that is used in screens inputs in the flow execution.
+    Used to inject predefined input values on flow start such as custom inputs, custom attributes and other inputs.
+    Keys passed can be accessed in flows actions, conditions and screens prefixed with "form.".
+    NOTE: form is not required. If not provided, 'form' context key will be empty before user input.
+    Example:
+    form={{ email: "predefinedname@domain.com",  firstName: "test", "customAttribute.test": "aaaa", "myCustomInput": 12 }}
+
+    client is an object the initial client context in the flow execution.
+    Keys passed can be accessed in flows actions and conditions prefixed with "client.".
+    NOTE: client is not required. If not provided, context key will be empty.
+    Example:
+    client={{ version: "1.2.0" }}
+
      logger is an object describing how to log info, warn and errors.
      NOTE: logger is not required. If not provided, the logs will be printed to the console.
      Example:
@@ -138,6 +174,10 @@ export class AppComponent {
      logger={logger}-->
 ></descope>
 ```
+
+#### Standalone Mode
+
+All components in the sdk are standalone, so you can use them by directly importing them to your components.
 
 ### Use the `DescopeAuthService` and its exposed fields (`descopeSdk`, `session$`, `user$`) to access authentication state, user details and utilities
 
@@ -227,6 +267,10 @@ export function initializeApp(authService: DescopeAuthService) {
 export class AppModule {}
 ```
 
+#### Standalone Mode Note:
+
+You can use the same approach with `APP_INITIALIZER` in standalone mode, by adding it to `providers` array of the application.
+
 ### Descope Interceptor
 
 You can also use `DescopeInterceptor` to attempt to refresh session on each HTTP request that gets `401` or `403` response:
@@ -237,9 +281,12 @@ You can also use `DescopeInterceptor` to attempt to refresh session on each HTTP
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
-
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { DescopeAuthModule, DescopeInterceptor } from '@descope/angular-sdk';
+import {
+	HttpClientModule,
+	provideHttpClient,
+	withInterceptors
+} from '@angular/common/http';
+import { DescopeAuthModule, descopeInterceptor } from '@descope/angular-sdk';
 
 @NgModule({
 	declarations: [AppComponent],
@@ -251,13 +298,7 @@ import { DescopeAuthModule, DescopeInterceptor } from '@descope/angular-sdk';
 			pathsToIntercept: ['/protectedPath']
 		})
 	],
-	providers: [
-		{
-			provide: HTTP_INTERCEPTORS,
-			useClass: DescopeInterceptor,
-			multi: true
-		}
-	],
+	providers: [provideHttpClient(withInterceptors([descopeInterceptor]))],
 	bootstrap: [AppComponent]
 })
 export class AppModule {}
@@ -393,6 +434,30 @@ export const environment: Env = {
 	descopeStepUpFlowId: 'step-up',
 	descopeBackendUrl: 'http://localhost:8080/protected'
 };
+```
+
+## Troubleshooting
+
+If you encounter warning during build of your application:
+
+```
+▲ [WARNING] Module 'lodash.get' used by 'node_modules/@descope/web-component/node_modules/@descope/core-js-sdk/dist/index.esm.js' is not ESM
+```
+
+add `lodash.get` to allowed CommonJS dependencies in `angular.json`
+
+```json
+"architect": {
+	"build": {
+		"builder": "@angular-devkit/build-angular:browser",
+		"options": {
+			"allowedCommonJsDependencies": ["lodash.get"],
+			<other_options>
+		}
+		<other_config>
+	}
+	<other_config>
+}
 ```
 
 ## Learn More

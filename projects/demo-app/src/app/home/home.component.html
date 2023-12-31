@@ -2,7 +2,13 @@
 <button *ngIf="!isAuthenticated" (click)="login()">LOGIN</button>
 <ng-container *ngIf="isAuthenticated">
 	<h3>Hello {{ userName }}</h3>
-	<div *ngIf="roles">Roles: {{ roles }}</div>
+	<div>
+		Roles:
+		<ng-container *ngIf="roles && roles.length; else noRoles">
+			{{ roles }}
+		</ng-container>
+		<ng-template #noRoles>N/A</ng-template>
+	</div>
 	<button
 		*ngIf="backendUrl.length > 0"
 		class="action-button"
