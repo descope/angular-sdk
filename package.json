@@ -33,6 +33,7 @@
 		]
 	},
 	"dependencies": {
+		"@descope/web-component": "3.4.3",
 		"tslib": "^2.3.0"
 	},
 	"optionalDependencies": {
@@ -55,7 +56,6 @@
 		"@angular/platform-browser": "^16.2.9",
 		"@angular/platform-browser-dynamic": "^16.2.9",
 		"@angular/router": "^16.2.9",
-		"@descope/web-component": "3.4.3",
 		"@types/jest": "^29.5.5",
 		"@typescript-eslint/eslint-plugin": "6.11.0",
 		"@typescript-eslint/parser": "6.11.0",
