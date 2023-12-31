@@ -3,7 +3,11 @@
 	"extends": ["local>descope/renovate-config"],
 	"packageRules": [
 		{
-			"matchDepNames": ["prettier"],
+			"matchDepNames": [
+				"prettier",
+				"@angular-devkit/build-angular",
+				"@angular/*"
+			],
 			"enabled": false
 		}
 	]
