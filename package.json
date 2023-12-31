@@ -1,23 +1,44 @@
 {
-	"name": "angular-sdk",
-	"version": "0.0.0",
+	"name": "@descope/angular-sdk",
+	"version": "0.0.4-alpha.0",
+	"peerDependencies": {
+		"@angular/common": ">=16.0.0",
+		"@angular/core": ">=16.0.0"
+	},
+	"license": "MIT",
 	"engines": {
-		"node": "^16.14.0 || ^18.10.0",
+		"node": "^16.14.0 || >=18.10.0",
 		"npm": ">= 8.1.0"
 	},
 	"scripts": {
 		"ng": "ng",
 		"start": "ng serve",
-		"build:lib": "ng build angular-sdk",
+		"prepare": "husky install",
+		"format-lint": "pretty-quick --staged --ignore-path .gitignore && lint-staged",
+		"prebuild:ci": "node scripts/setversion/setversion.js",
+		"build:ci": "npm run build:lib",
+		"build:lib": "cp package.json ./projects/angular-sdk && ng build angular-sdk",
 		"build:app": "ng build demo-app",
 		"watch": "ng build --watch --configuration development",
-		"test:lib": "jest --config jest.lib.config.js",
-		"test:app": "jest --config jest.app.config.js",
+		"test": "jest --config jest.config.js",
 		"lint": "ng lint",
 		"format": "prettier . -w --ignore-path .gitignore",
-		"format-check": "prettier . --check --ignore-path .gitignore"
+		"format-check": "prettier . --check --ignore-path .gitignore",
+		"prepublishOnly": "npm run build:ci",
+		"leaks": "bash ./scripts/gitleaks/gitleaks.sh"
 	},
-	"private": true,
+	"lint-staged": {
+		"+(src|test|examples)/**/*.{js,ts,html}": [
+			"npm run lint"
+		]
+	},
+	"dependencies": {
+		"@descope/web-component": "3.4.3",
+		"tslib": "^2.3.0"
+	},
+	"optionalDependencies": {
+		"@descope/web-js-sdk": ">=1"
+	},
 	"devDependencies": {
 		"@angular-devkit/build-angular": "^16.2.6",
 		"@angular-eslint/builder": "16.3.1",
@@ -35,16 +56,19 @@
 		"@angular/platform-browser": "^16.2.9",
 		"@angular/platform-browser-dynamic": "^16.2.9",
 		"@angular/router": "^16.2.9",
-		"@descope/web-component": "3.0.0",
 		"@types/jest": "^29.5.5",
 		"@typescript-eslint/eslint-plugin": "6.11.0",
 		"@typescript-eslint/parser": "6.11.0",
 		"eslint": "^8.51.0",
+		"eslint-plugin-prettier": "^4.2.1",
+		"husky": "^8.0.3",
 		"jest": "^29.7.0",
 		"jest-preset-angular": "^13.1.2",
+		"lint-staged": "^15.2.0",
 		"ng-mocks": "^14.11.0",
 		"ng-packagr": "^16.2.3",
-		"prettier": "3.0.3",
+		"prettier": "2.8.8",
+		"pretty-quick": "^3.1.3",
 		"rxjs": "~7.8.1",
 		"tslib": "^2.6.2",
 		"typescript": "~5.1.6",

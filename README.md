@@ -143,6 +143,19 @@ export class AppComponent {
      ...
      errorTransformer={errorTransformer}
 
+    form is an object the initial form context that is used in screens inputs in the flow execution.
+    Used to inject predefined input values on flow start such as custom inputs, custom attributes and other inputs.
+    Keys passed can be accessed in flows actions, conditions and screens prefixed with "form.".
+    NOTE: form is not required. If not provided, 'form' context key will be empty before user input.
+    Example:
+    form={{ email: "predefinedname@domain.com",  firstName: "test", "customAttribute.test": "aaaa", "myCustomInput": 12 }}
+
+    client is an object the initial client context in the flow execution.
+    Keys passed can be accessed in flows actions and conditions prefixed with "client.".
+    NOTE: client is not required. If not provided, context key will be empty.
+    Example:
+    client={{ version: "1.2.0" }}
+
      logger is an object describing how to log info, warn and errors.
      NOTE: logger is not required. If not provided, the logs will be printed to the console.
      Example:
@@ -162,7 +175,7 @@ export class AppComponent {
 ></descope>
 ```
 
-#### Standalone Mode Note:
+#### Standalone Mode
 
 All components in the sdk are standalone, so you can use them by directly importing them to your components.
 

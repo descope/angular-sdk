@@ -1,8 +1,8 @@
-// declare const BUILD_VERSION: string;
+import { environment } from '../../environment';
 
 export const baseHeaders = {
 	'x-descope-sdk-name': 'angular',
-	'x-descope-sdk-version': '1.1.1'
+	'x-descope-sdk-version': environment.buildVersion
 };
 
 export const isBrowser = () => typeof window !== 'undefined';
