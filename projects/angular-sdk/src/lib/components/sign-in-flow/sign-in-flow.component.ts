@@ -25,8 +25,9 @@ export class SignInFlowComponent {
 	@Input() form: Record<string, any>;
 	@Input() logger: ILogger;
 
-	@Output() success: EventEmitter<void> = new EventEmitter<void>();
-	@Output() error: EventEmitter<void> = new EventEmitter<void>();
+	@Output() success: EventEmitter<CustomEvent> =
+		new EventEmitter<CustomEvent>();
+	@Output() error: EventEmitter<CustomEvent> = new EventEmitter<CustomEvent>();
 
 	constructor(descopeConfig: DescopeAuthConfig) {
 		this.projectId = descopeConfig.projectId;

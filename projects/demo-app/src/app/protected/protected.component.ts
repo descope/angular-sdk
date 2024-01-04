@@ -26,12 +26,13 @@ export class ProtectedComponent {
 		return translationMap[error.type] || error.text;
 	};
 
-	onSuccess() {
+	onSuccess(e: CustomEvent) {
+		console.log('SUCCESSFULLY DONE IN PROTECTED ROUTE FLOW', e.detail);
 		this.stepUpSuccess = true;
 	}
 
-	onError() {
-		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT');
+	onError(e: CustomEvent) {
+		console.log('ERROR FROM PROTECTED ROUTE FLOW', e);
 	}
 
 	goBack() {

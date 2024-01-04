@@ -76,8 +76,8 @@ You can use **default flows** or **provide flow id** directly to the descope com
 
 ```angular2html
 <descope-sign-in-flow
-        (success)="onSuccess()"
-        (error)="onError()"
+        (success)="onSuccess($event)"
+        (error)="onError($event)"
 ></descope-sign-in-flow>
 ```
 
@@ -91,12 +91,12 @@ import { Component } from '@angular/core';
 	templateUrl: './app.component.html'
 })
 export class AppComponent {
-	onSuccess() {
-		console.log('SUCCESSFULLY LOGGED IN FROM WEB COMPONENT');
+	onSuccess(e: CustomEvent) {
+		console.log('SUCCESSFULLY LOGGED IN', e.detail);
 	}
 
-	onError() {
-		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT');
+	onError(e: CustomEvent) {
+		console.log('ERROR FROM LOG IN FLOW', e.detail);
 	}
 }
 ```

@@ -52,8 +52,8 @@ describe('DescopeComponent', () => {
 		component.projectId = '123';
 		component.flowId = 'sign-in';
 		component.locale = 'en-US';
-		component.success = new EventEmitter<void>();
-		component.error = new EventEmitter<void>();
+		component.success = new EventEmitter<CustomEvent>();
+		component.error = new EventEmitter<CustomEvent>();
 		component.logger = { info: jest.fn(), error: jest.fn(), warn: jest.fn() };
 		component.errorTransformer = jest.fn();
 		component.client = {};
@@ -83,24 +83,29 @@ describe('DescopeComponent', () => {
 		const html: HTMLElement = fixture.nativeElement;
 		const webComponentHtml = html.querySelector('descope-wc')!;
 
-		component.success.subscribe(() => {
-			expect(true).toBeTruthy();
+		const event = {
+			detail: { user: { name: 'user1' }, sessionJwt: 'session1' }
+		};
+		component.success.subscribe((e) => {
 			expect(afterRequestHooksSpy).toHaveBeenCalled();
+			expect(e.detail).toHaveBeenCalledWith(event.detail);
 		});
-		webComponentHtml.dispatchEvent(
-			new CustomEvent('success', {
-				detail: { user: { name: 'user1' }, sessionJwt: 'session1' }
-			})
-		);
+		webComponentHtml.dispatchEvent(new CustomEvent('success', event));
 	});
 
 	it('should emit error when web component emits error', () => {
 		const html: HTMLElement = fixture.nativeElement;
 		const webComponentHtml = html.querySelector('descope-wc')!;
 
-		component.error.subscribe(() => {
-			expect(true).toBeTruthy();
+		const event = {
+			detail: {
+				errorCode: 'someError',
+				errorDescription: 'someErrorDescription'
+			}
+		};
+		component.error.subscribe((e) => {
+			expect(e.detail).toEqual(event.detail);
 		});
-		webComponentHtml.dispatchEvent(new CustomEvent('error'));
+		webComponentHtml.dispatchEvent(new CustomEvent('error', event));
 	});
 });
