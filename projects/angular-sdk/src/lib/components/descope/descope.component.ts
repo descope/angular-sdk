@@ -36,8 +36,9 @@ export class DescopeComponent implements OnInit, OnChanges {
 	@Input() form: Record<string, any>;
 	@Input() logger: ILogger;
 
-	@Output() success: EventEmitter<void> = new EventEmitter<void>();
-	@Output() error: EventEmitter<void> = new EventEmitter<void>();
+	@Output() success: EventEmitter<CustomEvent> =
+		new EventEmitter<CustomEvent>();
+	@Output() error: EventEmitter<CustomEvent> = new EventEmitter<CustomEvent>();
 
 	private readonly webComponent: DescopeWebComponent =
 		new DescopeWebComponent();
@@ -101,23 +102,23 @@ export class DescopeComponent implements OnInit, OnChanges {
 			this.webComponent.logger = this.logger;
 		}
 
-		if (this.success) {
-			this.webComponent.addEventListener('success', (e: Event) => {
-				from(
-					this.authService.descopeSdk.httpClient.hooks?.afterRequest!(
-						// eslint-disable-next-line @typescript-eslint/no-explicit-any
-						{} as any,
-						new Response(JSON.stringify((e as CustomEvent).detail))
-					) as Promise<unknown>
-				).subscribe(() => {
-					this.success?.emit();
-				});
+		this.webComponent.addEventListener('success', (e: Event) => {
+			from(
+				this.authService.descopeSdk.httpClient.hooks?.afterRequest!(
+					// eslint-disable-next-line @typescript-eslint/no-explicit-any
+					{} as any,
+					new Response(JSON.stringify((e as CustomEvent).detail))
+				) as Promise<unknown>
+			).subscribe(() => {
+				if (this.success) {
+					this.success?.emit(e as CustomEvent);
+				}
 			});
-		}
+		});
 
 		if (this.error) {
-			this.webComponent.addEventListener('error', () => {
-				this.error?.emit();
+			this.webComponent.addEventListener('error', (e: Event) => {
+				this.error?.emit(e as CustomEvent);
 			});
 		}
 	}

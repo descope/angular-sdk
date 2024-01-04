@@ -1,6 +1,6 @@
 <descope
-	(success)="success.emit()"
-	(error)="error.emit()"
+	(success)="success.emit($event)"
+	(error)="error.emit($event)"
 	flowId="sign-up-or-in"
 	[locale]="locale"
 	[theme]="theme"

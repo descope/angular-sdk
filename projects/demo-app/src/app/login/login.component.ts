@@ -24,12 +24,12 @@ export class LoginComponent {
 		return translationMap[error.type] || error.text;
 	};
 
-	onSuccess() {
-		console.log('SUCCESSFULLY LOGGED IN FROM WEB COMPONENT');
+	onSuccess(e: CustomEvent) {
+		console.log('SUCCESSFULLY LOGGED IN FROM WEB COMPONENT', e.detail);
 		this.router.navigate(['/']).catch((err) => console.error(err));
 	}
 
-	onError() {
-		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT');
+	onError(e: CustomEvent) {
+		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT', e);
 	}
 }
