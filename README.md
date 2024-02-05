@@ -460,6 +460,29 @@ add `lodash.get` to allowed CommonJS dependencies in `angular.json`
 }
 ```
 
+## FAQ
+
+### I updated the user in my backend, but the user / session token are not updated in the frontend
+
+The Descope SDK caches the user and session token in the frontend. If you update the user in your backend (using Descope Management SDK/API for example), you can call `me` / `refresh` from `descopeSdk` member of `DescopeAuthService` to refresh the user and session token. Example:
+
+```ts
+import { DescopeAuthService } from '@descope/angular-sdk';
+
+export class MyComponent {
+	// ...
+	constructor(private authService: DescopeAuthService) {}
+
+	handleUpdateUser() {
+		myBackendUpdateUser().then(() => {
+			this.authService.descopeSdk.me();
+			// or
+			this.authService.descopeSdk.refresh();
+		});
+	}
+}
+```
+
 ## Learn More
 
 To learn more please see the [Descope Documentation and API reference page](https://docs.descope.com/).
