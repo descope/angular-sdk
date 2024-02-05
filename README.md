@@ -460,7 +460,7 @@ add `lodash.get` to allowed CommonJS dependencies in `angular.json`
 }
 ```
 
-## Q & A
+## FAQ
 
 ### I updated the user in my backend, but the user / session token are not updated in the frontend
 
