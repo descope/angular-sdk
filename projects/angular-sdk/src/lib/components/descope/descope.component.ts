@@ -52,7 +52,27 @@ export class DescopeComponent implements OnInit, OnChanges {
 	}
 
 	ngOnInit() {
-		DescopeWc.sdkConfigOverrides = { baseHeaders };
+		const sdk = this.authService.descopeSdk; // Capture the class context in a variable
+		DescopeWc.sdkConfigOverrides = {
+			// Overrides the web-component's base headers to indicate usage via the React SDK
+			baseHeaders,
+			// Disables token persistence within the web-component to delegate token management
+			// to the global SDK hooks. This ensures token handling aligns with the SDK's configuration,
+			// and web-component requests leverage the global SDK's beforeRequest hooks for consistency
+			persistTokens: false,
+			hooks: {
+				get beforeRequest() {
+					// Retrieves the beforeRequest hook from the global SDK, which is initialized
+					// within the AuthProvider using the desired configuration. This approach ensures
+					// the web-component utilizes the same beforeRequest hooks as the global SDK
+					return sdk.httpClient.hooks?.beforeRequest;
+				},
+				set beforeRequest(_) {
+					// The empty setter prevents runtime errors when attempts are made to assign a value to 'beforeRequest'.
+					// JavaScript objects default to having both getters and setters
+				}
+			}
+		};
 		this.setupWebComponent();
 		this.elementRef.nativeElement.appendChild(this.webComponent);
 	}

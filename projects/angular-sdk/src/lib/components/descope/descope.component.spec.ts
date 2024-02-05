@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
+import { default as DescopeWC } from '@descope/web-component';
 import { DescopeComponent } from './descope.component';
 import createSdk from '@descope/web-js-sdk';
 import { DescopeAuthConfig } from '../../types/types';
@@ -66,6 +66,15 @@ describe('DescopeComponent', () => {
 		const html: HTMLElement = fixture.nativeElement;
 		const webComponentHtml = html.querySelector('descope-wc');
 		expect(webComponentHtml).toBeDefined();
+
+		expect(DescopeWC.sdkConfigOverrides).toEqual({
+			baseHeaders: {
+				'x-descope-sdk-name': 'angular',
+				'x-descope-sdk-version': '0.0.0'
+			},
+			persistTokens: false,
+			hooks: {}
+		});
 	});
 
 	it('should correctly setup attributes based on inputs', () => {
