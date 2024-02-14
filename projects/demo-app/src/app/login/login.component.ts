@@ -15,6 +15,8 @@ export class LoginComponent {
 	locale = environment.descopeLocale ?? '';
 	redirectUrl = environment.descopeRedirectUrl ?? '';
 
+	isLoading = true;
+
 	constructor(private router: Router) {}
 
 	errorTransformer = (error: { text: string; type: string }): string => {
@@ -31,5 +33,9 @@ export class LoginComponent {
 
 	onError(e: CustomEvent) {
 		console.log('ERROR FROM LOG IN FLOW FROM WEB COMPONENT', e);
+	}
+
+	onReady() {
+		this.isLoading = false;
 	}
 }

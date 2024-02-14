@@ -3,6 +3,7 @@ import { default as DescopeWC } from '@descope/web-component';
 import { DescopeComponent } from './descope.component';
 import createSdk from '@descope/web-js-sdk';
 import { DescopeAuthConfig } from '../../types/types';
+import { spyOn } from 'jest-mock';
 import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import mocked = jest.mocked;
 
@@ -116,5 +117,16 @@ describe('DescopeComponent', () => {
 			expect(e.detail).toEqual(event.detail);
 		});
 		webComponentHtml.dispatchEvent(new CustomEvent('error', event));
+	});
+
+	it('should emit ready when web component emits ready', () => {
+		const spy = spyOn(component.ready, 'emit');
+
+		const html: HTMLElement = fixture.nativeElement;
+		const webComponentHtml = html.querySelector('descope-wc')!;
+
+		webComponentHtml.dispatchEvent(new CustomEvent('ready', {}));
+
+		expect(spy).toHaveBeenCalled();
 	});
 });
