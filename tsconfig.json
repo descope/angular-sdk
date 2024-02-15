@@ -21,10 +21,11 @@
 		"experimentalDecorators": true,
 		"moduleResolution": "node",
 		"importHelpers": true,
-		"target": "ES2022",
+		"target": "es2017",
 		"module": "ES2022",
 		"useDefineForClassFields": false,
-		"lib": ["ES2022", "dom"]
+		"lib": ["es2017", "dom"],
+		"skipLibCheck": true
 	},
 	"angularCompilerOptions": {
 		"enableI18nLegacyMessageIdFormat": false,

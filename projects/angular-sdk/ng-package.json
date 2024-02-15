@@ -4,5 +4,8 @@
 	"lib": {
 		"entryFile": "src/public-api.ts"
 	},
-	"allowedNonPeerDependencies": ["@descope/web-component"]
+	"allowedNonPeerDependencies": [
+		"@descope/web-component",
+		"@descope/user-management-widget"
+	]
 }

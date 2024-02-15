@@ -10,6 +10,7 @@ import { environment } from '../environments/environment';
 import { DescopeAuthService } from 'projects/angular-sdk/src/public-api';
 import { zip } from 'rxjs';
 import { LoginComponent } from './login/login.component';
+import { ManageUsersComponent } from './manage-users/manage-users.component';
 import {
 	HttpClientModule,
 	provideHttpClient,
@@ -26,7 +27,8 @@ export function initializeApp(authService: DescopeAuthService) {
 		AppComponent,
 		HomeComponent,
 		ProtectedComponent,
-		LoginComponent
+		LoginComponent,
+		ManageUsersComponent
 	],
 	imports: [
 		BrowserModule,
