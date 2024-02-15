@@ -78,7 +78,16 @@ You can use **default flows** or **provide flow id** directly to the descope com
 <descope-sign-in-flow
         (success)="onSuccess($event)"
         (error)="onError($event)"
+        (ready)="onReady()"
 ></descope-sign-in-flow>
+<!-- Optionally, you can show/hide loading indication until the flow page is ready -->
+<div
+  *ngIf="isLoading"
+  class="loading-indicator"
+  style="display: flex; justify-content: center; align-items: center;"
+>
+  Loading...
+</div>
 ```
 
 `app.component.ts`
@@ -91,12 +100,20 @@ import { Component } from '@angular/core';
 	templateUrl: './app.component.html'
 })
 export class AppComponent {
+	// Optionally, you can show/hide loading indication until the flow page is ready
+	// See usage in onReady() method and the html template
+	isLoading = true;
+
 	onSuccess(e: CustomEvent) {
 		console.log('SUCCESSFULLY LOGGED IN', e.detail);
 	}
 
 	onError(e: CustomEvent) {
 		console.log('ERROR FROM LOG IN FLOW', e.detail);
+	}
+
+	onReady() {
+		this.isLoading = false;
 	}
 }
 ```
