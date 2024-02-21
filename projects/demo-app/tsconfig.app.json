@@ -3,6 +3,7 @@
 	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"outDir": "../../out-tsc/app",
+		"target": "ES2022",
 		"types": []
 	},
 	"files": ["src/main.ts"],
