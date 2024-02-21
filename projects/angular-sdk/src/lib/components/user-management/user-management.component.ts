@@ -1,12 +1,4 @@
-import {
-	Component,
-	ElementRef,
-	EventEmitter,
-	Input,
-	OnChanges,
-	OnInit,
-	Output
-} from '@angular/core';
+import { Component, ElementRef, Input, OnChanges, OnInit } from '@angular/core';
 import DescopeUserManagementWidget from '@descope/user-management-widget';
 import { ILogger } from '@descope/web-component';
 import { DescopeAuthConfig } from '../../types/types';
