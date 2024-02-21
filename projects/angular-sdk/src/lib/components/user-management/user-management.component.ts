@@ -24,10 +24,6 @@ export class UserManagementComponent implements OnInit, OnChanges {
 	@Input() debug: boolean;
 	@Input() logger: ILogger;
 
-	@Output() success: EventEmitter<CustomEvent> =
-		new EventEmitter<CustomEvent>();
-	@Output() error: EventEmitter<CustomEvent> = new EventEmitter<CustomEvent>();
-
 	private readonly webComponent = new DescopeUserManagementWidget();
 
 	constructor(
