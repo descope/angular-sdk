@@ -39,6 +39,7 @@ export class DescopeComponent implements OnInit, OnChanges {
 	@Output() success: EventEmitter<CustomEvent> =
 		new EventEmitter<CustomEvent>();
 	@Output() error: EventEmitter<CustomEvent> = new EventEmitter<CustomEvent>();
+	@Output() ready: EventEmitter<void> = new EventEmitter<void>();
 
 	private readonly webComponent: DescopeWebComponent =
 		new DescopeWebComponent();
@@ -139,6 +140,12 @@ export class DescopeComponent implements OnInit, OnChanges {
 		if (this.error) {
 			this.webComponent.addEventListener('error', (e: Event) => {
 				this.error?.emit(e as CustomEvent);
+			});
+		}
+
+		if (this.ready) {
+			this.webComponent.addEventListener('ready', () => {
+				this.ready?.emit();
 			});
 		}
 	}
