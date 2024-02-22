@@ -10,4 +10,5 @@ export * from './lib/components/descope/descope.component';
 export * from './lib/components/sign-in-flow/sign-in-flow.component';
 export * from './lib/components/sign-up-flow/sign-up-flow.component';
 export * from './lib/components/sign-up-or-in-flow/sign-up-or-in-flow.component';
+export * from './lib/components/user-management/user-management.component';
 export * from './lib/types/types';

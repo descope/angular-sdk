@@ -34,6 +34,7 @@
 	},
 	"dependencies": {
 		"@descope/web-component": "3.8.2",
+		"@descope/user-management-widget": "0.0.9",
 		"tslib": "^2.3.0"
 	},
 	"optionalDependencies": {
@@ -71,7 +72,7 @@
 		"pretty-quick": "^3.1.3",
 		"rxjs": "~7.8.1",
 		"tslib": "^2.6.2",
-		"typescript": "~5.1.6",
+		"typescript": "4.9.3",
 		"zone.js": "~0.13.0"
 	}
 }

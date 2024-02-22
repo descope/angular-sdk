@@ -58,4 +58,8 @@ export class HomeComponent implements OnInit {
 	stepUp() {
 		this.router.navigate(['/step-up']).catch((err) => console.error(err));
 	}
+
+	manageUsers() {
+		this.router.navigate(['/manage-users']).catch((err) => console.error(err));
+	}
 }
