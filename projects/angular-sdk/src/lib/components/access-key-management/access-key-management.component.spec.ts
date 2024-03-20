@@ -1,25 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { UserManagementComponent } from './user-management.component';
+import { AccessKeyManagementComponent } from './access-key-management.component';
 import createSdk from '@descope/web-js-sdk';
 import { DescopeAuthConfig } from '../../types/types';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import mocked = jest.mocked;
 
 jest.mock('@descope/web-js-sdk');
-//Mock DescopeUserManagementWidget
-jest.mock('@descope/user-management-widget', () => {
+//Mock DescopeAccessKeyManagementWidget
+jest.mock('@descope/access-key-management-widget', () => {
 	return jest.fn(() => {
 		// Create a mock DOM element
-		return document.createElement('descope-user-management-widget');
+		return document.createElement('descope-access-key-management-widget');
 	});
 });
 
-describe('DescopeUserManagementComponent', () => {
-	let component: UserManagementComponent;
-	let fixture: ComponentFixture<UserManagementComponent>;
+describe('DescopeAccessKeyManagementComponent', () => {
+	let component: AccessKeyManagementComponent;
+	let fixture: ComponentFixture<AccessKeyManagementComponent>;
 	let mockedCreateSdk: jest.Mock;
 	const onSessionTokenChangeSpy = jest.fn();
-	const onUserChangeSpy = jest.fn();
+	const onAccessKeyChangeSpy = jest.fn();
 	const afterRequestHooksSpy = jest.fn();
 	const mockConfig: DescopeAuthConfig = {
 		projectId: 'someProject'
@@ -30,7 +30,7 @@ describe('DescopeUserManagementComponent', () => {
 
 		mockedCreateSdk.mockReturnValue({
 			onSessionTokenChange: onSessionTokenChangeSpy,
-			onUserChange: onUserChangeSpy,
+			onAccessKeyChange: onAccessKeyChangeSpy,
 			httpClient: {
 				hooks: {
 					afterRequest: afterRequestHooksSpy
@@ -46,7 +46,7 @@ describe('DescopeUserManagementComponent', () => {
 			]
 		});
 
-		fixture = TestBed.createComponent(UserManagementComponent);
+		fixture = TestBed.createComponent(AccessKeyManagementComponent);
 		component = fixture.componentInstance;
 		component.projectId = '123';
 		component.tenant = 'tenant-1';
@@ -59,7 +59,7 @@ describe('DescopeUserManagementComponent', () => {
 		expect(component).toBeTruthy();
 		const html: HTMLElement = fixture.nativeElement;
 		const webComponentHtml = html.querySelector(
-			'descope-user-management-widget'
+			'descope-access-key-management-widget'
 		);
 		expect(webComponentHtml).toBeDefined();
 	});
@@ -67,7 +67,7 @@ describe('DescopeUserManagementComponent', () => {
 	it('should correctly setup attributes based on inputs', () => {
 		const html: HTMLElement = fixture.nativeElement;
 		const webComponentHtml = html.querySelector(
-			'descope-user-management-widget'
+			'descope-access-key-management-widget'
 		)!;
 		expect(webComponentHtml.getAttribute('project-id')).toStrictEqual('123');
 		expect(webComponentHtml.getAttribute('tenant')).toStrictEqual('tenant-1');

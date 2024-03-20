@@ -6,6 +6,8 @@
 	},
 	"allowedNonPeerDependencies": [
 		"@descope/web-component",
-		"@descope/user-management-widget"
+		"@descope/user-management-widget",
+		"@descope/role-management-widget",
+		"@descope/access-key-management-widget"
 	]
 }

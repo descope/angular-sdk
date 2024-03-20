@@ -5,6 +5,8 @@ import { ProtectedComponent } from './protected/protected.component';
 import { descopeAuthGuard } from '../../../angular-sdk/src/lib/services/descope-auth.guard';
 import { LoginComponent } from './login/login.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { ManageRolesComponent } from './manage-roles/manage-roles.component';
+import { ManageAccessKeysComponent } from './manage-access-keys/manage-access-keys.component';
 
 const routes: Routes = [
 	{
@@ -15,6 +17,8 @@ const routes: Routes = [
 	},
 	{ path: 'login', component: LoginComponent },
 	{ path: 'manage-users', component: ManageUsersComponent },
+	{ path: 'manage-roles', component: ManageRolesComponent },
+	{ path: 'manage-access-keys', component: ManageAccessKeysComponent },
 	{ path: '**', component: HomeComponent }
 ];
 

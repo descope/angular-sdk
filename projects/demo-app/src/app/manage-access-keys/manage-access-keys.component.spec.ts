@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ManageUsersComponent } from './manage-users.component';
+import { ManageAccessKeysComponent } from './manage-access-keys.component';
 import createSdk from '@descope/web-js-sdk';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { DescopeAuthConfig } from '../../../../angular-sdk/src/lib/types/types';
@@ -7,9 +7,9 @@ import mocked = jest.mocked;
 
 jest.mock('@descope/web-js-sdk');
 
-describe('ManageUsersComponent', () => {
-	let component: ManageUsersComponent;
-	let fixture: ComponentFixture<ManageUsersComponent>;
+describe('ManageAccessKeysComponent', () => {
+	let component: ManageAccessKeysComponent;
+	let fixture: ComponentFixture<ManageAccessKeysComponent>;
 
 	let mockedCreateSdk: jest.Mock;
 
@@ -19,13 +19,13 @@ describe('ManageUsersComponent', () => {
 
 		TestBed.configureTestingModule({
 			schemas: [NO_ERRORS_SCHEMA],
-			declarations: [ManageUsersComponent],
+			declarations: [ManageAccessKeysComponent],
 			providers: [
 				DescopeAuthConfig,
 				{ provide: DescopeAuthConfig, useValue: { projectId: 'test' } }
 			]
 		});
-		fixture = TestBed.createComponent(ManageUsersComponent);
+		fixture = TestBed.createComponent(ManageAccessKeysComponent);
 		component = fixture.componentInstance;
 		fixture.detectChanges();
 	});

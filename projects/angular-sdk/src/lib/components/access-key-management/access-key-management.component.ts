@@ -1,14 +1,14 @@
 import { Component, ElementRef, Input, OnChanges, OnInit } from '@angular/core';
-import DescopeUserManagementWidget from '@descope/user-management-widget';
+import DescopeAccessKeyManagementWidget from '@descope/access-key-management-widget';
 import { ILogger } from '@descope/web-component';
 import { DescopeAuthConfig } from '../../types/types';
 
 @Component({
-	selector: 'user-management[tenant]',
+	selector: 'access-key-management[tenant]',
 	standalone: true,
 	template: ''
 })
-export class UserManagementComponent implements OnInit, OnChanges {
+export class AccessKeyManagementComponent implements OnInit, OnChanges {
 	projectId: string;
 	baseUrl?: string;
 	@Input() tenant: string;
@@ -18,7 +18,7 @@ export class UserManagementComponent implements OnInit, OnChanges {
 	@Input() debug: boolean;
 	@Input() logger: ILogger;
 
-	private readonly webComponent = new DescopeUserManagementWidget();
+	private readonly webComponent = new DescopeAccessKeyManagementWidget();
 
 	constructor(
 		private elementRef: ElementRef,
@@ -41,7 +41,6 @@ export class UserManagementComponent implements OnInit, OnChanges {
 		this.webComponent.setAttribute('project-id', this.projectId);
 		this.webComponent.setAttribute('tenant', this.tenant);
 		this.webComponent.setAttribute('widget-id', this.widgetId);
-
 		if (this.baseUrl) {
 			this.webComponent.setAttribute('base-url', this.baseUrl);
 		}

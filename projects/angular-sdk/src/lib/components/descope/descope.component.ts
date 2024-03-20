@@ -21,6 +21,7 @@ import { DescopeAuthConfig } from '../../types/types';
 })
 export class DescopeComponent implements OnInit, OnChanges {
 	projectId: string;
+	baseUrl?: string;
 	@Input() flowId: string;
 
 	@Input() locale: string;
@@ -50,6 +51,7 @@ export class DescopeComponent implements OnInit, OnChanges {
 		descopeConfig: DescopeAuthConfig
 	) {
 		this.projectId = descopeConfig.projectId;
+		this.baseUrl = descopeConfig.baseUrl;
 	}
 
 	ngOnInit() {
@@ -85,6 +87,10 @@ export class DescopeComponent implements OnInit, OnChanges {
 	private setupWebComponent() {
 		this.webComponent.setAttribute('project-id', this.projectId);
 		this.webComponent.setAttribute('flow-id', this.flowId);
+
+		if (this.baseUrl) {
+			this.webComponent.setAttribute('base-url', this.baseUrl);
+		}
 		if (this.locale) {
 			this.webComponent.setAttribute('locale', this.locale);
 		}
