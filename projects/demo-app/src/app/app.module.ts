@@ -11,6 +11,8 @@ import { DescopeAuthService } from 'projects/angular-sdk/src/public-api';
 import { zip } from 'rxjs';
 import { LoginComponent } from './login/login.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { ManageRolesComponent } from './manage-roles/manage-roles.component';
+import { ManageAccessKeysComponent } from './manage-access-keys/manage-access-keys.component';
 import {
 	HttpClientModule,
 	provideHttpClient,
@@ -28,7 +30,9 @@ export function initializeApp(authService: DescopeAuthService) {
 		HomeComponent,
 		ProtectedComponent,
 		LoginComponent,
-		ManageUsersComponent
+		ManageUsersComponent,
+		ManageRolesComponent,
+		ManageAccessKeysComponent
 	],
 	imports: [
 		BrowserModule,

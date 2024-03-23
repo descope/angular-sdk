@@ -62,4 +62,14 @@ export class HomeComponent implements OnInit {
 	manageUsers() {
 		this.router.navigate(['/manage-users']).catch((err) => console.error(err));
 	}
+
+	manageRoles() {
+		this.router.navigate(['/manage-roles']).catch((err) => console.error(err));
+	}
+
+	manageAccessKeys() {
+		this.router
+			.navigate(['/manage-access-keys'])
+			.catch((err) => console.error(err));
+	}
 }
