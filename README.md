@@ -391,6 +391,163 @@ export class AppRoutingModule {}
 
 If not authenticated user tries to access protected route they will be redirected to `descopeFallbackUrl`
 
+### Widgets
+
+Widgets are components that allow you to expose management features for tenant-based implementation. In certain scenarios, your customers may require the capability to perform managerial actions independently, alleviating the necessity to contact you. Widgets serve as a feature enabling you to delegate these capabilities to your customers in a modular manner.
+
+Important Note:
+
+- For the user to be able to use the widget, they need to be assigned the `Tenant Admin` Role.
+
+#### User Management
+
+The `User Management` widget will let you embed a user table in your site to view and take action.
+
+The widget lets you:
+
+- Create a new user
+- Edit an existing user
+- Activate / disable an existing user
+- Reset an existing user's password
+- Remove an existing user's passkey
+- Delete an existing user
+
+Note:
+
+- Custom fields also appear in the table.
+
+###### Usage
+
+`manage-users.component.html`
+
+```html
+<user-management
+	[tenant]="tenant"
+	[theme]="theme"
+	[debug]="debugMode"
+	widgetId="user-management-widget"
+/>
+```
+
+`manage-users.component.ts`
+
+```js
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+@Component({
+	selector: 'app-manage-users',
+	templateUrl: './manage-users.component.html'
+})
+export class ManageUsersComponent {
+	theme = 'light';
+	debugMode = false;
+	tenant = 'tenantId';
+
+	constructor(private _: Router) {}
+}
+```
+
+Example:
+[Manage Users](./projects/demo-app/src/app/manage-users/manage-users.component.ts)
+
+#### Role Management
+
+The `Role Management` widget will let you embed a role table in your site to view and take action.
+
+The widget lets you:
+
+- Create a new role
+- Change an existing role's fields
+- Delete an existing role
+
+Note:
+
+- The `Editable` field is determined by the user's access to the role - meaning that project-level roles are not editable by tenant level users.
+- You need to pre-define the permissions that the user can use, which are not editable in the widget.
+
+###### Usage
+
+`manage-roles.component.html`
+
+```html
+<role-management
+	[tenant]="tenant"
+	[theme]="theme"
+	[debug]="debugMode"
+	widgetId="role-management-widget"
+/>
+```
+
+`manage-roles.component.ts`
+
+```js
+import { Component } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+
+@Component({
+	selector: 'app-manage-roles',
+	templateUrl: './manage-roles.component.html'
+})
+export class ManageRolesComponent {
+	theme = 'light';
+	debugMode = false;
+	tenant = 'tenantId';
+
+	constructor(private _: Router) {}
+}
+```
+
+Example:
+[Manage Roles](./projects/demo-app/src/app/manage-roles/manage-roles.component.ts)
+
+#### Access Key Management
+
+The `Access Key Management` widget will let you embed an access key table in your site to view and take action.
+
+The widget lets you:
+
+- Create a new access key
+- Activate / deactivate an existing access key
+- Delete an exising access key
+
+###### Usage
+
+`manage-access-keys.component.html`
+
+```html
+<access-key-management
+	[tenant]="tenant"
+	[theme]="theme"
+	[debug]="debugMode"
+	widgetId="access-key-management-widget"
+/>
+```
+
+`manage-access-keys.component.ts`
+
+```js
+import { Component } from '@angular/core';
+import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+
+@Component({
+	selector: 'app-manage-access-keys',
+	templateUrl: './manage-access-keys.component.html'
+})
+export class ManageAccessKeysComponent {
+	theme = 'light';
+	debugMode = false;
+	tenant = 'tenantId';
+
+	constructor(private _: Router) {}
+}
+```
+
+Example:
+[Manage Access Keys](./projects/demo-app/src/app/manage-access-keys/manage-access-keys.component.ts)
+
 ## Code Example
 
 You can find an example angular app in the [examples folder](./projects/demo-app).
