@@ -421,12 +421,7 @@ Note:
 `manage-users.component.html`
 
 ```html
-<user-management
-	[tenant]="tenant"
-	[theme]="theme"
-	[debug]="debugMode"
-	widgetId="user-management-widget"
-/>
+<user-management [tenant]="tenant" widgetId="user-management-widget" />
 ```
 
 `manage-users.component.ts`
@@ -440,8 +435,6 @@ import { Router } from '@angular/router';
 	templateUrl: './manage-users.component.html'
 })
 export class ManageUsersComponent {
-	theme = 'light';
-	debugMode = false;
 	tenant = 'tenantId';
 
 	constructor(private _: Router) {}
@@ -471,12 +464,7 @@ Note:
 `manage-roles.component.html`
 
 ```html
-<role-management
-	[tenant]="tenant"
-	[theme]="theme"
-	[debug]="debugMode"
-	widgetId="role-management-widget"
-/>
+<role-management [tenant]="tenant" widgetId="role-management-widget" />
 ```
 
 `manage-roles.component.ts`
@@ -491,8 +479,6 @@ import { Router } from '@angular/router';
 	templateUrl: './manage-roles.component.html'
 })
 export class ManageRolesComponent {
-	theme = 'light';
-	debugMode = false;
 	tenant = 'tenantId';
 
 	constructor(private _: Router) {}
@@ -519,8 +505,6 @@ The widget lets you:
 ```html
 <access-key-management
 	[tenant]="tenant"
-	[theme]="theme"
-	[debug]="debugMode"
 	widgetId="access-key-management-widget"
 />
 ```
@@ -537,8 +521,6 @@ import { Router } from '@angular/router';
 	templateUrl: './manage-access-keys.component.html'
 })
 export class ManageAccessKeysComponent {
-	theme = 'light';
-	debugMode = false;
 	tenant = 'tenantId';
 
 	constructor(private _: Router) {}
