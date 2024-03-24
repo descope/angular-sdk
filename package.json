@@ -33,10 +33,10 @@
 		]
 	},
 	"dependencies": {
-		"@descope/user-management-widget": "0.4.9",
-		"@descope/role-management-widget": "0.1.8",
-		"@descope/access-key-management-widget": "0.1.8",
-		"@descope/web-component": "3.8.17",
+		"@descope/user-management-widget": "0.4.20",
+		"@descope/role-management-widget": "0.1.19",
+		"@descope/access-key-management-widget": "0.1.19",
+		"@descope/web-component": "3.8.28",
 		"tslib": "^2.3.0"
 	},
 	"optionalDependencies": {
