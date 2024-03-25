@@ -391,6 +391,86 @@ export class AppRoutingModule {}
 
 If not authenticated user tries to access protected route they will be redirected to `descopeFallbackUrl`
 
+### Widgets
+
+Widgets are components that allow you to expose management features for tenant-based implementation. In certain scenarios, your customers may require the capability to perform managerial actions independently, alleviating the necessity to contact you. Widgets serve as a feature enabling you to delegate these capabilities to your customers in a modular manner.
+
+Important Note:
+
+- For the user to be able to use the widget, they need to be assigned the `Tenant Admin` Role.
+
+#### User Management
+
+The `UserManagement` widget will let you embed a user table in your site to view and take action.
+
+The widget lets you:
+
+- Create a new user
+- Edit an existing user
+- Activate / disable an existing user
+- Reset an existing user's password
+- Remove an existing user's passkey
+- Delete an existing user
+
+Note:
+
+- Custom fields also appear in the table.
+
+###### Usage
+
+```html
+<user-management tenant="tenant-id" widgetId="user-management-widget" />
+```
+
+Example:
+[Manage Users](./projects/demo-app/src/app/manage-users/manage-users.component.html)
+
+#### Role Management
+
+The `RoleManagement` widget will let you embed a role table in your site to view and take action.
+
+The widget lets you:
+
+- Create a new role
+- Change an existing role's fields
+- Delete an existing role
+
+Note:
+
+- The `Editable` field is determined by the user's access to the role - meaning that project-level roles are not editable by tenant level users.
+- You need to pre-define the permissions that the user can use, which are not editable in the widget.
+
+###### Usage
+
+```html
+<role-management tenant="tenant-id" widgetId="role-management-widget" />
+```
+
+Example:
+[Manage Roles](./projects/demo-app/src/app/manage-roles/manage-roles.component.html)
+
+#### AccessKeyManagement
+
+The `AccessKeyManagement` widget will let you embed an access key table in your site to view and take action.
+
+The widget lets you:
+
+- Create a new access key
+- Activate / deactivate an existing access key
+- Delete an exising access key
+
+###### Usage
+
+```html
+<access-key-management
+	tenant="tenant-id"
+	widgetId="access-key-management-widget"
+/>
+```
+
+Example:
+[Manage Access Keys](./projects/demo-app/src/app/manage-access-keys/manage-access-keys.component.html)
+
 ## Code Example
 
 You can find an example angular app in the [examples folder](./projects/demo-app).
