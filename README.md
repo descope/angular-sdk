@@ -419,15 +419,15 @@ Note:
 ###### Usage
 
 ```html
-<user-management [tenant]="tenant" widgetId="user-management-widget" />
+<user-management tenant="tenant-id" widgetId="user-management-widget" />
 ```
 
 Example:
 [Manage Users](./projects/demo-app/src/app/manage-users/manage-users.component.html)
 
-#### RoleManagement
+#### Role Management
 
-The `Role Management` widget will let you embed a role table in your site to view and take action.
+The `RoleManagement` widget will let you embed a role table in your site to view and take action.
 
 The widget lets you:
 
@@ -443,7 +443,7 @@ Note:
 ###### Usage
 
 ```html
-<role-management [tenant]="tenant" widgetId="role-management-widget" />
+<role-management tenant="tenant-id" widgetId="role-management-widget" />
 ```
 
 Example:
@@ -463,7 +463,7 @@ The widget lets you:
 
 ```html
 <access-key-management
-	[tenant]="tenant"
+	tenant="tenant-id"
 	widgetId="access-key-management-widget"
 />
 ```
