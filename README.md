@@ -401,7 +401,7 @@ Important Note:
 
 #### User Management
 
-The `User Management` widget will let you embed a user table in your site to view and take action.
+The `UserManagement` widget will let you embed a user table in your site to view and take action.
 
 The widget lets you:
 
@@ -418,33 +418,14 @@ Note:
 
 ###### Usage
 
-`manage-users.component.html`
-
 ```html
 <user-management [tenant]="tenant" widgetId="user-management-widget" />
 ```
 
-`manage-users.component.ts`
-
-```js
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-
-@Component({
-	selector: 'app-manage-users',
-	templateUrl: './manage-users.component.html'
-})
-export class ManageUsersComponent {
-	tenant = 'tenantId';
-
-	constructor(private _: Router) {}
-}
-```
-
 Example:
-[Manage Users](./projects/demo-app/src/app/manage-users/manage-users.component.ts)
+[Manage Users](./projects/demo-app/src/app/manage-users/manage-users.component.html)
 
-#### Role Management
+#### RoleManagement
 
 The `Role Management` widget will let you embed a role table in your site to view and take action.
 
@@ -461,36 +442,16 @@ Note:
 
 ###### Usage
 
-`manage-roles.component.html`
-
 ```html
 <role-management [tenant]="tenant" widgetId="role-management-widget" />
 ```
 
-`manage-roles.component.ts`
-
-```js
-import { Component } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
-
-@Component({
-	selector: 'app-manage-roles',
-	templateUrl: './manage-roles.component.html'
-})
-export class ManageRolesComponent {
-	tenant = 'tenantId';
-
-	constructor(private _: Router) {}
-}
-```
-
 Example:
-[Manage Roles](./projects/demo-app/src/app/manage-roles/manage-roles.component.ts)
+[Manage Roles](./projects/demo-app/src/app/manage-roles/manage-roles.component.html)
 
-#### Access Key Management
+#### AccessKeyManagement
 
-The `Access Key Management` widget will let you embed an access key table in your site to view and take action.
+The `AccessKeyManagement` widget will let you embed an access key table in your site to view and take action.
 
 The widget lets you:
 
@@ -500,8 +461,6 @@ The widget lets you:
 
 ###### Usage
 
-`manage-access-keys.component.html`
-
 ```html
 <access-key-management
 	[tenant]="tenant"
@@ -509,26 +468,8 @@ The widget lets you:
 />
 ```
 
-`manage-access-keys.component.ts`
-
-```js
-import { Component } from '@angular/core';
-import { environment } from '../../environments/environment';
-import { Router } from '@angular/router';
-
-@Component({
-	selector: 'app-manage-access-keys',
-	templateUrl: './manage-access-keys.component.html'
-})
-export class ManageAccessKeysComponent {
-	tenant = 'tenantId';
-
-	constructor(private _: Router) {}
-}
-```
-
 Example:
-[Manage Access Keys](./projects/demo-app/src/app/manage-access-keys/manage-access-keys.component.ts)
+[Manage Access Keys](./projects/demo-app/src/app/manage-access-keys/manage-access-keys.component.html)
 
 ## Code Example
 
