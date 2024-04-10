@@ -16,6 +16,7 @@ describe('DescopeAuthService', () => {
 	const onUserChangeSpy = jest.fn();
 	const getSessionTokenSpy = jest.fn();
 	const getRefreshTokenSpy = jest.fn();
+	const isJwtExpiredSpy = jest.fn();
 	const getJwtPermissionsSpy = jest.fn();
 	const getJwtRolesSpy = jest.fn();
 	const meSpy = jest.fn();
@@ -33,6 +34,7 @@ describe('DescopeAuthService', () => {
 			onUserChange: onUserChangeSpy,
 			getSessionToken: getSessionTokenSpy,
 			getRefreshToken: getRefreshTokenSpy,
+			isJwtExpired: isJwtExpiredSpy,
 			getJwtPermissions: getJwtPermissionsSpy,
 			getJwtRoles: getJwtRolesSpy,
 			me: meSpy,
@@ -54,6 +56,7 @@ describe('DescopeAuthService', () => {
 	afterEach(() => {
 		getSessionTokenSpy.mockReset();
 		getRefreshTokenSpy.mockReset();
+		isJwtExpiredSpy.mockReset();
 		getJwtPermissionsSpy.mockReset();
 		getJwtRolesSpy.mockReset();
 	});
@@ -108,6 +111,48 @@ describe('DescopeAuthService', () => {
 				'Get refresh token is not supported in SSR'
 			);
 			expect(getRefreshTokenSpy).not.toHaveBeenCalled();
+		});
+	});
+
+	describe('isSessionTokenExpired', () => {
+		it('should call isSessionTokenExpired from sdk', () => {
+			const token = 'abcd';
+			getSessionTokenSpy.mockReturnValueOnce(token);
+			service.isSessionTokenExpired();
+			expect(getSessionTokenSpy).toHaveBeenCalled();
+			expect(isJwtExpiredSpy).toHaveBeenCalledWith(token);
+		});
+
+		it('should warn when using isSessionTokenExpired in non browser environment', () => {
+			const warnSpy = jest.spyOn(console, 'warn');
+			windowSpy.mockImplementationOnce(() => undefined);
+
+			service.isSessionTokenExpired('some token');
+			expect(warnSpy).toHaveBeenCalledWith(
+				'isSessionTokenExpired is not supported in SSR'
+			);
+			expect(isJwtExpiredSpy).not.toHaveBeenCalled();
+		});
+	});
+
+	describe('isRefreshTokenExpired', () => {
+		it('should call isRefreshTokenExpired from sdk', () => {
+			const token = 'abcd';
+			getRefreshTokenSpy.mockReturnValueOnce(token);
+			service.isRefreshTokenExpired();
+			expect(getRefreshTokenSpy).toHaveBeenCalled();
+			expect(isJwtExpiredSpy).toHaveBeenCalledWith(token);
+		});
+
+		it('should warn when using isRefreshTokenExpired in non browser environment', () => {
+			const warnSpy = jest.spyOn(console, 'warn');
+			windowSpy.mockImplementationOnce(() => undefined);
+
+			service.isRefreshTokenExpired('some token');
+			expect(warnSpy).toHaveBeenCalledWith(
+				'isRefreshTokenExpired is not supported in SSR'
+			);
+			expect(isJwtExpiredSpy).not.toHaveBeenCalled();
 		});
 	});
 

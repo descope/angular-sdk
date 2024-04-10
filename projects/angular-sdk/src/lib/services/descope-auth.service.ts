@@ -137,6 +137,26 @@ export class DescopeAuthService {
 		return '';
 	}
 
+	isSessionTokenExpired(token = this.getSessionToken()) {
+		if (isBrowser()) {
+			return this.descopeSdk.isJwtExpired(token ?? '');
+		}
+		console.warn('isSessionTokenExpired is not supported in SSR');
+		return true;
+	}
+
+	isRefreshTokenExpired(token = this.getRefreshToken()) {
+		if (isBrowser()) {
+			return (
+				this.descopeSdk as AngularDescopeSDK & {
+					isJwtExpired: (token: string) => boolean | null;
+				}
+			).isJwtExpired(token ?? '');
+		}
+		console.warn('isRefreshTokenExpired is not supported in SSR');
+		return true;
+	}
+
 	getJwtPermissions(token = this.getSessionToken(), tenant?: string) {
 		if (token === null) {
 			console.error('Could not get JWT Permissions - not authenticated');
