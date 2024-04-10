@@ -349,6 +349,8 @@ You can also use the following helper methods on `DescopeAuthService` to assist 
 - `isAuthenticated()` - Returns boolean whether user is authenticated
 - `refreshSession` - Force a refresh on current session token using an existing valid refresh token.
 - `refreshUser` - Force a refresh on current user using an existing valid refresh token.
+- `isSessionTokenExpired(token = getSessionToken())` - Check whether the current session token is expired. Provide a session token if is not persisted.
+- `isRefreshTokenExpired(token = getRefreshToken())` - Check whether the current refresh token is expired. Provide a refresh token if is not persisted.
 - `getJwtRoles(token = getSessionToken(), tenant = '')` - Get current roles from an existing session token. Provide tenant id for specific tenant roles.
 - `getJwtPermissions(token = getSessionToken(), tenant = '')` - Fet current permissions from an existing session token. Provide tenant id for specific tenant permissions.
 
