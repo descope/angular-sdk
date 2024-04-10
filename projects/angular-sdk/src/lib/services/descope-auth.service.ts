@@ -141,7 +141,7 @@ export class DescopeAuthService {
 		if (isBrowser()) {
 			return this.descopeSdk.isJwtExpired(token ?? '');
 		}
-		console.warn('Is session token expired is not supported in SSR');
+		console.warn('isSessionTokenExpired is not supported in SSR');
 		return true;
 	}
 
@@ -153,7 +153,7 @@ export class DescopeAuthService {
 				}
 			).isJwtExpired(token ?? '');
 		}
-		console.warn('Is refresh token expired is not supported in SSR');
+		console.warn('isRefreshTokenExpired is not supported in SSR');
 		return true;
 	}
 

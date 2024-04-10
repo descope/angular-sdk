@@ -129,7 +129,7 @@ describe('DescopeAuthService', () => {
 
 			service.isSessionTokenExpired('some token');
 			expect(warnSpy).toHaveBeenCalledWith(
-				'Is session token expired is not supported in SSR'
+				'isSessionTokenExpired is not supported in SSR'
 			);
 			expect(isJwtExpiredSpy).not.toHaveBeenCalled();
 		});
@@ -150,7 +150,7 @@ describe('DescopeAuthService', () => {
 
 			service.isRefreshTokenExpired('some token');
 			expect(warnSpy).toHaveBeenCalledWith(
-				'Is refresh token expired is not supported in SSR'
+				'isRefreshTokenExpired is not supported in SSR'
 			);
 			expect(isJwtExpiredSpy).not.toHaveBeenCalled();
 		});
