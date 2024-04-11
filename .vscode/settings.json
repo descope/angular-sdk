@@ -1,8 +1,3 @@
 {
-	"cSpell.words": ["setversion"],
-	"workbench.colorCustomizations": {
-		"activityBar.background": "#29310A",
-		"titleBar.activeBackground": "#39450E",
-		"titleBar.activeForeground": "#F9FCEF"
-	}
+	"cSpell.words": ["setversion"]
 }
