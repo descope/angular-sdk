@@ -8,6 +8,7 @@
 		"@descope/web-component",
 		"@descope/user-management-widget",
 		"@descope/role-management-widget",
-		"@descope/access-key-management-widget"
+		"@descope/access-key-management-widget",
+		"@descope/audit-management-widget"
 	]
 }
