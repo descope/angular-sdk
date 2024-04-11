@@ -12,6 +12,7 @@ import { SignUpOrInFlowComponent } from './components/sign-up-or-in-flow/sign-up
 import { UserManagementComponent } from './components/user-management/user-management.component';
 import { RoleManagementComponent } from './components/role-management/role-management.component';
 import { AccessKeyManagementComponent } from './components/access-key-management/access-key-management.component';
+import { AuditManagementComponent } from './components/audit-management/audit-management.component';
 import { DescopeAuthConfig } from './types/types';
 
 @NgModule({
@@ -23,7 +24,8 @@ import { DescopeAuthConfig } from './types/types';
 		SignUpOrInFlowComponent,
 		UserManagementComponent,
 		RoleManagementComponent,
-		AccessKeyManagementComponent
+		AccessKeyManagementComponent,
+		AuditManagementComponent
 	],
 	exports: [
 		DescopeComponent,
@@ -32,7 +34,8 @@ import { DescopeAuthConfig } from './types/types';
 		SignUpOrInFlowComponent,
 		UserManagementComponent,
 		RoleManagementComponent,
-		AccessKeyManagementComponent
+		AccessKeyManagementComponent,
+		AuditManagementComponent
 	]
 })
 export class DescopeAuthModule {

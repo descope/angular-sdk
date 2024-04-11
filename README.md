@@ -473,6 +473,19 @@ The widget lets you:
 Example:
 [Manage Access Keys](./projects/demo-app/src/app/manage-access-keys/manage-access-keys.component.html)
 
+#### AuditManagement
+
+The `AuditManagement` widget will let you embed an audit table in your site.
+
+###### Usage
+
+```html
+<audit-management tenant="tenant-id" widgetId="audit-management-widget" />
+```
+
+Example:
+[Manage Audit](./projects/demo-app/src/app/manage-audit/manage-audit.component.html)
+
 ## Code Example
 
 You can find an example angular app in the [examples folder](./projects/demo-app).

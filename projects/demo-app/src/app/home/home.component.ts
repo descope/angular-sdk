@@ -72,4 +72,8 @@ export class HomeComponent implements OnInit {
 			.navigate(['/manage-access-keys'])
 			.catch((err) => console.error(err));
 	}
+
+	manageAudit() {
+		this.router.navigate(['/manage-audit']).catch((err) => console.error(err));
+	}
 }

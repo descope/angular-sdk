@@ -13,4 +13,5 @@ export * from './lib/components/sign-up-or-in-flow/sign-up-or-in-flow.component'
 export * from './lib/components/user-management/user-management.component';
 export * from './lib/components/role-management/role-management.component';
 export * from './lib/components/access-key-management/access-key-management.component';
+export * from './lib/components/audit-management/audit-management.component';
 export * from './lib/types/types';
