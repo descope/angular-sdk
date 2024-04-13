@@ -393,6 +393,24 @@ export class AppRoutingModule {}
 
 If not authenticated user tries to access protected route they will be redirected to `descopeFallbackUrl`
 
+### Token Persistence
+
+Descope stores two tokens: the session token and the refresh token.
+
+- The refresh token is either stored in local storage or an `httpOnly` cookie. This is configurable in the Descope console.
+- The session token is stored in either local storage or a JS cookie. This behavior is configurable via the `sessionTokenViaCookie` prop in the `DescopeAuthModule` module.
+
+However, for security reasons, you may choose not to store tokens in the browser. In this case, you can pass `persistTokens: false` to the `DescopeAuthModule` module. This prevents the SDK from storing the tokens in the browser.
+
+Notes:
+
+- You must configure the refresh token to be stored in an `httpOnly` cookie in the Descope console. Otherwise, the refresh token will not be stored, and when the page is refreshed, the user will be logged out.
+- You can still retrieve the session token using the `session` observable of `DescopeAuthService`.
+
+### Last User Persistence
+
+Descope stores the last user information in local storage. If you wish to disable this feature, you can pass `storeLastAuthenticatedUser: false` to the `DescopeAuthModule` module. Please note that some features related to the last authenticated user may not function as expected if this behavior is disabled.
+
 ### Widgets
 
 Widgets are components that allow you to expose management features for tenant-based implementation. In certain scenarios, your customers may require the capability to perform managerial actions independently, alleviating the necessity to contact you. Widgets serve as a feature enabling you to delegate these capabilities to your customers in a modular manner.

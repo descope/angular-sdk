@@ -22,6 +22,7 @@ import { DescopeAuthConfig } from '../../types/types';
 export class DescopeComponent implements OnInit, OnChanges {
 	projectId: string;
 	baseUrl?: string;
+	storeLastAuthenticatedUser?: boolean;
 	@Input() flowId: string;
 
 	@Input() locale: string;
@@ -52,6 +53,7 @@ export class DescopeComponent implements OnInit, OnChanges {
 	) {
 		this.projectId = descopeConfig.projectId;
 		this.baseUrl = descopeConfig.baseUrl;
+		this.storeLastAuthenticatedUser = descopeConfig.storeLastAuthenticatedUser;
 	}
 
 	ngOnInit() {
@@ -90,6 +92,12 @@ export class DescopeComponent implements OnInit, OnChanges {
 
 		if (this.baseUrl) {
 			this.webComponent.setAttribute('base-url', this.baseUrl);
+		}
+		if (this.storeLastAuthenticatedUser) {
+			this.webComponent.setAttribute(
+				'store-last-authenticated-user',
+				this.storeLastAuthenticatedUser.toString()
+			);
 		}
 		if (this.locale) {
 			this.webComponent.setAttribute('locale', this.locale);

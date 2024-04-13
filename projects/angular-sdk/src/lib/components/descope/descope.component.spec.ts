@@ -59,6 +59,7 @@ describe('DescopeComponent', () => {
 		component.errorTransformer = jest.fn();
 		component.client = {};
 		component.form = {};
+		component.storeLastAuthenticatedUser = true;
 		fixture.detectChanges();
 	});
 
@@ -87,6 +88,9 @@ describe('DescopeComponent', () => {
 		expect(webComponentHtml.getAttribute('logger')).toBeDefined();
 		expect(webComponentHtml.getAttribute('error-transformer')).toBeDefined();
 		expect(webComponentHtml.getAttribute('redirect-url')).toBeNull();
+		expect(
+			webComponentHtml?.getAttribute('store-last-authenticated-user')
+		).toEqual('true');
 	});
 
 	it('should emit success when web component emits success', () => {
