@@ -482,9 +482,16 @@ The widget lets you:
 ###### Usage
 
 ```html
+<!-- admin view: manage all tenant users' access keys -->
 <access-key-management
 	tenant="tenant-id"
 	widgetId="access-key-management-widget"
+/>
+
+<!-- user view: mange access key for the logged-in tenant's user -->
+<access-key-management
+	tenant="tenant-id"
+	widgetId="user-access-key-management-widget"
 />
 ```
 
