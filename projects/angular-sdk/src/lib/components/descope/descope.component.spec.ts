@@ -55,7 +55,12 @@ describe('DescopeComponent', () => {
 		component.locale = 'en-US';
 		component.success = new EventEmitter<CustomEvent>();
 		component.error = new EventEmitter<CustomEvent>();
-		component.logger = { info: jest.fn(), error: jest.fn(), warn: jest.fn() };
+		component.logger = {
+			info: jest.fn(),
+			error: jest.fn(),
+			warn: jest.fn(),
+			debug: jest.fn()
+		};
 		component.errorTransformer = jest.fn();
 		component.client = {};
 		component.form = {};

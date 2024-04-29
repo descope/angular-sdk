@@ -14,6 +14,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageRolesComponent } from './manage-roles/manage-roles.component';
 import { ManageAccessKeysComponent } from './manage-access-keys/manage-access-keys.component';
 import { ManageAuditComponent } from './manage-audit/manage-audit.component';
+import { MyUserProfileComponent } from './my-user-profile/my-user-profile.component';
 import {
 	HttpClientModule,
 	provideHttpClient,
@@ -34,7 +35,8 @@ export function initializeApp(authService: DescopeAuthService) {
 		ManageUsersComponent,
 		ManageRolesComponent,
 		ManageAccessKeysComponent,
-		ManageAuditComponent
+		ManageAuditComponent,
+		MyUserProfileComponent
 	],
 	imports: [
 		BrowserModule,

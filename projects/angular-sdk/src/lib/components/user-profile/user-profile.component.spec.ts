@@ -1,25 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { RoleManagementComponent } from './role-management.component';
+import { UserProfileComponent } from './user-profile.component';
 import createSdk from '@descope/web-js-sdk';
 import { DescopeAuthConfig } from '../../types/types';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import mocked = jest.mocked;
 
 jest.mock('@descope/web-js-sdk');
-//Mock DescopeRoleManagementWidget
-jest.mock('@descope/role-management-widget', () => {
+//Mock DescopeUserProfileWidget
+jest.mock('@descope/user-profile-widget', () => {
 	return jest.fn(() => {
 		// Create a mock DOM element
-		return document.createElement('descope-role-management-widget');
+		return document.createElement('descope-user-profile-widget');
 	});
 });
 
-describe('DescopeRoleManagementComponent', () => {
-	let component: RoleManagementComponent;
-	let fixture: ComponentFixture<RoleManagementComponent>;
+describe('DescopeUserProfileComponent', () => {
+	let component: UserProfileComponent;
+	let fixture: ComponentFixture<UserProfileComponent>;
 	let mockedCreateSdk: jest.Mock;
 	const onSessionTokenChangeSpy = jest.fn();
-	const onRoleChangeSpy = jest.fn();
+	const onAuditChangeSpy = jest.fn();
 	const afterRequestHooksSpy = jest.fn();
 	const mockConfig: DescopeAuthConfig = {
 		projectId: 'someProject'
@@ -30,7 +30,7 @@ describe('DescopeRoleManagementComponent', () => {
 
 		mockedCreateSdk.mockReturnValue({
 			onSessionTokenChange: onSessionTokenChangeSpy,
-			onRoleChange: onRoleChangeSpy,
+			onAuditChange: onAuditChangeSpy,
 			httpClient: {
 				hooks: {
 					afterRequest: afterRequestHooksSpy
@@ -46,11 +46,11 @@ describe('DescopeRoleManagementComponent', () => {
 			]
 		});
 
-		fixture = TestBed.createComponent(RoleManagementComponent);
+		fixture = TestBed.createComponent(UserProfileComponent);
 		component = fixture.componentInstance;
 		component.projectId = '123';
-		component.tenant = 'tenant-1';
 		component.widgetId = 'widget-1';
+		component.logout = new EventEmitter<CustomEvent>();
 		component.logger = {
 			info: jest.fn(),
 			error: jest.fn(),
@@ -63,22 +63,31 @@ describe('DescopeRoleManagementComponent', () => {
 	it('should create', () => {
 		expect(component).toBeTruthy();
 		const html: HTMLElement = fixture.nativeElement;
-		const webComponentHtml = html.querySelector(
-			'descope-role-management-widget'
-		);
+		const webComponentHtml = html.querySelector('descope-user-profile-widget');
 		expect(webComponentHtml).toBeDefined();
 	});
 
 	it('should correctly setup attributes based on inputs', () => {
 		const html: HTMLElement = fixture.nativeElement;
-		const webComponentHtml = html.querySelector(
-			'descope-role-management-widget'
-		)!;
+		const webComponentHtml = html.querySelector('descope-user-profile-widget')!;
 		expect(webComponentHtml.getAttribute('project-id')).toStrictEqual('123');
-		expect(webComponentHtml.getAttribute('tenant')).toStrictEqual('tenant-1');
 		expect(webComponentHtml.getAttribute('widget-id')).toStrictEqual(
 			'widget-1'
 		);
 		expect(webComponentHtml.getAttribute('logger')).toBeDefined();
+	});
+
+	it('should emit logout when web component emits logout', () => {
+		const html: HTMLElement = fixture.nativeElement;
+		const webComponentHtml = html.querySelector('descope-user-profile-widget')!;
+
+		const event = {
+			detail: 'logout'
+		};
+		component.logout.subscribe((e) => {
+			expect(afterRequestHooksSpy).toHaveBeenCalled();
+			expect(e.detail).toHaveBeenCalledWith(event.detail);
+		});
+		webComponentHtml.dispatchEvent(new CustomEvent('logout', event));
 	});
 });

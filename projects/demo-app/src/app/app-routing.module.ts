@@ -8,6 +8,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
 import { ManageRolesComponent } from './manage-roles/manage-roles.component';
 import { ManageAccessKeysComponent } from './manage-access-keys/manage-access-keys.component';
 import { ManageAuditComponent } from './manage-audit/manage-audit.component';
+import { MyUserProfileComponent } from './my-user-profile/my-user-profile.component';
 
 const routes: Routes = [
 	{
@@ -21,6 +22,7 @@ const routes: Routes = [
 	{ path: 'manage-roles', component: ManageRolesComponent },
 	{ path: 'manage-access-keys', component: ManageAccessKeysComponent },
 	{ path: 'manage-audit', component: ManageAuditComponent },
+	{ path: 'my-user-profile', component: MyUserProfileComponent },
 	{ path: '**', component: HomeComponent }
 ];
 

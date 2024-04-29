@@ -51,7 +51,12 @@ describe('DescopeAuditManagementComponent', () => {
 		component.projectId = '123';
 		component.tenant = 'tenant-1';
 		component.widgetId = 'widget-1';
-		component.logger = { info: jest.fn(), error: jest.fn(), warn: jest.fn() };
+		component.logger = {
+			info: jest.fn(),
+			error: jest.fn(),
+			warn: jest.fn(),
+			debug: jest.fn()
+		};
 		fixture.detectChanges();
 	});
 
