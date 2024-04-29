@@ -51,7 +51,12 @@ describe('DescopeUserProfileComponent', () => {
 		component.projectId = '123';
 		component.widgetId = 'widget-1';
 		component.logout = new EventEmitter<CustomEvent>();
-		component.logger = { info: jest.fn(), error: jest.fn(), warn: jest.fn() };
+		component.logger = {
+			info: jest.fn(),
+			error: jest.fn(),
+			warn: jest.fn(),
+			debug: jest.fn()
+		};
 		fixture.detectChanges();
 	});
 
