@@ -511,6 +511,26 @@ The `AuditManagement` widget will let you embed an audit table in your site.
 Example:
 [Manage Audit](./projects/demo-app/src/app/manage-audit/manage-audit.component.html)
 
+#### UserProfile
+
+The `UserProfile` widget lets you embed a user profile component in your app and let the logged in user update his profile.
+
+The widget lets you:
+
+- Update user profile picture
+- Update user personal information
+- Update authentication methods
+- Logout
+
+###### Usage
+
+```html
+<user-profile widgetId="user-profile-widget" />
+```
+
+Example:
+[My User Profile](./projects/demo-app/src/app/my-user-profile/my-user-profile.component.html)
+
 ## Code Example
 
 You can find an example angular app in the [examples folder](./projects/demo-app).

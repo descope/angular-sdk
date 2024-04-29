@@ -76,4 +76,10 @@ export class HomeComponent implements OnInit {
 	manageAudit() {
 		this.router.navigate(['/manage-audit']).catch((err) => console.error(err));
 	}
+
+	myUserProfile() {
+		this.router
+			.navigate(['/my-user-profile'])
+			.catch((err) => console.error(err));
+	}
 }
