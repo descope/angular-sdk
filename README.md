@@ -524,8 +524,10 @@ The widget lets you:
 
 ###### Usage
 
-```html
-<user-profile widgetId="user-profile-widget" />
+```angular2html
+<user-profile widgetId="user-profile-widget"
+(logout)="<your_logout_function>"
+/>
 ```
 
 Example:

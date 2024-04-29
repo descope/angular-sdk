@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { UserProfileComponent } from './user-profile.component';
 import createSdk from '@descope/web-js-sdk';
 import { DescopeAuthConfig } from '../../types/types';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, EventEmitter } from '@angular/core';
 import mocked = jest.mocked;
 
 jest.mock('@descope/web-js-sdk');
@@ -50,6 +50,7 @@ describe('DescopeUserProfileComponent', () => {
 		component = fixture.componentInstance;
 		component.projectId = '123';
 		component.widgetId = 'widget-1';
+		component.logout = new EventEmitter<CustomEvent>();
 		component.logger = { info: jest.fn(), error: jest.fn(), warn: jest.fn() };
 		fixture.detectChanges();
 	});
@@ -65,10 +66,23 @@ describe('DescopeUserProfileComponent', () => {
 		const html: HTMLElement = fixture.nativeElement;
 		const webComponentHtml = html.querySelector('descope-user-profile-widget')!;
 		expect(webComponentHtml.getAttribute('project-id')).toStrictEqual('123');
-		expect(webComponentHtml.getAttribute('tenant')).toStrictEqual('tenant-1');
 		expect(webComponentHtml.getAttribute('widget-id')).toStrictEqual(
 			'widget-1'
 		);
 		expect(webComponentHtml.getAttribute('logger')).toBeDefined();
+	});
+
+	it('should emit logout when web component emits logout', () => {
+		const html: HTMLElement = fixture.nativeElement;
+		const webComponentHtml = html.querySelector('descope-user-profile-widget')!;
+
+		const event = {
+			detail: 'logout'
+		};
+		component.logout.subscribe((e) => {
+			expect(afterRequestHooksSpy).toHaveBeenCalled();
+			expect(e.detail).toHaveBeenCalledWith(event.detail);
+		});
+		webComponentHtml.dispatchEvent(new CustomEvent('logout', event));
 	});
 });

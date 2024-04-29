@@ -1,4 +1,12 @@
-import { Component, ElementRef, Input, OnChanges, OnInit } from '@angular/core';
+import {
+	Component,
+	ElementRef,
+	EventEmitter,
+	Input,
+	OnChanges,
+	OnInit,
+	Output
+} from '@angular/core';
 import DescopeUserProfileWidget from '@descope/user-profile-widget';
 import { ILogger } from '@descope/web-component';
 import { DescopeAuthConfig } from '../../types/types';
@@ -16,6 +24,8 @@ export class UserProfileComponent implements OnInit, OnChanges {
 	@Input() theme: 'light' | 'dark' | 'os';
 	@Input() debug: boolean;
 	@Input() logger: ILogger;
+
+	@Output() logout: EventEmitter<CustomEvent> = new EventEmitter<CustomEvent>();
 
 	private readonly webComponent = new DescopeUserProfileWidget();
 
@@ -51,6 +61,12 @@ export class UserProfileComponent implements OnInit, OnChanges {
 
 		if (this.logger) {
 			(this.webComponent as any).logger = this.logger;
+		}
+
+		if (this.logout) {
+			this.webComponent.addEventListener('logout', (e: Event) => {
+				this.logout?.emit(e as CustomEvent);
+			});
 		}
 	}
 }
