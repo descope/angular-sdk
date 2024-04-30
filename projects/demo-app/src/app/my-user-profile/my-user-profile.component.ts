@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 
 @Component({
 	selector: 'app-my-user-profile',
-	templateUrl: './my-user-profile.component.html'
+	templateUrl: './my-user-profile.component.html',
+	styleUrls: ['./my-user-profile.scss']
 })
 export class MyUserProfileComponent {
 	theme = (environment.descopeTheme as 'light' | 'dark' | 'os') ?? 'os';
