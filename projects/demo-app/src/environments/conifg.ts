@@ -1,6 +1,7 @@
 export interface Env {
 	descopeProjectId: string;
 	descopeBaseUrl?: string;
+	descopeBaseStaticUrl?: string;
 	descopeFlowId?: string;
 	descopeDebugMode?: false;
 	descopeTheme?: string;

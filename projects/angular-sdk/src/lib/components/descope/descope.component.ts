@@ -22,6 +22,7 @@ import { DescopeAuthConfig } from '../../types/types';
 export class DescopeComponent implements OnInit, OnChanges {
 	projectId: string;
 	baseUrl?: string;
+	baseStaticUrl?: string;
 	storeLastAuthenticatedUser?: boolean;
 	@Input() flowId: string;
 
@@ -53,6 +54,7 @@ export class DescopeComponent implements OnInit, OnChanges {
 	) {
 		this.projectId = descopeConfig.projectId;
 		this.baseUrl = descopeConfig.baseUrl;
+		this.baseStaticUrl = descopeConfig.baseStaticUrl;
 		this.storeLastAuthenticatedUser = descopeConfig.storeLastAuthenticatedUser;
 	}
 
@@ -92,6 +94,9 @@ export class DescopeComponent implements OnInit, OnChanges {
 
 		if (this.baseUrl) {
 			this.webComponent.setAttribute('base-url', this.baseUrl);
+		}
+		if (this.baseStaticUrl) {
+			this.webComponent.setAttribute('base-static-url', this.baseStaticUrl);
 		}
 		if (this.storeLastAuthenticatedUser) {
 			this.webComponent.setAttribute(

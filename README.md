@@ -563,18 +563,19 @@ npm i && npm start
 
 See the following table for customization environment variables for the example app:
 
-| Env Variable        | Description                                                                                                   | Default value     |
-| ------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------- |
-| descopeFlowId       | Which flow ID to use in the login page                                                                        | **sign-up-or-in** |
-| descopeBaseUrl      | Custom Descope base URL                                                                                       | None              |
-| descopeTheme        | Flow theme                                                                                                    | None              |
-| descopeLocale       | Flow locale                                                                                                   | Browser's locale  |
-| descopeRedirectUrl  | Flow redirect URL for OAuth/SSO/Magic Link/Enchanted Link                                                     | None              |
-| descopeTenantId     | Flow tenant ID for SSO/SAML                                                                                   | None              |
-| descopeDebugMode    | **"true"** - Enable debugger</br>**"false"** - Disable flow debugger                                          | None              |
-| descopeStepUpFlowId | Step up flow ID to show to logged in user (via button). e.g. "step-up". Button will be hidden if not provided | None              |
-| descopeTelemetryKey | **String** - Telemetry public key provided by Descope Inc                                                     | None              |
-| descopeBackendUrl   | Url to your test backend app in case you want to test e2e                                                     | None              |
+| Env Variable         | Description                                                                                                   | Default value     |
+| -------------------- | ------------------------------------------------------------------------------------------------------------- | ----------------- |
+| descopeFlowId        | Which flow ID to use in the login page                                                                        | **sign-up-or-in** |
+| descopeBaseUrl       | Custom Descope base URL                                                                                       | None              |
+| descopeBaseStaticUrl | Custom Descope base static URL                                                                                | None              |
+| descopeTheme         | Flow theme                                                                                                    | None              |
+| descopeLocale        | Flow locale                                                                                                   | Browser's locale  |
+| descopeRedirectUrl   | Flow redirect URL for OAuth/SSO/Magic Link/Enchanted Link                                                     | None              |
+| descopeTenantId      | Flow tenant ID for SSO/SAML                                                                                   | None              |
+| descopeDebugMode     | **"true"** - Enable debugger</br>**"false"** - Disable flow debugger                                          | None              |
+| descopeStepUpFlowId  | Step up flow ID to show to logged in user (via button). e.g. "step-up". Button will be hidden if not provided | None              |
+| descopeTelemetryKey  | **String** - Telemetry public key provided by Descope Inc                                                     | None              |
+| descopeBackendUrl    | Url to your test backend app in case you want to test e2e                                                     | None              |
 
 Example `environment.development.ts` file:
 
@@ -584,6 +585,7 @@ import { Env } from './conifg';
 export const environment: Env = {
 	descopeProjectId: '<your_project_id>',
 	descopeBaseUrl: '<your_base_url>',
+	descopeBaseStaticUrl: '<your_base_static_url>',
 	descopeFlowId: 'sign-in',
 	descopeDebugMode: false,
 	descopeTheme: 'os',
