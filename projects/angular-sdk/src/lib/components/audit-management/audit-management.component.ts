@@ -11,6 +11,7 @@ import { DescopeAuthConfig } from '../../types/types';
 export class AuditManagementComponent implements OnInit, OnChanges {
 	projectId: string;
 	baseUrl?: string;
+	baseStaticUrl?: string;
 	@Input() tenant: string;
 	@Input() widgetId: string;
 
@@ -26,6 +27,7 @@ export class AuditManagementComponent implements OnInit, OnChanges {
 	) {
 		this.projectId = descopeConfig.projectId;
 		this.baseUrl = descopeConfig.baseUrl;
+		this.baseStaticUrl = descopeConfig.baseStaticUrl;
 	}
 
 	ngOnInit() {
@@ -43,6 +45,9 @@ export class AuditManagementComponent implements OnInit, OnChanges {
 		this.webComponent.setAttribute('widget-id', this.widgetId);
 		if (this.baseUrl) {
 			this.webComponent.setAttribute('base-url', this.baseUrl);
+		}
+		if (this.baseStaticUrl) {
+			this.webComponent.setAttribute('base-static-url', this.baseStaticUrl);
 		}
 		if (this.theme) {
 			this.webComponent.setAttribute('theme', this.theme);

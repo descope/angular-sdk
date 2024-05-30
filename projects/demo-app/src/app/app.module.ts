@@ -45,6 +45,7 @@ export function initializeApp(authService: DescopeAuthService) {
 		DescopeAuthModule.forRoot({
 			projectId: environment.descopeProjectId,
 			baseUrl: environment.descopeBaseUrl || '',
+			baseStaticUrl: environment.descopeBaseStaticUrl || '',
 			sessionTokenViaCookie: true
 		})
 	],

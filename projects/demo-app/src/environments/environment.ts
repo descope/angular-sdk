@@ -7,6 +7,7 @@ import { Env } from './conifg';
 export const environment: Env = {
 	descopeProjectId: '',
 	descopeBaseUrl: '',
+	descopeBaseStaticUrl: '',
 	descopeFlowId: '',
 	descopeDebugMode: false,
 	descopeTheme: '',
