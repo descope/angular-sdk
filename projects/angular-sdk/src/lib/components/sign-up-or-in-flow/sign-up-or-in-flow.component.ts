@@ -18,6 +18,7 @@ export class SignUpOrInFlowComponent {
 	@Input() telemetryKey: string;
 	@Input() redirectUrl: string;
 	@Input() autoFocus: true | false | 'skipFirstScreen';
+	@Input() validateOnBlur: boolean;
 
 	@Input() debug: boolean;
 	@Input() errorTransformer: (error: { text: string; type: string }) => string;

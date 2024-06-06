@@ -32,6 +32,7 @@ export class DescopeComponent implements OnInit, OnChanges {
 	@Input() telemetryKey: string;
 	@Input() redirectUrl: string;
 	@Input() autoFocus: true | false | 'skipFirstScreen';
+	@Input() validateOnBlur: boolean;
 
 	@Input() debug: boolean;
 	@Input() errorTransformer: (error: { text: string; type: string }) => string;
@@ -121,6 +122,12 @@ export class DescopeComponent implements OnInit, OnChanges {
 		}
 		if (this.autoFocus) {
 			this.webComponent.setAttribute('auto-focus', this.autoFocus.toString());
+		}
+		if (this.validateOnBlur) {
+			this.webComponent.setAttribute(
+				'validate-on-blur',
+				this.validateOnBlur.toString()
+			);
 		}
 		if (this.debug) {
 			this.webComponent.setAttribute('debug', this.debug.toString());
