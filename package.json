@@ -33,12 +33,12 @@
 		]
 	},
 	"dependencies": {
-		"@descope/access-key-management-widget": "0.1.113",
-		"@descope/audit-management-widget": "0.1.76",
-		"@descope/role-management-widget": "0.1.111",
-		"@descope/user-management-widget": "0.4.114",
-		"@descope/user-profile-widget": "0.0.91",
-		"@descope/web-component": "3.20.2",
+		"@descope/access-key-management-widget": "0.1.115",
+		"@descope/audit-management-widget": "0.1.78",
+		"@descope/role-management-widget": "0.1.113",
+		"@descope/user-management-widget": "0.4.116",
+		"@descope/user-profile-widget": "0.0.94",
+		"@descope/web-component": "3.21.1",
 		"tslib": "^2.3.0"
 	},
 	"optionalDependencies": {
