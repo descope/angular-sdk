@@ -1,3 +1,9 @@
+# IMPORTANT NOTE: This repository is _DEPRECATED_.
+
+Descope Angular SDK has been moved to the [descope-js](https://github.com/descope/descope-js/tree/main/packages/sdks/angular-sdk) repoistory.
+
+---
+
 # Descope SDK for Angular
 
 The Descope SDK for Angular provides convenient access to the Descope for an application written on top of Angular. You can read more on the [Descope Website](https://descope.com).
